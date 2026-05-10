@@ -110,6 +110,18 @@
     },
     {
       "number": 4,
+      "name": "Surface and verify assumptions",
+      "description": "Present key assumptions to user for early validation before deep analysis",
+      "actions": [
+        "Based on parameters, sources, and requirements gathered so far, list the top 3-5 assumptions the agent has formed about scope (what is included/excluded), architecture (technical approach, patterns, structure), and boundaries (constraints, limitations, interfaces)",
+        "Present these assumptions to the user clearly, numbered and categorized, requesting confirmation or correction for each",
+        "If the user corrects any assumptions, log each correction as a user interaction with forImprovementStep: true so the continuous-improvement step can identify systemic assumption patterns",
+        "Adjust the analysis direction based on any corrections before proceeding to deeper analysis (success criteria, constraints)",
+        "Output: '✓ Assumptions validated with user - [N] confirmed, [M] corrected'"
+      ]
+    },
+    {
+      "number": 5,
       "name": "Understand Success Criteria",
       "description": "Identify how success will be measured",
       "actions": [
@@ -121,7 +133,7 @@
       ]
     },
     {
-      "number": 5,
+      "number": 6,
       "name": "Document Constraints",
       "description": "Identify and document all constraints and limitations",
       "actions": [
@@ -133,7 +145,7 @@
       ]
     },
     {
-      "number": 6,
+      "number": 7,
       "name": "Verify Context Completeness",
       "description": "Check if all necessary information is available",
       "actions": [
@@ -145,7 +157,7 @@
       ]
     },
     {
-      "number": 7,
+      "number": 8,
       "name": "Request Missing Information",
       "description": "If context is incomplete, formulate specific questions for missing information",
       "conditional": true,
@@ -160,7 +172,7 @@
       ]
     },
     {
-      "number": 8,
+      "number": 9,
       "name": "Create Context File and Update Memory",
       "description": "Create step{N}-context.md with full documentation, update memory.json with reference",
       "actions": [
@@ -173,7 +185,7 @@
       ]
     },
     {
-      "number": 9,
+      "number": 10,
       "name": "End-Step: Compliance Check",
       "description": "Verify principles were followed in this step",
       "actions": [
@@ -184,7 +196,7 @@
     }
   ],
   "flow": {
-    "description": "Linear flow through substeps 1-6, conditional substep 7 if gaps found, then substep 8. If substep 7 executed, return to substep 3 after receiving answers."
+    "description": "Linear flow through substeps 1-4 (including assumption validation), then substeps 5-7, conditional substep 8 if gaps found, then substep 9. If substep 8 executed, return to substep 3 after receiving answers."
   },
   "memoryFileUsage": {
     "readFrom": "Process context (process.md parameters and description)",

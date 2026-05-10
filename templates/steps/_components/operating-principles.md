@@ -38,4 +38,5 @@ Shared component containing all operating principles that agents must follow dur
 Every step's End-Step compliance check MUST verify all of the following. This checklist is the **single source of truth** for what End-Step verifies — agents read this file at End-Step time.
 
 - [ ] **Principle 4 (INTERACTION OPTIONS)**: If the step had any point where the agent stopped for user input (approval, question, clarification), were interaction options generated via the skill at each of those points?
+- [ ] **Process-wide observations**: Were any cross-step patterns, efficiency metrics, or recommendations recorded in log.json processWideObservations? (patternsDetected for cross-file patterns, efficiencyMetrics for counts/durations, recommendationsForFuture for improvement ideas)
 - [ ] **Cross-References**: Were cross-reference updates recorded? (Key decisions from this step, files modified/created by this step.)
