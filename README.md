@@ -11,7 +11,6 @@ This repository contains reusable process templates and step templates that can 
 ```
 templates/
   processes/               # Process templates (full workflow definitions)
-    _framework/            # Framework scaffolding (log-template, memory-template)
     development/           # Software development workflows
     infrastructure/        # Framework/tooling infrastructure workflows
     investigation/         # Code investigation and analysis workflows
