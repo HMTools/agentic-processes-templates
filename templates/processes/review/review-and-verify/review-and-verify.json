@@ -8,8 +8,14 @@
     "lastUpdated": "2026-01-19"
   },
   "parameters": {
-    "required": ["investigationScope", "verificationCriteria"],
-    "optional": ["targetFiles", "excludePatterns"],
+    "required": [
+      "investigationScope",
+      "verificationCriteria"
+    ],
+    "optional": [
+      "targetFiles",
+      "excludePatterns"
+    ],
     "definitions": {
       "investigationScope": {
         "description": "What aspect to investigate",
@@ -34,12 +40,6 @@
     }
   },
   "steps": [
-    {
-      "number": 0,
-      "name": "Init Process Principles",
-      "stepRef": "@step:common/init-process-principles",
-      "output": "Principles loaded and confirmed"
-    },
     {
       "number": 1,
       "name": "Understand context",
@@ -110,13 +110,9 @@
       "@step:learning/continuous-improvement",
       "@step:common/end-process-validation"
     ],
-    "relatedTemplates": ["set-concept"],
+    "relatedTemplates": [
+      "set-concept"
+    ],
     "dependencies": []
   }
 }
-
-
-
-
-
-

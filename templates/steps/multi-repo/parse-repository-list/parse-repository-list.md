@@ -43,17 +43,15 @@ Use this step when you need to:
 
 ```mermaid
 graph TD
-    A[Substep 0: Init-Step - Confirm Principles] --> B[Substep 1: Read repositoryList Parameter]
-    B --> C[Substep 2: Split and Trim Entries]
-    C --> D[Substep 3: Classify and Validate Each Entry]
-    D --> E[Substep 4: Build repositories-list.json Structure]
-    E --> F[Substep 5: Write Output File and Update Memory]
-    F --> G[Substep 6: End-Step - Compliance Check]
+    A[Substep 1: Read repositoryList Parameter] --> B[Substep 2: Split and Trim Entries]
+    B --> C[Substep 3: Classify and Validate Each Entry]
+    C --> D[Substep 4: Build repositories-list.json Structure]
+    D --> E[Substep 5: Write Output File and Update Memory]
+    E --> F[Substep 6: End-Step - Compliance Check]
 ```
 
 ### Substeps
 
-- [ ] **Substep 0**: Init-Step - Read operating principles and confirm them for this step
 - [ ] **Substep 1**: Read `repositoryList` parameter from process.json parameters or memory.json
 - [ ] **Substep 2**: Split string by comma, trim whitespace, track empty entries as skipped
 - [ ] **Substep 3**: Classify each entry by source type (remote-url, local-path, unknown), extract name, validate format

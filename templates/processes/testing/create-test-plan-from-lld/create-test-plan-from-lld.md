@@ -37,8 +37,7 @@ The following are configured via team guidelines (`.guidelines/` folder) rather 
 
 ```mermaid
 flowchart TD
-    Start([Start]) --> S0[Step 0: Init Process Principles]
-    S0 --> S1[Step 1: Understand LLD Context]
+    Start([Start]) --> S1[Step 1: Understand LLD Context]
     S1 --> S2[Step 2: Gather Test Requirements]
     
     S2 --> S3[Step 3: Create Test Plan]
@@ -63,16 +62,6 @@ flowchart TD
 ```
 
 ## Steps
-
-### Step 0: Init Process Principles
-**Step Reference**: `@step:common/init-process-principles`  
-**Approval Required**: No
-
-Load and confirm the 8 operating principles for this process execution.
-
-**Output**: Principles loaded and confirmed
-
----
 
 ### Step 1: Understand LLD Context
 **Step Reference**: `@step:planning/understand-context`  
@@ -165,7 +154,6 @@ Final compliance check to ensure all process requirements were met.
 
 | Step | Name | Approval Required |
 |------|------|-------------------|
-| 0 | Init Process Principles | No |
 | 1 | Understand LLD Context | No |
 | 2 | Gather Test Requirements | No |
 | 3 | Create Test Plan | **Yes** |

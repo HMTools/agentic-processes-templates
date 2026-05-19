@@ -8,8 +8,14 @@
     "lastUpdated": "2026-01-19"
   },
   "parameters": {
-    "required": ["templateName", "templatePurpose", "useCases"],
-    "optional": ["exampleParameters"],
+    "required": [
+      "templateName",
+      "templatePurpose",
+      "useCases"
+    ],
+    "optional": [
+      "exampleParameters"
+    ],
     "definitions": {
       "templateName": {
         "description": "Name of the template to create",
@@ -29,17 +35,14 @@
       "exampleParameters": {
         "description": "Example parameter values for testing the template",
         "type": "object",
-        "example": {"reviewScope": "backend", "reviewType": "security"}
+        "example": {
+          "reviewScope": "backend",
+          "reviewType": "security"
+        }
       }
     }
   },
   "steps": [
-    {
-      "number": 0,
-      "name": "Init Process Principles",
-      "stepRef": "@step:common/init-process-principles",
-      "output": "Principles loaded and confirmed"
-    },
     {
       "number": 1,
       "name": "Plan and design template",
@@ -88,11 +91,9 @@
       "@step:learning/continuous-improvement",
       "@step:common/end-process-validation"
     ],
-    "relatedTemplates": ["create-process-step-template"],
+    "relatedTemplates": [
+      "create-process-step-template"
+    ],
     "dependencies": []
   }
 }
-
-
-
-

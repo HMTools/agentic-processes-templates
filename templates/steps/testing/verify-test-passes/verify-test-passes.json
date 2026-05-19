@@ -53,15 +53,6 @@
   },
   "substeps": [
     {
-      "number": 0,
-      "name": "Init-Step: Confirm Principles",
-      "description": "Recall operating principles before starting this step",
-      "actions": [
-        "Read `~/.claude/agentic-processes/templates/steps/_components/operating-principles.md` and recall all principles",
-        "Output: '✓ Principles confirmed for this step'"
-      ]
-    },
-    {
       "number": 1,
       "name": "Run the originally failing test",
       "description": "Execute the test to verify the fix",

@@ -41,8 +41,7 @@ Use this template when you need to:
 
 ```mermaid
 flowchart TD
-    A[Step 0: Init Process Principles] --> B[Step 1: Analyze Current Artifact State]
-    B --> C{Artifact Exists?}
+    A[Step 1: Analyze Current Artifact State] --> C{Artifact Exists?}
     C -->|No| D[Abort: Artifact Not Found]
     C -->|Yes| E[Step 2: Plan Artifact Updates]
     E --> F{User Prompt: Is backward<br/>compatibility required?}
@@ -76,7 +75,6 @@ flowchart TD
 
 | Step | Name | Approval Required |
 |------|------|-------------------|
-| 0 | Init Process Principles | No |
 | 1 | Analyze Current Artifact State | No |
 | 2 | Plan Artifact Updates | **Yes** (outputs: update-plan.md) |
 | 3 | Apply Artifact Updates | No |
@@ -86,9 +84,6 @@ flowchart TD
 | 7 | End Process Validation | No |
 
 ## Step Details
-
-### Step 0: Init Process Principles
-Load and confirm understanding of the 7 operating principles.
 
 ### Step 1: Analyze Current Artifact State
 - Validate parameters (`artifactType`, `artifactPath`, optional `focusArea`)

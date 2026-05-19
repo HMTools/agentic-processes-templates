@@ -8,8 +8,14 @@
     "lastUpdated": "2026-01-19"
   },
   "parameters": {
-    "required": ["testName", "testClass"],
-    "optional": ["testProject", "failureDescription"],
+    "required": [
+      "testName",
+      "testClass"
+    ],
+    "optional": [
+      "testProject",
+      "failureDescription"
+    ],
     "definitions": {
       "testName": {
         "description": "Name of the failing test method",
@@ -51,12 +57,6 @@
     }
   ],
   "steps": [
-    {
-      "number": 0,
-      "name": "Init Process Principles",
-      "stepRef": "@step:common/init-process-principles",
-      "output": "Principles loaded and confirmed"
-    },
     {
       "number": 1,
       "name": "Capture test failure information",
@@ -121,9 +121,3 @@
     "dependencies": []
   }
 }
-
-
-
-
-
-

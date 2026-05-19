@@ -10,8 +10,16 @@
     "subProcessTemplate": "investigate-single-repo"
   },
   "parameters": {
-    "required": ["researchQuestion", "repositories"],
-    "optional": ["investigationScope", "filePatterns", "excludePatterns", "outputFormat"],
+    "required": [
+      "researchQuestion",
+      "repositories"
+    ],
+    "optional": [
+      "investigationScope",
+      "filePatterns",
+      "excludePatterns",
+      "outputFormat"
+    ],
     "definitions": {
       "researchQuestion": {
         "description": "The specific question or investigation goal to answer across repositories",
@@ -47,14 +55,6 @@
     }
   },
   "steps": [
-    {
-      "number": 0,
-      "name": "Init Process Principles",
-      "stepRef": "@step:common/init-process-principles",
-      "output": "Operating principles loaded and confirmed",
-      "approvalRequired": false,
-      "reused": true
-    },
     {
       "number": 1,
       "name": "Understand Investigation Context",
@@ -195,7 +195,6 @@
   },
   "references": {
     "steps": [
-      "@step:common/init-process-principles",
       "@step:planning/understand-context",
       "@step:multi-repo/parse-repository-list",
       "@step:common/spawn-sub-process",

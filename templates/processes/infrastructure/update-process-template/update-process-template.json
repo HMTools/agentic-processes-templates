@@ -8,8 +8,14 @@
     "lastUpdated": "2026-02-08"
   },
   "parameters": {
-    "required": ["templateName", "updateDescription"],
-    "optional": ["changeScope", "preserveActiveProcesses"],
+    "required": [
+      "templateName",
+      "updateDescription"
+    ],
+    "optional": [
+      "changeScope",
+      "preserveActiveProcesses"
+    ],
     "definitions": {
       "templateName": {
         "description": "Name of the template to update",
@@ -34,12 +40,6 @@
     }
   },
   "steps": [
-    {
-      "number": 0,
-      "name": "Init Process Principles",
-      "stepRef": "@step:common/init-process-principles",
-      "output": "Principles loaded and confirmed"
-    },
     {
       "number": 1,
       "name": "Analyze Current Artifact State",
@@ -95,7 +95,6 @@
   ],
   "references": {
     "steps": [
-      "@step:common/init-process-principles",
       "@step:common/analyze-current-artifact-state",
       "@step:common/plan-artifact-updates",
       "@step:common/apply-artifact-updates",
@@ -104,7 +103,10 @@
       "@step:learning/continuous-improvement",
       "@step:common/end-process-validation"
     ],
-    "relatedTemplates": ["create-process-template", "create-process-step-template"],
+    "relatedTemplates": [
+      "create-process-template",
+      "create-process-step-template"
+    ],
     "dependencies": []
   }
 }

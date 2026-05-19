@@ -8,8 +8,17 @@
     "lastUpdated": "2026-01-19"
   },
   "parameters": {
-    "required": ["conceptName", "conceptDescription", "targetFiles"],
-    "optional": ["existingState", "requestedState", "verificationCriteria", "excludePatterns"],
+    "required": [
+      "conceptName",
+      "conceptDescription",
+      "targetFiles"
+    ],
+    "optional": [
+      "existingState",
+      "requestedState",
+      "verificationCriteria",
+      "excludePatterns"
+    ],
     "definitions": {
       "conceptName": {
         "description": "Name of the concept to implement",
@@ -49,12 +58,6 @@
     }
   },
   "steps": [
-    {
-      "number": 0,
-      "name": "Init Process Principles",
-      "stepRef": "@step:common/init-process-principles",
-      "output": "Principles loaded and confirmed"
-    },
     {
       "number": 1,
       "name": "Understand concept",
@@ -116,13 +119,9 @@
       "@step:common/apply-changes",
       "@step:learning/continuous-improvement"
     ],
-    "relatedTemplates": ["review-and-verify"],
+    "relatedTemplates": [
+      "review-and-verify"
+    ],
     "dependencies": []
   }
 }
-
-
-
-
-
-

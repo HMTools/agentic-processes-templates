@@ -55,9 +55,8 @@ Use this step when:
 
 ```mermaid
 flowchart TD
-    A[Init-Step: Confirm Principles] --> B[Validate parameters]
-    B --> C[Review update requirements]
-    C --> D[Load artifact analysis from memory]
+    A[Validate parameters] --> B[Review update requirements]
+    A --> C[Load artifact analysis from memory]
     D --> E[Prompt user: Is backward<br/>compatibility required?]
     E --> F{Artifact Type?}
     
@@ -86,7 +85,6 @@ flowchart TD
 
 ### Substeps
 
-- [ ] **Substep 0**: Init-Step — Read operating principles and confirm for this step
 - [ ] **Substep 1**: Validate parameters — Confirm artifactType, artifactPath, updateDescription
 - [ ] **Substep 2**: Review update requirements — Understand requested changes and scope
 - [ ] **Substep 3**: Load artifact analysis from memory — Read baseline from prior step

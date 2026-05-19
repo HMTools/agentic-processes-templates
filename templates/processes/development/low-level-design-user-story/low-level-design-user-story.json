@@ -8,7 +8,9 @@
     "lastUpdated": "2026-01-23"
   },
   "parameters": {
-    "required": ["userStoryId"],
+    "required": [
+      "userStoryId"
+    ],
     "optional": [],
     "definitions": {
       "userStoryId": {
@@ -19,12 +21,6 @@
     }
   },
   "steps": [
-    {
-      "number": 0,
-      "name": "Init Process Principles",
-      "stepRef": "@step:common/init-process-principles",
-      "output": "Principles loaded and confirmed"
-    },
     {
       "number": 1,
       "name": "Get User Story Parameters",
@@ -114,8 +110,9 @@
       "@step:planning/create-low-level-design",
       "@step:learning/continuous-improvement"
     ],
-    "relatedTemplates": ["develop-user-story"],
+    "relatedTemplates": [
+      "develop-user-story"
+    ],
     "dependencies": []
   }
 }
-

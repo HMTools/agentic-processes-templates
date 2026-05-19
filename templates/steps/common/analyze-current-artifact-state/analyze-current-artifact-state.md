@@ -54,10 +54,9 @@ Use this step when:
 
 ```mermaid
 graph TD
-    A[Init: Confirm Principles] --> B[Validate parameters]
-    B --> C{Valid?}
-    C -->|No| D[Log error and stop]
-    C -->|Yes| E[Locate artifact files]
+    A[Validate parameters] --> B{Valid?}
+    B -->|No| D[Log error and stop]
+    B -->|Yes| E[Locate artifact files]
     E --> F{Files exist?}
     F -->|No| G[Log error and stop]
     F -->|Yes| H{Artifact Type?}
@@ -75,7 +74,6 @@ graph TD
 
 ### Substeps
 
-- [ ] **Substep 0**: Init-Step — Read operating principles and confirm for this step
 - [ ] **Substep 1**: Validate parameters — Confirm artifactType, artifactPath, and interpret focusArea if provided
 - [ ] **Substep 2**: Locate artifact files — Construct expected file paths based on artifact type and verify they exist
 - [ ] **Substep 3**: Load primary files — Read the main artifact files identified in Substep 2

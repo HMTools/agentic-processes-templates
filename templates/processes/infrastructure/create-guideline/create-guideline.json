@@ -8,8 +8,15 @@
     "lastUpdated": "2026-01-24"
   },
   "parameters": {
-    "required": ["guidelineName", "guidelineCategory", "guidelinePurpose"],
-    "optional": ["relatedSteps", "triggeringContext"],
+    "required": [
+      "guidelineName",
+      "guidelineCategory",
+      "guidelinePurpose"
+    ],
+    "optional": [
+      "relatedSteps",
+      "triggeringContext"
+    ],
     "definitions": {
       "guidelineName": {
         "description": "Name of the action (kebab-case, without 'how-to-' prefix)",
@@ -20,7 +27,14 @@
         "description": "Category folder for the guideline. Use existing category if it fits, or create new if needed.",
         "type": "string",
         "example": "api-design",
-        "existingCategories": ["api-design", "data-access", "docs", "implementation", "planning", "testing"]
+        "existingCategories": [
+          "api-design",
+          "data-access",
+          "docs",
+          "implementation",
+          "planning",
+          "testing"
+        ]
       },
       "guidelinePurpose": {
         "description": "The 'How to' question this guideline answers",
@@ -30,7 +44,9 @@
       "relatedSteps": {
         "description": "Steps that will reference this guideline",
         "type": "array",
-        "example": ["api/implement-controller-layer"]
+        "example": [
+          "api/implement-controller-layer"
+        ]
       },
       "triggeringContext": {
         "description": "What triggered the need for this guideline",
@@ -40,12 +56,6 @@
     }
   },
   "steps": [
-    {
-      "number": 0,
-      "name": "Init Process Principles",
-      "stepRef": "@step:common/init-process-principles",
-      "output": "Principles loaded and confirmed"
-    },
     {
       "number": 1,
       "name": "Understand context",
@@ -89,7 +99,9 @@
       "@step:learning/continuous-improvement",
       "@step:common/end-process-validation"
     ],
-    "relatedTemplates": ["create-process-step-template"],
+    "relatedTemplates": [
+      "create-process-step-template"
+    ],
     "dependencies": []
   },
   "guidelineFormat": {
@@ -98,8 +110,12 @@
     "structure": {
       "title": "# How to {Action}",
       "content": "Practical steps and examples to answer the 'How to' question",
-      "sections": ["numbered steps", "examples", "code snippets (if applicable)", "tips/notes (optional)"]
+      "sections": [
+        "numbered steps",
+        "examples",
+        "code snippets (if applicable)",
+        "tips/notes (optional)"
+      ]
     }
   }
 }
-

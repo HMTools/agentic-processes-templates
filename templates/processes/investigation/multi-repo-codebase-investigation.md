@@ -33,8 +33,7 @@ Use this template when you need to:
 
 ```mermaid
 graph TD
-    A[Start] --> B[Init Process Principles]
-    B --> C[Understand Investigation Context]
+    A[Start] --> C[Understand Investigation Context]
     C --> D{Context Approved?}
     D -->|No| C
     D -->|Yes| E[Parse Repository List<br/>Lightweight parsing only]
@@ -56,9 +55,6 @@ graph TD
 ```
 
 ## Steps
-
-- [ ] Step 0: Init Process Principles (@step:common/init-process-principles)
-  - Output: Operating principles loaded and confirmed
 
 - [ ] Step 1: Understand Investigation Context (@step:planning/understand-context)
   - Output: Context documentation with research question, repositories, and scope

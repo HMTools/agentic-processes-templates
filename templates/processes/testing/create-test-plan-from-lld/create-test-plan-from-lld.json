@@ -8,8 +8,13 @@
     "lastUpdated": "2026-02-11"
   },
   "parameters": {
-    "required": ["userStoryId", "lldPath"],
-    "optional": ["testPlanId"],
+    "required": [
+      "userStoryId",
+      "lldPath"
+    ],
+    "optional": [
+      "testPlanId"
+    ],
     "definitions": {
       "userStoryId": {
         "description": "ID/reference of the user story (e.g., ADO work item ID, JIRA ticket)",
@@ -47,14 +52,6 @@
     }
   ],
   "steps": [
-    {
-      "number": 0,
-      "name": "Init Process Principles",
-      "stepRef": "@step:common/init-process-principles",
-      "description": "Load and confirm the 8 operating principles for this process execution",
-      "output": "Principles loaded and confirmed",
-      "approvalRequired": false
-    },
     {
       "number": 1,
       "name": "Understand LLD Context",
@@ -133,7 +130,6 @@
   },
   "references": {
     "steps": [
-      "@step:common/init-process-principles",
       "@step:planning/understand-context",
       "@step:testing/gather-test-requirements",
       "@step:testing/create-test-plan",

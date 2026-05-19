@@ -8,7 +8,11 @@
     "lastUpdated": "2026-01-19"
   },
   "parameters": {
-    "required": ["userStoryTitle", "userStoryDescription", "acceptanceCriteria"],
+    "required": [
+      "userStoryTitle",
+      "userStoryDescription",
+      "acceptanceCriteria"
+    ],
     "optional": [],
     "definitions": {
       "userStoryTitle": {
@@ -31,7 +35,11 @@
   "phases": [
     {
       "name": "Planning",
-      "steps": [1, 2, 3]
+      "steps": [
+        1,
+        2,
+        3
+      ]
     },
     {
       "name": "Implementation",
@@ -40,24 +48,25 @@
     },
     {
       "name": "Testing",
-      "steps": ["N+1", "N+2"]
+      "steps": [
+        "N+1",
+        "N+2"
+      ]
     },
     {
       "name": "Documentation",
-      "steps": ["N+3"]
+      "steps": [
+        "N+3"
+      ]
     },
     {
       "name": "Learning",
-      "steps": ["N+4"]
+      "steps": [
+        "N+4"
+      ]
     }
   ],
   "steps": [
-    {
-      "number": 0,
-      "name": "Init Process Principles",
-      "stepRef": "@step:common/init-process-principles",
-      "output": "Principles loaded and confirmed"
-    },
     {
       "number": 1,
       "name": "Create high-level plan",
@@ -110,7 +119,3 @@
     "dependencies": []
   }
 }
-
-
-
-

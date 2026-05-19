@@ -15,12 +15,6 @@
   },
   "steps": [
     {
-      "number": 0,
-      "name": "Init Process Principles",
-      "stepRef": "@step:common/init-process-principles",
-      "output": "Principles loaded and confirmed"
-    },
-    {
       "number": 1,
       "name": "Identify missing guidelines",
       "stepRef": "@step:investigation/identify-files",
@@ -95,22 +89,41 @@
       "@step:common/spawn-sub-process",
       "@step:learning/continuous-improvement"
     ],
-    "relatedTemplates": ["create-guideline"],
+    "relatedTemplates": [
+      "create-guideline"
+    ],
     "dependencies": []
   },
   "memoryFileUsage": {
     "step1": {
-      "informationProduced": ["Total missing guidelines count", "Missing guidelines by category", "Path to identified-files.json"],
-      "decisionsMade": ["Search approach used", "Categories scanned"]
+      "informationProduced": [
+        "Total missing guidelines count",
+        "Missing guidelines by category",
+        "Path to identified-files.json"
+      ],
+      "decisionsMade": [
+        "Search approach used",
+        "Categories scanned"
+      ]
     },
     "step2": {
-      "informationProduced": ["Guidelines created count", "Sub-processes spawned"],
-      "decisionsMade": ["Order of guideline creation", "Any skipped guidelines"]
+      "informationProduced": [
+        "Guidelines created count",
+        "Sub-processes spawned"
+      ],
+      "decisionsMade": [
+        "Order of guideline creation",
+        "Any skipped guidelines"
+      ]
     },
     "step3": {
-      "informationProduced": ["Improvements identified", "Improvements implemented"],
-      "decisionsMade": ["Which improvements to apply"]
+      "informationProduced": [
+        "Improvements identified",
+        "Improvements implemented"
+      ],
+      "decisionsMade": [
+        "Which improvements to apply"
+      ]
     }
   }
 }
-

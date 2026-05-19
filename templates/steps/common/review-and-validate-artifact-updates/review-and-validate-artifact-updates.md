@@ -46,9 +46,8 @@ Use this step when:
 
 ```mermaid
 graph TD
-    A[Init-Step: Confirm Principles] --> B[Load Context from Memory]
-    B --> C[Read Update Plan]
-    C --> D[Read Current Artifact Files]
+    A[Load Context from Memory] --> B[Read Update Plan]
+    A --> C[Read Current Artifact Files]
     D --> E[Compare Changes Against Plan]
     E --> F[Assess Implementation Quality]
     F --> G[Validate Artifact Structure - Type-Specific]
@@ -62,7 +61,6 @@ graph TD
 
 ### Substeps
 
-- [ ] **Substep 0**: Init-Step — Read operating principles and confirm for this step
 - [ ] **Substep 1**: Load context from memory — Get `updatePlanRef`, `changesApplied`, `filesModified`, `artifactType`, `artifactPath` from prior steps
 - [ ] **Substep 2**: Read update plan — Parse `update-plan.md` into list of expected changes with before/after states
 - [ ] **Substep 3**: Read current artifact files — Resolve file paths by artifact type, read current state of modified files

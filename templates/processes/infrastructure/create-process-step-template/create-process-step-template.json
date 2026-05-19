@@ -8,8 +8,15 @@
     "lastUpdated": "2026-01-19"
   },
   "parameters": {
-    "required": ["stepName", "stepCategory", "stepPurpose", "useCases"],
-    "optional": ["exampleContext"],
+    "required": [
+      "stepName",
+      "stepCategory",
+      "stepPurpose",
+      "useCases"
+    ],
+    "optional": [
+      "exampleContext"
+    ],
     "definitions": {
       "stepName": {
         "description": "Name of the step file (kebab-case)",
@@ -20,7 +27,19 @@
         "description": "Category folder for the step",
         "type": "string",
         "example": "planning",
-        "enum": ["planning", "investigation", "common", "api", "service", "data", "testing", "template", "documentation", "external-services", "learning"]
+        "enum": [
+          "planning",
+          "investigation",
+          "common",
+          "api",
+          "service",
+          "data",
+          "testing",
+          "template",
+          "documentation",
+          "external-services",
+          "learning"
+        ]
       },
       "stepPurpose": {
         "description": "What the step accomplishes",
@@ -35,17 +54,14 @@
       "exampleContext": {
         "description": "Example context values for testing the step",
         "type": "object",
-        "example": {"inputPath": "data/input.json", "schemaPath": "schemas/input.schema.json"}
+        "example": {
+          "inputPath": "data/input.json",
+          "schemaPath": "schemas/input.schema.json"
+        }
       }
     }
   },
   "steps": [
-    {
-      "number": 0,
-      "name": "Init Process Principles",
-      "stepRef": "@step:common/init-process-principles",
-      "output": "Principles loaded and confirmed"
-    },
     {
       "number": 1,
       "name": "Plan and design step",
@@ -88,13 +104,9 @@
       "@step:learning/continuous-improvement",
       "@step:common/end-process-validation"
     ],
-    "relatedTemplates": ["create-process-template"],
+    "relatedTemplates": [
+      "create-process-template"
+    ],
     "dependencies": []
   }
 }
-
-
-
-
-
-
