@@ -28,16 +28,16 @@
     "specificActions": [
       "Follow the substeps below in sequence",
       "Workflow: review requirements → check existing → purpose → use cases → check reusable steps → plan steps → identify parameters → design flow → create diagram",
-      "Before planning steps: Check existing generic steps in ~/.claude/agentic-processes/templates/steps/planning/ and ~/.claude/agentic-processes/templates/steps/common/",
+      "Before planning steps: Check existing generic steps in ~/.claude/agentic-processes/steps/planning/ and ~/.claude/agentic-processes/steps/common/",
       "When planning steps: Prefer reusable step categories",
       "When planning steps: Ensure each step represents actual work, not flow control",
       "Use camelCase for parameter names: featureName, targetBranch"
     ],
     "files": {
       "read": [
-        "~/.claude/agentic-processes/templates/processes/README.md",
-        "~/.claude/agentic-processes/templates/steps/planning/",
-        "~/.claude/agentic-processes/templates/steps/common/",
+        "~/.claude/agentic-processes/templates/README.md",
+        "~/.claude/agentic-processes/steps/planning/",
+        "~/.claude/agentic-processes/steps/common/",
         "Existing templates for patterns"
       ],
       "create": [],
@@ -59,8 +59,45 @@
       "Ensure flow diagram matches step sequence",
       "Consider guideline-based steps for team flexibility (see guidelineBasedStepPattern)",
       "Embed Q&A within steps, not as standalone steps - use qa-session component (see qaAsSubstepPattern)",
-      "Design feedback loops for iterative processes - allow returning to gather more info (see feedbackLoopsPattern)"
+      "Design feedback loops for iterative processes - allow returning to gather more info (see feedbackLoopsPattern)",
+      "For templates coordinating multiple phases/skills, use orchestrator pattern (see orchestratorPattern)",
+      "Prefer native process templates over skill wrappers for sub-processes — native templates get full process tracking, memory, logging, and continuous improvement (see nativeOverSkillWrappersPattern)",
+      "Orchestrator templates should be pure sequencing — no direct work steps (like context gathering) when sub-processes handle their own context"
     ],
+    "orchestratorPattern": {
+      "description": "Use an orchestrator template when coordinating multiple independent phases, each with its own workflow, approval gates, and context gathering",
+      "whenToUse": [
+        "Template coordinates 3+ phases that each have their own multi-step workflow",
+        "Phases can evolve independently and be reused standalone",
+        "Different phases may be added or removed over time",
+        "Each phase needs its own approval gates and process tracking"
+      ],
+      "howToImplement": [
+        "Orchestrator template uses @step:common/spawn-sub-process for each phase",
+        "Each phase is a separate sub-process template with its own steps",
+        "Use syncPoint: immediate for sequential phase execution",
+        "Orchestrator only has: spawn steps + continuous-improvement + end-process-validation",
+        "Do NOT add context-gathering steps to the orchestrator — sub-processes gather their own context",
+        "Keep orchestrator parameters minimal — only what's needed to identify the work (e.g., workItemId)"
+      ],
+      "antiPattern": "Adding direct work steps (context gathering, analysis) to the orchestrator when sub-processes already handle those concerns"
+    },
+    "nativeOverSkillWrappersPattern": {
+      "description": "When a sub-process needs to replicate what a skill does, convert the skill logic to native process steps rather than invoking the skill",
+      "rationale": "Skill invocations are opaque — the process framework cannot track individual decisions, log substep progress, or apply continuous improvement. Native templates get full process tracking at every substep.",
+      "whenToUse": [
+        "Sub-process needs to replicate a skill's workflow",
+        "Process tracking and approval gates are needed at the substep level",
+        "The workflow needs to evolve independently through continuous improvement"
+      ],
+      "howToImplement": [
+        "Read the skill definition to understand its full workflow",
+        "Break the skill's workflow into process steps with clear inputs/outputs",
+        "Embed skill-specific rules and guidelines into step guidance",
+        "Add approval gates where the skill had user confirmation points"
+      ],
+      "antiPattern": "Creating a single step that just invokes /skill-name — this bypasses process tracking"
+    },
     "guidelineBasedStepPattern": {
       "description": "Use guideline-based steps when teams need flexibility in how they perform a step",
       "whenToUse": [
@@ -86,7 +123,7 @@
       "description": "Embed Q&A within steps rather than creating standalone Q&A steps",
       "rationale": "Q&A naturally occurs during multiple steps - a standalone Q&A step is artificial and creates unnecessary process overhead",
       "pattern": "substep",
-      "sharedComponent": "~/.claude/agentic-processes/templates/steps/_components/qa-session.md",
+      "sharedSkill": "/process-QnA-session skill for structured Q&A sessions",
       "whenToUse": [
         "Information gaps are discovered during step execution",
         "User clarification is needed before proceeding",
@@ -95,7 +132,7 @@
       "howToImplement": [
         "Do NOT create a standalone Q&A step in the template",
         "Instead, add Q&A as a substep within relevant steps",
-        "Reference the shared component: ~/.claude/agentic-processes/templates/steps/_components/qa-session.md",
+        "Use the /process-QnA-session skill for structured Q&A",
         "Steps that commonly need Q&A: context understanding, information gathering, design creation"
       ],
       "stepJsonExample": {
@@ -108,8 +145,7 @@
           {
             "number": 2,
             "name": "Q&A Session (if needed)",
-            "description": "Use qa-session component to gather missing information",
-            "component": "~/.claude/agentic-processes/templates/steps/_components/qa-session.md",
+            "description": "Use /process-QnA-session skill to gather missing information",
             "conditional": true
           }
         ]
@@ -154,7 +190,7 @@
   },
   "substeps": [
     {
-      "number": 1,
+      "number": 0,
       "name": "Review requirements",
       "description": "Understand what workflow needs to be templated",
       "actions": [
@@ -164,7 +200,7 @@
       ]
     },
     {
-      "number": 2,
+      "number": 1,
       "name": "Check existing templates",
       "description": "Verify no similar template already exists",
       "actions": [
@@ -174,7 +210,7 @@
       ]
     },
     {
-      "number": 3,
+      "number": 2,
       "name": "Write purpose statement",
       "description": "Define clear purpose for the template",
       "actions": [
@@ -184,7 +220,7 @@
       ]
     },
     {
-      "number": 4,
+      "number": 3,
       "name": "Define use cases",
       "description": "Document when to use this template",
       "actions": [
@@ -194,18 +230,18 @@
       ]
     },
     {
-      "number": 5,
+      "number": 4,
       "name": "Check existing reusable steps",
       "description": "Identify steps that can be reused",
       "actions": [
-        "Review ~/.claude/agentic-processes/templates/steps/planning/ for planning steps",
-        "Review ~/.claude/agentic-processes/templates/steps/common/ for utility steps",
-        "Review ~/.claude/agentic-processes/templates/steps/investigation/ for analysis steps",
+        "Review ~/.claude/agentic-processes/steps/planning/ for planning steps",
+        "Review ~/.claude/agentic-processes/steps/common/ for utility steps",
+        "Review ~/.claude/agentic-processes/steps/investigation/ for analysis steps",
         "List existing steps that fit the workflow"
       ]
     },
     {
-      "number": 6,
+      "number": 5,
       "name": "Plan step breakdown",
       "description": "Design the sequence of steps",
       "actions": [
@@ -219,7 +255,7 @@
       ]
     },
     {
-      "number": 7,
+      "number": 6,
       "name": "Identify parameters",
       "description": "Define required and optional parameters",
       "actions": [
@@ -230,7 +266,7 @@
       ]
     },
     {
-      "number": 8,
+      "number": 7,
       "name": "Design process flow",
       "description": "Map out the logical flow of the template",
       "actions": [
@@ -241,7 +277,7 @@
       ]
     },
     {
-      "number": 9,
+      "number": 8,
       "name": "Create mermaid diagram",
       "description": "Create visual flowchart",
       "actions": [
@@ -252,7 +288,7 @@
       ]
     },
     {
-      "number": 10,
+      "number": 9,
       "name": "End-Step: Compliance Check",
       "description": "Verify principles were followed in this step",
       "actions": [

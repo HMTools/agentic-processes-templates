@@ -1,0 +1,87 @@
+{
+  "type": "template",
+  "name": "plan-work-item",
+  "category": "sdlc",
+  "metadata": {
+    "title": "Plan Work Item Implementation",
+    "purposeAndUsage": "Create a detailed implementation plan for an Azure DevOps work item by fetching its details and analyzing the codebase. Use as a standalone planning process or as a sub-process within the SDLC orchestrator.",
+    "lastUpdated": "2026-05-20"
+  },
+  "parameters": {
+    "required": [
+      "workItemId"
+    ],
+    "optional": [],
+    "definitions": {
+      "workItemId": {
+        "description": "Azure DevOps work item ID",
+        "type": "string",
+        "example": "123456"
+      }
+    }
+  },
+  "steps": [
+    {
+      "number": 0,
+      "name": "Fetch Work Item Details",
+      "stepRef": "@step:sdlc/fetch-work-item",
+      "output": "Work item details: title, description, acceptance criteria, detailed solution",
+      "guidance": {
+        "adoTool": "wit_get_work_item",
+        "adoArgs": { "project": "Payoneer", "id": "{{workItemId}}", "expand": "all" },
+        "extract": ["Title", "Description", "Acceptance Criteria", "Custom.DetailedSolution"]
+      }
+    },
+    {
+      "number": 1,
+      "name": "Analyze Codebase",
+      "stepRef": "@step:sdlc/analyze-codebase",
+      "output": "Affected files, patterns, dependencies, integration points, infra/config changes",
+      "guidance": {
+        "approach": "Use parallel explore subagents to investigate different areas simultaneously",
+        "focus": ["Files to create or modify", "Existing patterns to follow", "Dependencies and integration points", "Infrastructure/config changes needed"]
+      }
+    },
+    {
+      "number": 2,
+      "name": "Create Implementation Plan",
+      "stepRef": "@step:sdlc/create-implementation-plan",
+      "output": "Implementation plan document",
+      "approvalRequired": true,
+      "guidance": {
+        "planSections": ["Summary and acceptance criteria", "Prerequisites and dependencies", "Affected files table (path, change type, description)", "Step-by-step implementation tasks", "Architecture diagram (mermaid) if helpful", "Testing strategy", "Verification checklist"],
+        "rules": [
+          "No code snippets — describe what to implement, not the implementation itself",
+          "Use business-domain names, not technical/infrastructure names",
+          "Order: dependencies/config → module wiring → feature code → infra/DevOps → tests"
+        ]
+      }
+    },
+    {
+      "number": 3,
+      "name": "Continuous Improvement",
+      "stepRef": "@step:learning/continuous-improvement",
+      "output": "Improvements implemented",
+      "approvalRequired": true
+    },
+    {
+      "number": 4,
+      "name": "End Process Validation",
+      "stepRef": "@step:common/end-process-validation",
+      "output": "Compliance report"
+    }
+  ],
+  "references": {
+    "steps": [
+      "@step:sdlc/fetch-work-item",
+      "@step:sdlc/analyze-codebase",
+      "@step:sdlc/create-implementation-plan",
+      "@step:learning/continuous-improvement",
+      "@step:common/end-process-validation"
+    ],
+    "relatedTemplates": [
+      "sdlc/sdlc"
+    ],
+    "dependencies": []
+  }
+}

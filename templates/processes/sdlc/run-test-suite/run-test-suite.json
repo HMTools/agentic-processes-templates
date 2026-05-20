@@ -1,0 +1,128 @@
+{
+  "type": "template",
+  "name": "run-test-suite",
+  "category": "sdlc",
+  "metadata": {
+    "title": "Run Test Suite",
+    "purposeAndUsage": "Execute test cases from an ADO test suite with assertions on HTTP responses, MongoDB state, SQS queues, S3 objects, and Coralogix logs. Handles AWS SSO authentication, captures evidence for each step, and generates a detailed test results report. Use as a standalone test execution process or as a sub-process within the SDLC orchestrator.",
+    "lastUpdated": "2026-05-20"
+  },
+  "parameters": {
+    "required": [
+      "workItemId"
+    ],
+    "optional": [
+      "testSuiteId",
+      "testPlanId",
+      "environment"
+    ],
+    "definitions": {
+      "workItemId": {
+        "description": "Azure DevOps work item ID (used to resolve test suite if testSuiteId not provided)",
+        "type": "string",
+        "example": "123456"
+      },
+      "testSuiteId": {
+        "description": "ADO test suite ID to execute (resolved from parent memory if not provided)",
+        "type": "string",
+        "example": "1218483"
+      },
+      "testPlanId": {
+        "description": "ADO test plan ID",
+        "type": "string",
+        "example": "1218465"
+      },
+      "environment": {
+        "description": "Target environment for test execution",
+        "type": "string",
+        "example": "dev"
+      }
+    }
+  },
+  "steps": [
+    {
+      "number": 0,
+      "name": "Setup & Load Config",
+      "stepRef": "@step:sdlc/setup-test-environment",
+      "output": "Output directory created, config loaded, AWS session verified, environment confirmed",
+      "guidance": {
+        "actions": [
+          "Create output directory: skills-outputs/test-runner/{suiteId}/{timestamp}/",
+          "Load config from .cursor/skills/run-test-suite/config.json",
+          "Load app config-map for AWS service endpoints",
+          "Verify AWS SSO session (aws sts get-caller-identity)",
+          "Verify AWS account ID matches config",
+          "Confirm environment details with user"
+        ],
+        "awsRules": [
+          "All AWS CLI commands must include --profile and --region",
+          "Account mismatch = abort with clear error"
+        ]
+      }
+    },
+    {
+      "number": 1,
+      "name": "Fetch & Parse Test Cases",
+      "stepRef": "@step:sdlc/fetch-test-cases",
+      "output": "Parsed test cases with step details (action, expected result, type)",
+      "guidance": {
+        "adoTool": "testplan_list_test_cases",
+        "adoArgs": { "project": "Payoneer", "planid": "{{testPlanId}}", "suiteid": "{{testSuiteId}}" },
+        "parse": "Extract Microsoft.VSTS.TCM.Steps XML. For each step: id, type (ActionStep/ValidateStep), action text, expected result."
+      }
+    },
+    {
+      "number": 2,
+      "name": "Execute Test Cases",
+      "stepRef": "@step:sdlc/execute-test-cases",
+      "output": "Test results with evidence JSON files for each step",
+      "guidance": {
+        "assertionTypes": ["setup (external API calls)", "http (HTTP response assertions)", "mongodb (database state verification)", "sqs (queue send/receive/depth)", "s3 (object existence/content)", "coralogix (log query/error absence)"],
+        "evidenceRule": "Save evidence JSON immediately after each step executes. NEVER generate evidence from memory or inference.",
+        "asyncRule": "After SQS messages, wait 20-30s for consumer processing before verification.",
+        "perTestCase": "Maintain test context dictionary for passing data between steps. Clear between test cases."
+      }
+    },
+    {
+      "number": 3,
+      "name": "Generate Results Report",
+      "stepRef": "@step:sdlc/generate-test-results",
+      "output": "test-results.html + test-results.md with pass/fail summary, step details, evidence links",
+      "approvalRequired": true,
+      "guidance": {
+        "htmlReport": "Dark theme, expandable test case cards, color-coded status badges, evidence links, precondition context panel",
+        "mdReport": "Quick reference with pass/fail table, failed tests summary",
+        "evidenceIntegrity": "MUST source evidence data from saved JSON files, NEVER from memory. If evidence file missing, mark as missing.",
+        "openInBrowser": true
+      }
+    },
+    {
+      "number": 4,
+      "name": "Continuous Improvement",
+      "stepRef": "@step:learning/continuous-improvement",
+      "output": "Improvements implemented",
+      "approvalRequired": true
+    },
+    {
+      "number": 5,
+      "name": "End Process Validation",
+      "stepRef": "@step:common/end-process-validation",
+      "output": "Compliance report"
+    }
+  ],
+  "references": {
+    "steps": [
+      "@step:sdlc/setup-test-environment",
+      "@step:sdlc/fetch-test-cases",
+      "@step:sdlc/execute-test-cases",
+      "@step:sdlc/generate-test-results",
+      "@step:learning/continuous-improvement",
+      "@step:common/end-process-validation"
+    ],
+    "relatedTemplates": [
+      "sdlc/sdlc",
+      "sdlc/create-test-plan"
+    ],
+    "dependencies": []
+  }
+}

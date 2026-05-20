@@ -1,0 +1,41 @@
+{
+  "type": "step",
+  "name": "fetch-test-cases",
+  "category": "sdlc",
+  "metadata": {
+    "title": "Fetch & Parse Test Cases",
+    "purposeAndUsage": "Fetch test cases from an ADO test suite and parse the XML step format into structured data for execution.",
+    "lastUpdated": "2026-05-20"
+  },
+  "output": {
+    "description": "Parsed test cases with step details: action, expected result, type",
+    "artifacts": [],
+    "memoryUpdates": ["testCases", "totalTestCases"]
+  },
+  "guidance": {
+    "prerequisites": ["Test suite ID and plan ID available", "ADO MCP server accessible"],
+    "mandatoryComponents": ["mandatory-logging.md"],
+    "specificActions": [
+      "Fetch test cases via MCP: testplan_list_test_cases",
+      "Extract Microsoft.VSTS.TCM.Steps XML from response",
+      "Parse XML step format into structured data"
+    ],
+    "files": { "read": [], "create": [], "update": [] },
+    "tools": ["MCP - testplan_list_test_cases"],
+    "bestPractices": [
+      "The list response already includes step XML — no separate wit_get_work_item call needed",
+      "Parse both ActionStep and ValidateStep types",
+      "First parameterizedString = action, second = expected result"
+    ]
+  },
+  "substeps": [
+    { "number": 0, "name": "Fetch test cases from ADO", "description": "Call MCP to get test cases", "actions": ["Call testplan_list_test_cases(project='Payoneer', planid=testPlanId, suiteid=suiteId)", "Verify response contains test cases"] },
+    { "number": 1, "name": "Parse XML steps", "description": "Extract step data from XML format", "actions": ["For each test case, extract Microsoft.VSTS.TCM.Steps XML", "Parse each <step> element: id, type (ActionStep/ValidateStep)", "Extract first parameterizedString (action text)", "Extract second parameterizedString (expected result for ValidateStep)"] },
+    { "number": 2, "name": "Store parsed test cases", "description": "Save structured test case data", "actions": ["Store parsed test cases in memory", "Record total test case count"] },
+    { "number": 3, "name": "End-Step: Compliance Check", "description": "Verify principles were followed", "actions": ["Output: '✓ Step completed in compliance with operating principles'"] }
+  ],
+  "flow": { "description": "Fetch from ADO → parse XML steps → store in memory" },
+  "memoryFileUsage": { "readFrom": "Suite and plan IDs from config", "writeTo": "Parsed test cases", "fields": ["testCases", "totalTestCases"] },
+  "dependencies": { "requiredComponents": ["mandatory-logging.md"], "requiredFiles": [], "requiredTools": ["MCP"] },
+  "references": { "relatedSteps": ["setup-test-environment", "execute-test-cases"], "usedInTemplates": ["run-test-suite"] }
+}

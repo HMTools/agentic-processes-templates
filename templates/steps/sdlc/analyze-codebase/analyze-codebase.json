@@ -1,0 +1,199 @@
+{
+  "type": "step",
+  "name": "analyze-codebase",
+  "category": "sdlc",
+  "metadata": {
+    "title": "Analyze Codebase",
+    "purposeAndUsage": "Explore affected files and components in the codebase using parallel exploration to identify files to create or modify, existing patterns, dependencies, integration points, and infrastructure or config changes needed.",
+    "lastUpdated": "2026-05-20"
+  },
+  "output": {
+    "description": "Codebase analysis results organized by area: controllers, services, models, config, infra",
+    "artifacts": [],
+    "memoryUpdates": [
+      "codebaseAnalysis.filesToCreate",
+      "codebaseAnalysis.filesToModify",
+      "codebaseAnalysis.existingPatterns",
+      "codebaseAnalysis.dependencies",
+      "codebaseAnalysis.integrationPoints",
+      "codebaseAnalysis.infraChanges",
+      "codebaseAnalysis.configChanges",
+      "codebaseAnalysis.groupedFindings"
+    ]
+  },
+  "guidance": {
+    "prerequisites": [
+      "Work item details available in memory from fetch-work-item step",
+      "Access to the target codebase"
+    ],
+    "mandatoryComponents": [
+      "mandatory-logging.md"
+    ],
+    "specificActions": [
+      "Follow the substeps below in sequence",
+      "Workflow: read context from memory → launch parallel explore subagents → group findings by area → store in memory → compliance check",
+      "Use parallel explore subagents to investigate different areas simultaneously for efficiency",
+      "Each subagent focuses on one area: files to create/modify, existing patterns, dependencies/integration points, infrastructure/config changes",
+      "Group all findings by area: controllers, services, models, config, infra"
+    ],
+    "files": {
+      "read": [
+        "memory.json (work item details from fetch-work-item step)",
+        "Source code files identified during exploration",
+        "Configuration files (package.json, *.csproj, tsconfig.json, etc.)",
+        "Infrastructure files (Terraform, CloudFormation, Docker, etc.)"
+      ],
+      "create": [],
+      "update": []
+    },
+    "tools": [
+      "Glob - Find files by name patterns across the codebase",
+      "Grep - Search for code patterns, references, and usages",
+      "Read - Read specific source code, config, and infra files",
+      "Agent - Launch parallel explore subagents for simultaneous investigation"
+    ],
+    "bestPractices": [
+      "Start broad and narrow down — search for keywords from the work item title and acceptance criteria first",
+      "Use parallel exploration to investigate multiple areas simultaneously instead of sequentially",
+      "Look for similar existing implementations to identify patterns the new code should follow",
+      "Check both the application code and infrastructure/config layers",
+      "Map upstream (what calls) and downstream (what is called) for affected components",
+      "Note naming conventions, folder structures, and module registration patterns",
+      "Keep findings structured and concise — reference file paths rather than copying large code blocks"
+    ]
+  },
+  "substeps": [
+    {
+      "number": 0,
+      "name": "Read implementation context from memory",
+      "description": "Load work item details from memory to guide codebase exploration",
+      "actions": [
+        "Read memory.json to get work item details from fetch-work-item step",
+        "Extract title, description, acceptance criteria, and detailed solution",
+        "Identify key terms, feature names, and domain concepts to search for",
+        "Formulate exploration strategy based on what the work item requires"
+      ]
+    },
+    {
+      "number": 1,
+      "name": "Launch parallel explore subagents",
+      "description": "Use parallel subagents to investigate different areas of the codebase simultaneously",
+      "actions": [
+        "Subagent 1 — Files to create or modify: Search for existing files related to the feature domain. Identify files that need modification and gaps where new files are needed. Use Glob for file discovery and Grep for content matching.",
+        "Subagent 2 — Existing patterns to follow: Find similar implementations in the codebase. Note naming conventions, folder structures, module registration, dependency injection patterns. Identify the 'template' that new code should follow.",
+        "Subagent 3 — Dependencies and integration points: Map upstream callers and downstream callees for affected components. Identify external service integrations, event handlers, message consumers. Check for shared libraries or cross-cutting concerns.",
+        "Subagent 4 — Infrastructure and config changes: Check for infrastructure-as-code files (Terraform, CloudFormation, Docker). Review config files, environment variables, feature flags. Identify deployment or pipeline changes needed."
+      ]
+    },
+    {
+      "number": 2,
+      "name": "Group findings by area",
+      "description": "Organize all exploration results into structured categories",
+      "actions": [
+        "Group findings into: controllers (API layer), services (business logic layer), models (data/domain models), config (configuration and environment), infra (infrastructure, deployment, pipelines)",
+        "For each file identified, note: file path, change type (create/modify/extend), brief description of what needs to change",
+        "Consolidate dependency and integration point findings",
+        "Highlight patterns that new code must follow"
+      ]
+    },
+    {
+      "number": 3,
+      "name": "Store analysis results in memory",
+      "description": "Write structured codebase analysis to memory.json",
+      "actions": [
+        "Write codebaseAnalysis object to current step's informationProduced section",
+        "Include: filesToCreate, filesToModify, existingPatterns, dependencies, integrationPoints, infraChanges, configChanges",
+        "Include groupedFindings organized by area (controllers, services, models, config, infra)",
+        "Document any assumptions or areas that need clarification"
+      ]
+    },
+    {
+      "number": 4,
+      "name": "End-Step: Compliance Check",
+      "description": "Verify principles were followed in this step",
+      "actions": [
+        "Verify: Was log.json updated for any user interactions?",
+        "Verify: Were mandatory actions confirmed with output?",
+        "Verify: Findings are grouped by area and include file paths with change types",
+        "Output: 'Step completed in compliance with operating principles'"
+      ]
+    }
+  ],
+  "flow": {
+    "description": "Linear flow: Read work item context from memory -> Launch parallel explore subagents (4 concurrent investigations) -> Group all findings by area -> Store structured analysis in memory -> Compliance check."
+  },
+  "memoryFileUsage": {
+    "readFrom": "Previous step (workItem from fetch-work-item)",
+    "writeTo": "Step results and decisions",
+    "fields": [
+      "Information Produced: codebaseAnalysis object with filesToCreate, filesToModify, existingPatterns, dependencies, integrationPoints, infraChanges, configChanges, groupedFindings",
+      "Decisions Made: Exploration strategy, area grouping classifications",
+      "Notes: Assumptions, areas needing clarification, patterns identified"
+    ]
+  },
+  "outputStructure": {
+    "filesToCreate": {
+      "description": "New files that need to be created",
+      "structure": ["Array of { path, description, patternSource }"]
+    },
+    "filesToModify": {
+      "description": "Existing files that need changes",
+      "structure": ["Array of { path, changeType, description }"]
+    },
+    "existingPatterns": {
+      "description": "Patterns found in the codebase that new code should follow",
+      "structure": ["Array of { pattern, exampleFile, description }"]
+    },
+    "dependencies": {
+      "description": "Upstream and downstream dependencies",
+      "structure": {
+        "upstream": ["Components/services that call affected code"],
+        "downstream": ["Components/services called by affected code"]
+      }
+    },
+    "integrationPoints": {
+      "description": "External services, events, and cross-cutting concerns",
+      "structure": ["Array of { type, name, description }"]
+    },
+    "infraChanges": {
+      "description": "Infrastructure and deployment changes needed",
+      "structure": ["Array of { path, changeType, description }"]
+    },
+    "configChanges": {
+      "description": "Configuration and environment changes needed",
+      "structure": ["Array of { path, changeType, description }"]
+    },
+    "groupedFindings": {
+      "description": "All findings grouped by architectural area",
+      "structure": {
+        "controllers": ["API layer findings"],
+        "services": ["Business logic layer findings"],
+        "models": ["Data/domain model findings"],
+        "config": ["Configuration findings"],
+        "infra": ["Infrastructure findings"]
+      }
+    }
+  },
+  "dependencies": {
+    "requiredComponents": [
+      "mandatory-logging.md"
+    ],
+    "requiredFiles": [
+      "memory.json"
+    ],
+    "requiredTools": [
+      "Glob",
+      "Grep",
+      "Read",
+      "Agent"
+    ]
+  },
+  "references": {
+    "relatedSteps": [
+      "fetch-work-item"
+    ],
+    "usedInTemplates": [
+      "plan-work-item"
+    ]
+  }
+}

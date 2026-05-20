@@ -1,0 +1,104 @@
+{
+  "type": "template",
+  "name": "sdlc",
+  "category": "sdlc",
+  "metadata": {
+    "title": "SDLC Orchestrator",
+    "purposeAndUsage": "End-to-end SDLC orchestrator that spawns sub-processes for planning, test planning, implementation, and test execution. Use when implementing an ADO work item with full lifecycle coverage.",
+    "lastUpdated": "2026-05-20"
+  },
+  "parameters": {
+    "required": [
+      "workItemId"
+    ],
+    "optional": [],
+    "definitions": {
+      "workItemId": {
+        "description": "Azure DevOps work item ID (PBI, Bug, Feature)",
+        "type": "string",
+        "example": "123456"
+      }
+    }
+  },
+  "steps": [
+    {
+      "number": 0,
+      "name": "Plan Work Item",
+      "stepRef": "@step:common/spawn-sub-process",
+      "output": "Implementation plan document",
+      "subProcessTrigger": {
+        "template": "sdlc/plan-work-item",
+        "parameters": {
+          "workItemId": "{{workItemId}}"
+        },
+        "syncPoint": "immediate"
+      }
+    },
+    {
+      "number": 1,
+      "name": "Create Test Plan",
+      "stepRef": "@step:common/spawn-sub-process",
+      "output": "Test plan with test cases in ADO",
+      "subProcessTrigger": {
+        "template": "sdlc/create-test-plan",
+        "parameters": {
+          "workItemId": "{{workItemId}}"
+        },
+        "syncPoint": "immediate"
+      }
+    },
+    {
+      "number": 2,
+      "name": "Implement Work Item",
+      "stepRef": "@step:common/spawn-sub-process",
+      "output": "Code changes and commits",
+      "subProcessTrigger": {
+        "template": "sdlc/implement-work-item",
+        "parameters": {
+          "workItemId": "{{workItemId}}"
+        },
+        "syncPoint": "immediate"
+      }
+    },
+    {
+      "number": 3,
+      "name": "Run Test Suite",
+      "stepRef": "@step:common/spawn-sub-process",
+      "output": "Test execution results report",
+      "subProcessTrigger": {
+        "template": "sdlc/run-test-suite",
+        "parameters": {
+          "workItemId": "{{workItemId}}"
+        },
+        "syncPoint": "immediate"
+      }
+    },
+    {
+      "number": 4,
+      "name": "Continuous Improvement",
+      "stepRef": "@step:learning/continuous-improvement",
+      "output": "Improvements implemented",
+      "approvalRequired": true
+    },
+    {
+      "number": 5,
+      "name": "End Process Validation",
+      "stepRef": "@step:common/end-process-validation",
+      "output": "Compliance report"
+    }
+  ],
+  "references": {
+    "steps": [
+      "@step:common/spawn-sub-process",
+      "@step:learning/continuous-improvement",
+      "@step:common/end-process-validation"
+    ],
+    "relatedTemplates": [
+      "sdlc/plan-work-item",
+      "sdlc/create-test-plan",
+      "sdlc/implement-work-item",
+      "sdlc/run-test-suite"
+    ],
+    "dependencies": []
+  }
+}

@@ -1,0 +1,166 @@
+{
+  "type": "step",
+  "name": "load-qa-config",
+  "category": "sdlc",
+  "metadata": {
+    "title": "Load & Validate QA Config",
+    "purposeAndUsage": "Load and validate the .ai/qa-config.json team configuration file. If the file is missing or contains null values, auto-discover settings from the work item area path. Ensures all required QA configuration fields are resolved and confirmed by the user before proceeding.",
+    "lastUpdated": "2026-05-20"
+  },
+  "output": {
+    "description": "Fully resolved qa-config with team settings, plan ID, suite IDs, and base branch",
+    "artifacts": [],
+    "memoryUpdates": [
+      "qaConfig.ado_project",
+      "qaConfig.test_plan_id",
+      "qaConfig.services_suite_id",
+      "qaConfig.releases_suite_id",
+      "qaConfig.area_path",
+      "qaConfig.team_name",
+      "qaConfig.base_branch"
+    ]
+  },
+  "guidance": {
+    "prerequisites": [
+      "Work item ID available in process parameters",
+      "Access to Azure DevOps MCP tools"
+    ],
+    "mandatoryComponents": [
+      "mandatory-logging.md"
+    ],
+    "specificActions": [
+      "Follow the substeps below in sequence",
+      "Config file path: .ai/qa-config.json in the repository root",
+      "Required fields: ado_project, test_plan_id, services_suite_id, releases_suite_id, area_path, team_name, base_branch",
+      "If config file exists: parse all fields and check for null values",
+      "If config file is missing or has null values: run auto-discovery from work item area path",
+      "Auto-discovery: extract team name from area path, list test plans and match by team name, list suites to find Services/Releases root IDs, detect base_branch by checking origin/master, origin/main, origin/develop in order",
+      "If auto-discovery fails to find a matching test plan: ask user for the test plan ID directly",
+      "Do NOT proceed until config is fully resolved and confirmed by user"
+    ],
+    "files": {
+      "read": [
+        ".ai/qa-config.json (if exists)",
+        "memory.json (for work item context)"
+      ],
+      "create": [],
+      "update": []
+    },
+    "tools": [
+      "read_file - Read .ai/qa-config.json",
+      "list_dir - Check if .ai/qa-config.json exists",
+      "mcp__azuredevops__testplan - List test plans to match by team name",
+      "mcp__azuredevops__testplan_test_suite_write - List suites to find Services/Releases root IDs",
+      "git - Detect base branch (origin/master, origin/main, origin/develop)"
+    ],
+    "bestPractices": [
+      "Always validate all 7 fields before proceeding",
+      "Prefer existing config values over auto-discovered ones",
+      "Present all resolved values to user in a clear summary before confirming",
+      "Log whether config was loaded from file or auto-discovered",
+      "If any auto-discovery step fails, ask user rather than guessing"
+    ]
+  },
+  "substeps": [
+    {
+      "number": 0,
+      "name": "Check for qa-config.json",
+      "description": "Check if .ai/qa-config.json exists in the repository root",
+      "actions": [
+        "Look for .ai/qa-config.json in the repo root directory",
+        "Note whether file exists or is missing"
+      ]
+    },
+    {
+      "number": 1,
+      "name": "Parse existing config or prepare for auto-discovery",
+      "description": "If config exists, parse and extract all fields. Check for null values.",
+      "actions": [
+        "If config file exists: read and parse JSON",
+        "Extract fields: ado_project, test_plan_id, services_suite_id, releases_suite_id, area_path, team_name, base_branch",
+        "Check each field for null or missing values",
+        "If all fields are populated: skip to substep 3 (present for confirmation)",
+        "If any fields are null/missing: proceed to substep 2 for auto-discovery of those fields"
+      ]
+    },
+    {
+      "number": 2,
+      "name": "Auto-discover missing values from work item area path",
+      "description": "For any null or missing fields, auto-discover from work item area path and ADO APIs",
+      "actions": [
+        "Extract team name from work item area path (e.g., 'Payoneer\\Team\\SubTeam' -> extract team identifier)",
+        "List test plans in ADO and match by team name to find test_plan_id",
+        "If no matching test plan found: ask user for the test plan ID directly",
+        "List suites under matched test plan to find Services and Releases root suite IDs",
+        "Detect base_branch by checking existence of branches in order: origin/master, origin/main, origin/develop",
+        "Set ado_project to 'Payoneer' if not already set",
+        "Set area_path from work item if not already set"
+      ]
+    },
+    {
+      "number": 3,
+      "name": "Present values for user confirmation",
+      "description": "Display all resolved config values and ask user to confirm",
+      "actions": [
+        "Present a clear summary of all 7 config fields with their resolved values",
+        "Indicate which values came from file vs auto-discovery",
+        "Ask user to confirm all values are correct",
+        "If user requests changes: update the specific fields",
+        "Do NOT proceed until user explicitly confirms"
+      ]
+    },
+    {
+      "number": 4,
+      "name": "Store resolved config in memory",
+      "description": "Save the confirmed configuration to process memory",
+      "actions": [
+        "Write all 7 config fields to memory under qaConfig object",
+        "Include metadata: source (file/auto-discovered/user-provided) for each field",
+        "Log the config resolution outcome"
+      ]
+    },
+    {
+      "number": 5,
+      "name": "End-Step: Compliance Check",
+      "description": "Verify principles were followed in this step",
+      "actions": [
+        "Verify: Was log.json updated for any user interactions?",
+        "Verify: All 7 config fields are non-null and confirmed by user",
+        "Verify: Were mandatory actions confirmed with output?",
+        "Output: 'Step completed in compliance with operating principles'"
+      ]
+    }
+  ],
+  "flow": {
+    "description": "Check config file existence -> Parse if exists (check for nulls) -> Auto-discover missing values from area path and ADO APIs -> Present all values for user confirmation -> Store resolved config in memory. Auto-discovery (substep 2) is conditional, only runs if config is missing or has null fields."
+  },
+  "memoryFileUsage": {
+    "readFrom": "Process parameters for workItemId, work item details for area path",
+    "writeTo": "qaConfig object with all 7 resolved fields",
+    "fields": [
+      "Information Produced: qaConfig.ado_project, qaConfig.test_plan_id, qaConfig.services_suite_id, qaConfig.releases_suite_id, qaConfig.area_path, qaConfig.team_name, qaConfig.base_branch",
+      "Decisions Made: Config source (file vs auto-discovered vs user-provided)",
+      "Notes: Any auto-discovery failures, user overrides"
+    ]
+  },
+  "dependencies": {
+    "requiredComponents": [
+      "mandatory-logging.md"
+    ],
+    "requiredFiles": [],
+    "requiredTools": [
+      "read_file",
+      "list_dir",
+      "mcp__azuredevops__testplan",
+      "git"
+    ]
+  },
+  "references": {
+    "relatedSteps": [
+      "fetch-work-item"
+    ],
+    "usedInTemplates": [
+      "create-test-plan"
+    ]
+  }
+}

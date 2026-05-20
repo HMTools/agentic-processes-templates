@@ -1,0 +1,179 @@
+{
+  "type": "step",
+  "name": "generate-test-cases",
+  "category": "sdlc",
+  "metadata": {
+    "title": "Generate Test Cases & Map Coverage",
+    "purposeAndUsage": "Generate test cases, calibrate scope, resolve target suite, map against existing ADO coverage (new/update/skip/obsolete), and produce combined HTML viewer.",
+    "lastUpdated": "2026-05-20"
+  },
+  "output": {
+    "description": "test-plan-review-{id}.json + combined HTML viewer",
+    "artifacts": [
+      "test-cases-{id}.json",
+      "test-plan-review-{id}.json",
+      "test-plan-review-{id}.html"
+    ],
+    "memoryUpdates": [
+      "testCases",
+      "coverageMapping",
+      "resolvedSuiteId",
+      "suitePath"
+    ]
+  },
+  "guidance": {
+    "prerequisites": [
+      "Test plan context approved",
+      "Test case writing guidelines loaded"
+    ],
+    "mandatoryComponents": [
+      "mandatory-logging.md"
+    ],
+    "specificActions": [
+      "Calibrate scope based on PBI type",
+      "Resolve target suite path in ADO",
+      "Generate test cases following guidelines",
+      "Map against existing coverage",
+      "Produce combined HTML viewer"
+    ],
+    "files": {
+      "read": [
+        ".qa/test-plan/test-plan-context-{id}.json"
+      ],
+      "create": [
+        ".qa/test-plan/test-cases-{id}.json",
+        ".qa/test-plan/test-plan-review-{id}.json",
+        ".qa/test-plan/test-plan-review-{id}.html"
+      ],
+      "update": []
+    },
+    "tools": [
+      "MCP - testplan_list_test_suites, testplan_list_test_cases",
+      "Bash - Node.js inject script",
+      "Write - JSON and HTML files"
+    ],
+    "bestPractices": [
+      "Naming: [Feature] - [Triggering Action] - [Scenario]",
+      "ActionStep for setup, ValidateStep for verification with concrete assertions",
+      "One scenario per test case",
+      "Same action = same test case",
+      "Decision: user-visible outcome=include, internal mechanism=exclude",
+      "Cap at 3 assertions per ValidateStep"
+    ],
+    "scopeCalibration": {
+      "configChange": "2-4",
+      "newEndpoint": "5-8",
+      "multiEndpoint": "8-12",
+      "crossService": "10-15"
+    },
+    "coverageClassification": {
+      "new": "No existing coverage",
+      "update": "Existing test needs new steps \u2014 include current+proposed for diff",
+      "skip": "Fully covered \u2014 just link",
+      "obsolete": "Flow removed by PBI"
+    }
+  },
+  "substeps": [
+    {
+      "number": 0,
+      "name": "Calibrate scope",
+      "description": "Estimate right number of test cases",
+      "actions": [
+        "Assess PBI type",
+        "Set expected TC count range"
+      ]
+    },
+    {
+      "number": 1,
+      "name": "Resolve target suite path",
+      "description": "Find correct ADO suite",
+      "actions": [
+        "List suites via testplan_list_test_suites",
+        "Walk tree under Services",
+        "Match by service/feature name",
+        "If no match: ask user"
+      ]
+    },
+    {
+      "number": 2,
+      "name": "Generate test cases",
+      "description": "Create TCs following guidelines",
+      "actions": [
+        "Cover: valid scenarios, error handling, edge cases, state transitions, integration flows",
+        "Follow naming convention",
+        "Concrete assertions in ValidateSteps"
+      ]
+    },
+    {
+      "number": 3,
+      "name": "Map against existing coverage",
+      "description": "Classify each TC",
+      "actions": [
+        "Fetch existing TCs from resolved suite",
+        "Classify as New/Update/Skip/Obsolete",
+        "For Update: include current+proposed steps for diff"
+      ]
+    },
+    {
+      "number": 4,
+      "name": "Write scannable summaries",
+      "description": "One-sentence summaries per TC",
+      "actions": [
+        "New: what it verifies + key outcome",
+        "Update: what was added/modified + why"
+      ]
+    },
+    {
+      "number": 5,
+      "name": "Produce output files",
+      "description": "Write JSON + HTML",
+      "actions": [
+        "Write test-cases-{id}.json",
+        "Write test-plan-review-{id}.json",
+        "Generate combined HTML via combined-viewer.html template",
+        "Open in browser"
+      ]
+    },
+    {
+      "number": 6,
+      "name": "End-Step: Compliance Check",
+      "description": "Verify principles",
+      "actions": [
+        "Output: Step completed in compliance"
+      ]
+    }
+  ],
+  "flow": {
+    "description": "Calibrate scope -> resolve suite -> generate TCs -> map coverage -> write summaries -> produce files"
+  },
+  "memoryFileUsage": {
+    "readFrom": "Test plan context and guidelines",
+    "writeTo": "Test cases and coverage mapping",
+    "fields": [
+      "testCases",
+      "coverageMapping",
+      "resolvedSuiteId",
+      "suitePath"
+    ]
+  },
+  "dependencies": {
+    "requiredComponents": [
+      "mandatory-logging.md"
+    ],
+    "requiredFiles": [],
+    "requiredTools": [
+      "MCP",
+      "Write",
+      "Bash"
+    ]
+  },
+  "references": {
+    "relatedSteps": [
+      "generate-test-context",
+      "push-test-plan-ado"
+    ],
+    "usedInTemplates": [
+      "create-test-plan"
+    ]
+  }
+}

@@ -1,0 +1,138 @@
+{
+  "type": "step",
+  "name": "fetch-work-item",
+  "category": "sdlc",
+  "metadata": {
+    "title": "Fetch Work Item Details",
+    "purposeAndUsage": "Fetch work item details from Azure DevOps via MCP tool and extract key fields (title, description, acceptance criteria, detailed solution, relations) for downstream planning or test generation steps.",
+    "lastUpdated": "2026-05-20"
+  },
+  "output": {
+    "description": "Work item details extracted and stored in memory",
+    "artifacts": [],
+    "memoryUpdates": [
+      "workItem.id",
+      "workItem.title",
+      "workItem.description",
+      "workItem.acceptanceCriteria",
+      "workItem.detailedSolution",
+      "workItem.relations",
+      "workItem.areaPath",
+      "workItem.iterationPath",
+      "workItem.assignedTo",
+      "workItem.state"
+    ]
+  },
+  "guidance": {
+    "prerequisites": [
+      "workItemId parameter available from process parameters",
+      "Azure DevOps MCP tools accessible"
+    ],
+    "mandatoryComponents": [
+      "mandatory-logging.md"
+    ],
+    "specificActions": [
+      "Follow the substeps below in sequence",
+      "Workflow: call ADO MCP tool → extract fields → store in memory → compliance check",
+      "Use mcp__azuredevops__wit_work_item with project='Payoneer', id=workItemId, expand='all'",
+      "If the MCP call fails, report the error clearly and stop — do NOT proceed with missing work item data",
+      "Extract all fields listed in memoryUpdates even if some are empty/null"
+    ],
+    "files": {
+      "read": [
+        "memory.json (for process parameters including workItemId)"
+      ],
+      "create": [],
+      "update": []
+    },
+    "tools": [
+      "mcp__azuredevops__wit_work_item - Fetch work item details from Azure DevOps"
+    ],
+    "bestPractices": [
+      "Always use expand='all' to get relations and all fields in a single call",
+      "Preserve HTML formatting in Description and Acceptance Criteria fields for downstream consumers",
+      "Store the raw work item response alongside extracted fields for reference",
+      "Log the work item title immediately after fetch for traceability",
+      "If Custom.DetailedSolution is empty, note this explicitly — do not silently skip it"
+    ]
+  },
+  "substeps": [
+    {
+      "number": 0,
+      "name": "Call wit_work_item MCP tool",
+      "description": "Fetch the work item from Azure DevOps using the MCP tool",
+      "actions": [
+        "Read workItemId from process parameters",
+        "Call mcp__azuredevops__wit_work_item with project='Payoneer', id=workItemId, expand='all'",
+        "If the call fails: report the error message clearly and STOP — do not proceed",
+        "If the call succeeds: proceed to extraction"
+      ]
+    },
+    {
+      "number": 1,
+      "name": "Extract key fields",
+      "description": "Extract all relevant fields from the work item response",
+      "actions": [
+        "Extract Title from fields.System.Title",
+        "Extract Description from fields.System.Description",
+        "Extract Acceptance Criteria from fields.Microsoft.VSTS.Common.AcceptanceCriteria",
+        "Extract Custom.DetailedSolution from fields.Custom.DetailedSolution",
+        "Extract Relations array from relations",
+        "Extract AreaPath from fields.System.AreaPath",
+        "Extract IterationPath from fields.System.IterationPath",
+        "Extract AssignedTo from fields.System.AssignedTo",
+        "Extract State from fields.System.State",
+        "Note any fields that are empty or null"
+      ]
+    },
+    {
+      "number": 2,
+      "name": "Store extracted data in memory",
+      "description": "Write all extracted work item fields to memory.json",
+      "actions": [
+        "Write workItem object to current step's informationProduced section in memory",
+        "Include all extracted fields: id, title, description, acceptanceCriteria, detailedSolution, relations, areaPath, iterationPath, assignedTo, state",
+        "Note which fields were empty/null under Notes"
+      ]
+    },
+    {
+      "number": 3,
+      "name": "End-Step: Compliance Check",
+      "description": "Verify principles were followed in this step",
+      "actions": [
+        "Verify: Was log.json updated for any user interactions?",
+        "Verify: Were mandatory actions confirmed with output?",
+        "Verify: All key fields were extracted (even if null)",
+        "Output: 'Step completed in compliance with operating principles'"
+      ]
+    }
+  ],
+  "flow": {
+    "description": "Linear flow: Call ADO MCP tool to fetch work item -> Extract key fields from response -> Store in memory -> Compliance check. If MCP call fails at substep 0, the step halts with an error."
+  },
+  "memoryFileUsage": {
+    "readFrom": "Process parameters (workItemId)",
+    "writeTo": "Step results and decisions",
+    "fields": [
+      "Information Produced: workItem object with id, title, description, acceptanceCriteria, detailedSolution, relations, areaPath, iterationPath, assignedTo, state",
+      "Decisions Made: None (data fetch step)",
+      "Notes: Fields that were empty/null, any warnings from ADO response"
+    ]
+  },
+  "dependencies": {
+    "requiredComponents": [
+      "mandatory-logging.md"
+    ],
+    "requiredFiles": [],
+    "requiredTools": [
+      "mcp__azuredevops__wit_work_item"
+    ]
+  },
+  "references": {
+    "relatedSteps": [],
+    "usedInTemplates": [
+      "plan-work-item",
+      "create-test-plan"
+    ]
+  }
+}

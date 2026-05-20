@@ -1,0 +1,169 @@
+{
+  "type": "template",
+  "name": "create-test-plan",
+  "category": "sdlc",
+  "metadata": {
+    "title": "Create Backend Test Plan",
+    "purposeAndUsage": "Create comprehensive ADO test plans for backend work items. Loads config, fetches work item, runs sniffing checklists, generates test cases, maps against existing coverage, and pushes to Azure DevOps. Use as a standalone test planning process or as a sub-process within the SDLC orchestrator.",
+    "lastUpdated": "2026-05-20"
+  },
+  "parameters": {
+    "required": [
+      "workItemId"
+    ],
+    "optional": [],
+    "definitions": {
+      "workItemId": {
+        "description": "Azure DevOps work item ID",
+        "type": "string",
+        "example": "123456"
+      }
+    }
+  },
+  "steps": [
+    {
+      "number": 0,
+      "name": "Load & Validate Config",
+      "stepRef": "@step:sdlc/load-qa-config",
+      "output": "Resolved qa-config.json with team settings, plan ID, suite IDs, base branch",
+      "approvalRequired": true,
+      "guidance": {
+        "configPath": ".ai/qa-config.json",
+        "autoDiscovery": "If config missing or has null values, auto-discover from work item area path",
+        "fields": ["ado_project", "test_plan_id", "services_suite_id", "releases_suite_id", "area_path", "team_name", "base_branch"],
+        "rule": "Do NOT proceed until config is fully resolved and confirmed by user"
+      }
+    },
+    {
+      "number": 1,
+      "name": "Pull Work Item Details",
+      "stepRef": "@step:sdlc/fetch-work-item",
+      "output": "Work item details: title, description, AC, detailed solution, relations, area/iteration path",
+      "guidance": {
+        "adoTool": "wit_get_work_item",
+        "adoArgs": { "project": "Payoneer", "id": "{{workItemId}}", "expand": "all" },
+        "extract": ["Title", "Description", "Acceptance Criteria", "Custom.DetailedSolution", "Relations", "AreaPath", "IterationPath", "AssignedTo", "State"]
+      }
+    },
+    {
+      "number": 2,
+      "name": "Pull Sniffing Guidelines",
+      "stepRef": "@step:sdlc/pull-qa-guidelines",
+      "output": "Sniffing checklist from qa-guidelines repo",
+      "guidance": {
+        "repoId": "9b4f0be0-9a6b-43d1-a3b1-fd5f73714b19",
+        "files": ["test-plan-creation/work-item-sniffing.md"],
+        "fallback": "If search_code fails, clone repo locally and read files directly"
+      }
+    },
+    {
+      "number": 3,
+      "name": "Execute Sniffing",
+      "stepRef": "@step:sdlc/execute-sniffing",
+      "output": "Sniffing findings: scope/impact, risks, cross-service concerns, code changes, requirements vs code mapping",
+      "guidance": {
+        "codeAnalysis": "Run git diff against base_branch from config. Group files by type. Identify endpoints affected.",
+        "hierarchy": "Traverse up one level to parent work item. Go further only if parent lacks AC.",
+        "crossReference": "Compare AC vs code. Flag: requirements not in code, code not in requirements, unstated behaviors.",
+        "budget": "Stop exploring when you can articulate what the feature does, what flows are affected, and what could go wrong."
+      }
+    },
+    {
+      "number": 4,
+      "name": "Q&A Session",
+      "stepRef": "@step:sdlc/qa-session-if-needed",
+      "output": "Resolved questions (if any)",
+      "guidance": {
+        "skipIf": "AC are clear and specific, code changes align with requirements, no critical ambiguities",
+        "mustAsk": "Ambiguous AC with multiple valid interpretations that change test case content",
+        "assumeAndNote": "Test data specifics, environment details, non-functional requirements"
+      }
+    },
+    {
+      "number": 5,
+      "name": "Generate Test Plan Context",
+      "stepRef": "@step:sdlc/generate-test-context",
+      "output": "test-plan-context-{id}.json + interactive HTML viewer",
+      "approvalRequired": true,
+      "guidance": {
+        "outputDir": ".qa/test-plan/",
+        "jsonFile": "test-plan-context-{workItemId}.json",
+        "htmlFile": "test-plan-context-{workItemId}.html",
+        "rule": "Open HTML in browser. Do NOT proceed until user explicitly approves context."
+      }
+    },
+    {
+      "number": 6,
+      "name": "Get Test Case Guidelines",
+      "stepRef": "@step:sdlc/pull-qa-guidelines",
+      "output": "Test case writing guidelines",
+      "guidance": {
+        "repoId": "9b4f0be0-9a6b-43d1-a3b1-fd5f73714b19",
+        "files": ["test-plan-creation/test-case-writing.md", "test-plan-creation/test-types-reference.md", "test-plan-creation/test-case-metadata.md", "test-plan-creation/examples.md"]
+      }
+    },
+    {
+      "number": 7,
+      "name": "Generate Test Cases & Map Coverage",
+      "stepRef": "@step:sdlc/generate-test-cases",
+      "output": "test-plan-review-{id}.json + combined HTML viewer with test cases and coverage mapping",
+      "approvalRequired": true,
+      "guidance": {
+        "calibration": "2-4 TCs for config change, 5-8 for new endpoint, 8-12 for multi-endpoint, 10-15 for cross-service",
+        "naming": "[Feature] - [Triggering Action] - [Scenario]",
+        "mapping": "Classify each TC as New, Update, Skip, or Obsolete against existing coverage",
+        "rule": "Open combined HTML viewer. Do NOT proceed until user explicitly approves test cases and mapping."
+      }
+    },
+    {
+      "number": 8,
+      "name": "Push Test Plan to ADO",
+      "stepRef": "@step:sdlc/push-test-plan-ado",
+      "output": "Test cases created/updated in ADO, linked to work item",
+      "guidance": {
+        "actions": ["Create requirement-based suite in Releases", "Create new test cases via wit_create_work_item", "Add test cases to target suite", "Link test cases to work item", "Update existing test cases", "Link skip cases", "Handle obsolete test cases"]
+      }
+    },
+    {
+      "number": 9,
+      "name": "Report Results",
+      "stepRef": "@step:sdlc/report-test-plan-results",
+      "output": "Final report with ADO links, regenerated HTML",
+      "guidance": {
+        "actions": ["Backfill ADO IDs into review JSON", "Regenerate HTML with clickable ADO links", "Display summary of all actions taken"]
+      }
+    },
+    {
+      "number": 10,
+      "name": "Continuous Improvement",
+      "stepRef": "@step:learning/continuous-improvement",
+      "output": "Improvements implemented",
+      "approvalRequired": true
+    },
+    {
+      "number": 11,
+      "name": "End Process Validation",
+      "stepRef": "@step:common/end-process-validation",
+      "output": "Compliance report"
+    }
+  ],
+  "references": {
+    "steps": [
+      "@step:sdlc/load-qa-config",
+      "@step:sdlc/fetch-work-item",
+      "@step:sdlc/pull-qa-guidelines",
+      "@step:sdlc/execute-sniffing",
+      "@step:sdlc/qa-session-if-needed",
+      "@step:sdlc/generate-test-context",
+      "@step:sdlc/generate-test-cases",
+      "@step:sdlc/push-test-plan-ado",
+      "@step:sdlc/report-test-plan-results",
+      "@step:learning/continuous-improvement",
+      "@step:common/end-process-validation"
+    ],
+    "relatedTemplates": [
+      "sdlc/sdlc"
+    ],
+    "dependencies": []
+  }
+}

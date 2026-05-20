@@ -1,0 +1,98 @@
+{
+  "type": "template",
+  "name": "implement-work-item",
+  "category": "sdlc",
+  "metadata": {
+    "title": "Implement Work Item",
+    "purposeAndUsage": "Implement an Azure DevOps work item based on an approved implementation plan. Reviews the plan, executes code changes, runs tests, and prepares for review. Use as a standalone implementation process or as a sub-process within the SDLC orchestrator.",
+    "lastUpdated": "2026-05-20"
+  },
+  "parameters": {
+    "required": [
+      "workItemId"
+    ],
+    "optional": [],
+    "definitions": {
+      "workItemId": {
+        "description": "Azure DevOps work item ID",
+        "type": "string",
+        "example": "123456"
+      }
+    }
+  },
+  "steps": [
+    {
+      "number": 0,
+      "name": "Review Implementation Plan",
+      "stepRef": "@step:sdlc/review-implementation-plan",
+      "output": "Understood plan: scope, affected files, step order, dependencies",
+      "guidance": {
+        "source": "Read the plan produced by the plan-work-item sub-process from parent memory",
+        "focus": ["Scope and affected files", "Implementation step order", "Dependencies and prerequisites", "Testing strategy"]
+      }
+    },
+    {
+      "number": 1,
+      "name": "Execute Implementation",
+      "stepRef": "@step:sdlc/execute-implementation",
+      "output": "Code changes across affected files",
+      "approvalRequired": true,
+      "guidance": {
+        "approach": "Follow the plan step-by-step",
+        "order": "Dependencies/config → module wiring → feature code → infra/DevOps → tests",
+        "rules": [
+          "Create/modify files as specified in the plan",
+          "Follow existing codebase patterns and conventions",
+          "Use business-domain names, not technical/infrastructure names"
+        ]
+      }
+    },
+    {
+      "number": 2,
+      "name": "Run Tests",
+      "stepRef": "@step:sdlc/run-local-tests",
+      "output": "Test results — all passing or failures identified and fixed",
+      "guidance": {
+        "actions": ["Execute existing unit tests", "Execute existing integration tests", "Fix any regressions introduced by implementation", "Verify new functionality works as expected"]
+      }
+    },
+    {
+      "number": 3,
+      "name": "Prepare for Review",
+      "stepRef": "@step:sdlc/prepare-for-review",
+      "output": "Clean commits, acceptance criteria verification, change summary",
+      "approvalRequired": true,
+      "guidance": {
+        "actions": ["Create commits with clear, descriptive messages", "Verify all acceptance criteria are met", "Summarize all changes made", "List any deviations from the original plan"]
+      }
+    },
+    {
+      "number": 4,
+      "name": "Continuous Improvement",
+      "stepRef": "@step:learning/continuous-improvement",
+      "output": "Improvements implemented",
+      "approvalRequired": true
+    },
+    {
+      "number": 5,
+      "name": "End Process Validation",
+      "stepRef": "@step:common/end-process-validation",
+      "output": "Compliance report"
+    }
+  ],
+  "references": {
+    "steps": [
+      "@step:sdlc/review-implementation-plan",
+      "@step:sdlc/execute-implementation",
+      "@step:sdlc/run-local-tests",
+      "@step:sdlc/prepare-for-review",
+      "@step:learning/continuous-improvement",
+      "@step:common/end-process-validation"
+    ],
+    "relatedTemplates": [
+      "sdlc/sdlc",
+      "sdlc/plan-work-item"
+    ],
+    "dependencies": []
+  }
+}
