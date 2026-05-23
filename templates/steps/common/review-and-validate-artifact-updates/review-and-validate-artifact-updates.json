@@ -27,7 +27,7 @@
       "artifactPath": {
         "description": "Path to the artifact (relative to project root)",
         "type": "string",
-        "example": "~/.claude/agentic-processes/templates/processes/infrastructure/update-process-template"
+        "example": "~/.claude/agentic-processes/templates/infrastructure/update-process-template"
       }
     }
   },
@@ -105,7 +105,7 @@
         "Valid JSON structure with required top-level fields (type, name, metadata, steps, parameters, flow)",
         "steps array present with valid structure (id, number, name, status, stepRef)",
         "Step references use @step:category/name format",
-        "Referenced steps exist in ~/.claude/agentic-processes/templates/steps/ directory",
+        "Referenced steps exist in ~/.claude/agentic-processes/steps/ directory",
         "Parameters defined with required/optional/defaults/definitions",
         "Mermaid diagram in MD is syntactically valid",
         "Mermaid diagram reflects actual step sequence"
@@ -233,7 +233,7 @@
   },
   "substeps": [
     {
-      "number": 1,
+      "number": 0,
       "name": "Load Context from Memory",
       "description": "Get required references from prior steps in memory",
       "actions": [
@@ -246,7 +246,7 @@
       ]
     },
     {
-      "number": 2,
+      "number": 1,
       "name": "Read Update Plan",
       "description": "Parse the approved update plan into a list of expected changes",
       "actions": [
@@ -257,7 +257,7 @@
       ]
     },
     {
-      "number": 3,
+      "number": 2,
       "name": "Read Current Artifact Files",
       "description": "Read the current state of modified artifact files",
       "actions": [
@@ -268,7 +268,7 @@
       ]
     },
     {
-      "number": 4,
+      "number": 3,
       "name": "Compare Changes Against Plan",
       "description": "Verify each planned change was applied correctly",
       "actions": [
@@ -280,7 +280,7 @@
       ]
     },
     {
-      "number": 5,
+      "number": 4,
       "name": "Assess Implementation Quality",
       "description": "Evaluate whether changes were implemented in the best possible way",
       "actions": [
@@ -297,7 +297,7 @@
       ]
     },
     {
-      "number": 6,
+      "number": 5,
       "name": "Validate Artifact Structure (Type-Specific)",
       "description": "Run structural validation checks based on artifact type",
       "actions": [
@@ -310,7 +310,7 @@
       ]
     },
     {
-      "number": 7,
+      "number": 6,
       "name": "Generate review-report.md",
       "description": "Create comprehensive review report in the process folder",
       "actions": [
@@ -323,11 +323,12 @@
         "  - Issues Found: detailed description of any failures with suggested fixes",
         "  - Recommendation: approve | approve-with-suggestions | fix-required",
         "Record: reviewReportRef, planComparisonResults, qualityAssessment, structuralValidationResults, overallStatus",
-        "Self-review the report before presenting: are findings accurate, actionable, and fairly graded?"
+        "Self-review the report before presenting: are findings accurate, actionable, and fairly graded?",
+        "Update processWideObservations in log.json via update-log-observations: record patterns detected (e.g., recurring quality issues, common structural validation failures), user feedback summary from approval interaction, and recommendations for future process runs"
       ]
     },
     {
-      "number": 8,
+      "number": 7,
       "name": "Present Report for Approval",
       "description": "Summarize findings and wait for user approval",
       "actions": [
@@ -340,7 +341,7 @@
       ]
     },
     {
-      "number": 9,
+      "number": 8,
       "name": "End-Step: Compliance Check",
       "description": "Verify principles were followed in this step",
       "actions": [

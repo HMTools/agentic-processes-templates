@@ -1,0 +1,156 @@
+{
+  "type": "step",
+  "name": "fetch-pr-comments",
+  "category": "sdlc",
+  "metadata": {
+    "title": "Fetch PR and Comments",
+    "purposeAndUsage": "Fetch PR details and all active comment threads with full conversation context from Azure DevOps. This is the loop entry point — runs at the start of each iteration cycle. If no active comments are found, downstream steps can exit early.",
+    "lastUpdated": "2026-05-21"
+  },
+  "output": {
+    "description": "PR details and active comment threads with full conversation stored in memory",
+    "artifacts": [],
+    "memoryUpdates": [
+      "pr.title",
+      "pr.status",
+      "pr.sourceBranch",
+      "activeThreadCount",
+      "activeThreads"
+    ]
+  },
+  "guidance": {
+    "prerequisites": [
+      "repository.id and pullRequestId available in memory from detect-repository step",
+      "Azure DevOps MCP tools accessible"
+    ],
+    "mandatoryComponents": [
+      "mandatory-logging.md"
+    ],
+    "specificActions": [
+      "Follow the substeps below in sequence",
+      "Workflow: read context from memory → fetch PR details → list active threads → fetch full comments per thread → store in memory",
+      "Use MCP tools exclusively for ADO data — do not use REST API directly",
+      "If pullRequestId is null in memory, report error and STOP — PR must exist before comments can be fetched",
+      "When fetching threads, filter by status='Active' to only get unresolved comments",
+      "For each thread, fetch the full comment conversation — not just the first comment"
+    ],
+    "files": {
+      "read": [
+        "memory.json (repository.id, pullRequestId from detect-repository step)"
+      ],
+      "create": [],
+      "update": []
+    },
+    "tools": [
+      "mcp__azuredevops__repo_pull_request - Fetch PR details",
+      "mcp__azuredevops__repo_pull_request_thread - List active comment threads"
+    ],
+    "bestPractices": [
+      "Always fetch fresh thread data on each iteration — do not rely on cached data from previous cycles",
+      "Record activeThreadCount explicitly so downstream steps can check for early exit",
+      "Preserve the full thread context including file paths and line ranges for the analysis step",
+      "Log the count of active threads immediately for traceability",
+      "If this is a subsequent iteration (not the first), log which threads are new vs previously seen"
+    ]
+  },
+  "substeps": [
+    {
+      "number": 0,
+      "name": "Read Context from Memory",
+      "description": "Load repository and PR identifiers from previous step",
+      "actions": [
+        "Read repository.id and pullRequestId from memory",
+        "If pullRequestId is null: report error 'No PR linked to work item — cannot fetch comments' and STOP",
+        "Log: 'Fetching comments for PR #{pullRequestId} in repository {repository.id}'"
+      ]
+    },
+    {
+      "number": 1,
+      "name": "Fetch PR Details",
+      "description": "Get PR metadata from Azure DevOps",
+      "actions": [
+        "Call mcp__azuredevops__repo_pull_request with repositoryId and pullRequestId",
+        "Extract: title, status, source branch, target branch, created by",
+        "If the call fails: report error and STOP",
+        "Log: 'PR #{pullRequestId}: {title} ({status})'"
+      ]
+    },
+    {
+      "number": 2,
+      "name": "List Active Comment Threads",
+      "description": "Fetch all unresolved comment threads on the PR",
+      "actions": [
+        "Call mcp__azuredevops__repo_pull_request_thread with repositoryId, pullRequestId, and status filter for active threads",
+        "Count the active threads",
+        "If no active threads found: record activeThreadCount=0 in memory and log 'No active comments on PR' — downstream steps handle early exit",
+        "Log: 'Found {count} active comment threads'"
+      ]
+    },
+    {
+      "number": 3,
+      "name": "Extract Thread Details",
+      "description": "Parse each active thread for downstream analysis",
+      "actions": [
+        "For each active thread, extract:",
+        "  - threadId: thread identifier",
+        "  - filePath: threadContext.filePath (the file being commented on)",
+        "  - lineRange: rightFileStart.line to rightFileEnd.line",
+        "  - comments: all comments in the thread with author and content",
+        "  - author: first comment's author.displayName",
+        "  - status: thread status",
+        "Build activeThreads array with all extracted data"
+      ]
+    },
+    {
+      "number": 4,
+      "name": "Store Results in Memory",
+      "description": "Write PR and thread data to memory",
+      "actions": [
+        "Write to memory: pr.title, pr.status, pr.sourceBranch, activeThreadCount, activeThreads array",
+        "If this is a subsequent iteration, note which threads are new"
+      ]
+    },
+    {
+      "number": 5,
+      "name": "End-Step: Compliance Check",
+      "description": "Verify principles were followed in this step",
+      "actions": [
+        "Verify: Was log.json updated for any user interactions?",
+        "Verify: Were mandatory actions confirmed with output?",
+        "Verify: activeThreadCount is recorded (even if 0)",
+        "Output: 'Step completed in compliance with operating principles'"
+      ]
+    }
+  ],
+  "flow": {
+    "description": "Linear flow: Read context → Fetch PR details → List active threads → Extract thread details → Store in memory → Compliance check. If no active threads found at substep 2, store activeThreadCount=0 and continue (early exit handled by template)."
+  },
+  "memoryFileUsage": {
+    "readFrom": "repository.id, pullRequestId from detect-repository step",
+    "writeTo": "PR details and active threads",
+    "fields": [
+      "Information Produced: pr.title, pr.status, pr.sourceBranch, activeThreadCount, activeThreads (array of thread objects with threadId, filePath, lineRange, comments, author, status)",
+      "Decisions Made: None (data fetch step)",
+      "Notes: Count of active threads, any threads that failed to fetch"
+    ]
+  },
+  "dependencies": {
+    "requiredComponents": [
+      "mandatory-logging.md"
+    ],
+    "requiredFiles": [],
+    "requiredTools": [
+      "mcp__azuredevops__repo_pull_request",
+      "mcp__azuredevops__repo_pull_request_thread"
+    ]
+  },
+  "references": {
+    "relatedSteps": [
+      "detect-repository",
+      "analyze-plan-fixes"
+    ],
+    "usedInTemplates": [
+      "fix-pr-comments"
+    ]
+  }
+}

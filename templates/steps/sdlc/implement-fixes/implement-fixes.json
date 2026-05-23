@@ -1,0 +1,166 @@
+{
+  "type": "step",
+  "name": "implement-fixes",
+  "category": "sdlc",
+  "metadata": {
+    "title": "Implement Fixes",
+    "purposeAndUsage": "Apply the approved fixes from the fix plan to the codebase, commit changes with a conventional commit message referencing the PR, and push to the remote branch. Only implements 'Valid' category fixes from the approved plan.",
+    "lastUpdated": "2026-05-21"
+  },
+  "output": {
+    "description": "Code changes committed and pushed to remote branch",
+    "artifacts": [],
+    "memoryUpdates": [
+      "implementation.filesModified",
+      "implementation.commitHash",
+      "implementation.commitMessage"
+    ]
+  },
+  "guidance": {
+    "prerequisites": [
+      "Approved fix plan available in memory from analyze-plan-fixes step",
+      "Local workspace on the correct PR branch",
+      "Git remote configured and push access available"
+    ],
+    "mandatoryComponents": [
+      "mandatory-logging.md"
+    ],
+    "specificActions": [
+      "Follow the substeps below in sequence",
+      "Workflow: read approved plan → apply code fixes → stage files → commit → push → store results",
+      "Only implement fixes categorized as 'Valid' in the approved plan",
+      "For 'Partial' fixes: implement only what was explicitly approved, note what was deferred",
+      "For 'Disagree' items: do NOT modify code — these are handled by reply-to-comments",
+      "Use Edit tool for precise code changes — do not overwrite entire files",
+      "Stage specific files with git add, not git add -A"
+    ],
+    "files": {
+      "read": [
+        "memory.json (fixPlan.comments from analyze-plan-fixes step)",
+        "Source code files to be modified"
+      ],
+      "create": [],
+      "update": [
+        "Source code files identified in the fix plan"
+      ]
+    },
+    "tools": [
+      "Edit - Apply precise code changes to affected files",
+      "Read - Read current file state before editing",
+      "Bash - Git operations (add, commit, push)"
+    ],
+    "bestPractices": [
+      "Read the current file state before applying each fix to ensure the code hasn't drifted",
+      "Apply fixes one file at a time, verifying each change",
+      "Stage specific modified files by name — never use git add -A or git add .",
+      "Use conventional commit format with PR reference: fix: address PR #{prId} review comments",
+      "Include bullet points in commit message body describing each fix",
+      "Do not force push — if push fails, report the error",
+      "If a fix cannot be applied cleanly (code has changed), log the issue and skip that fix"
+    ]
+  },
+  "substeps": [
+    {
+      "number": 0,
+      "name": "Read Approved Fix Plan",
+      "description": "Load the approved fixes from memory",
+      "actions": [
+        "Read fixPlan.comments from memory",
+        "Filter to only 'Valid' and approved 'Partial' comments",
+        "Build a list of fixes to apply, each with: filePath, lineRange, proposedFix",
+        "Log: 'Implementing {count} fixes across {fileCount} files'"
+      ]
+    },
+    {
+      "number": 1,
+      "name": "Apply Code Changes",
+      "description": "Edit each affected file with the proposed fix",
+      "actions": [
+        "For each fix to apply:",
+        "  - Read the current file to verify the code context still matches",
+        "  - Apply the proposed fix using Edit tool",
+        "  - If the code has drifted and the fix can't apply cleanly: log warning and skip",
+        "  - Log: 'Applied fix for comment #{threadId} in {filePath}'",
+        "Track list of files successfully modified and any skipped fixes"
+      ]
+    },
+    {
+      "number": 2,
+      "name": "Stage and Commit",
+      "description": "Stage modified files and create a conventional commit",
+      "actions": [
+        "Stage each modified file individually with git add {filePath}",
+        "Create commit with message format:",
+        "  Subject: fix: address PR #{prId} review comments",
+        "  Body: bullet list of changes (one per fix)",
+        "If no files were modified (all fixes skipped): log warning and skip commit",
+        "Log: 'Committed {count} file changes'"
+      ]
+    },
+    {
+      "number": 3,
+      "name": "Push to Remote",
+      "description": "Push the commit to the remote branch",
+      "actions": [
+        "Run git push to push the commit",
+        "If push fails: report the error — do NOT force push",
+        "If push succeeds: extract the commit hash",
+        "Log: 'Pushed commit {hash} to remote'"
+      ]
+    },
+    {
+      "number": 4,
+      "name": "Store Results in Memory",
+      "description": "Record implementation details for downstream steps",
+      "actions": [
+        "Write to memory: implementation.filesModified (list of modified file paths), implementation.commitHash, implementation.commitMessage",
+        "Note any fixes that were skipped and why"
+      ]
+    },
+    {
+      "number": 5,
+      "name": "End-Step: Compliance Check",
+      "description": "Verify principles were followed in this step",
+      "actions": [
+        "Verify: Was log.json updated for any user interactions?",
+        "Verify: Were mandatory actions confirmed with output?",
+        "Verify: All Valid fixes were applied or skipped with documented reason",
+        "Output: 'Step completed in compliance with operating principles'"
+      ]
+    }
+  ],
+  "flow": {
+    "description": "Linear flow: Read approved plan → Apply code changes per fix → Stage specific files → Commit with conventional message → Push to remote → Store results → Compliance check. If code has drifted, skip individual fixes with warning."
+  },
+  "memoryFileUsage": {
+    "readFrom": "fixPlan.comments from analyze-plan-fixes step",
+    "writeTo": "Implementation results",
+    "fields": [
+      "Information Produced: implementation.filesModified, implementation.commitHash, implementation.commitMessage",
+      "Decisions Made: Which fixes to skip (if code drifted)",
+      "Notes: Skipped fixes with reasons, push success/failure"
+    ]
+  },
+  "dependencies": {
+    "requiredComponents": [
+      "mandatory-logging.md"
+    ],
+    "requiredFiles": [
+      "Source code files referenced in fix plan"
+    ],
+    "requiredTools": [
+      "Edit",
+      "Read",
+      "Bash"
+    ]
+  },
+  "references": {
+    "relatedSteps": [
+      "analyze-plan-fixes",
+      "reply-to-comments"
+    ],
+    "usedInTemplates": [
+      "fix-pr-comments"
+    ]
+  }
+}

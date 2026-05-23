@@ -5,7 +5,7 @@
   "metadata": {
     "title": "SDLC Orchestrator",
     "purposeAndUsage": "End-to-end SDLC orchestrator that spawns sub-processes for planning, test planning, implementation, and test execution. Use when implementing an ADO work item with full lifecycle coverage.",
-    "lastUpdated": "2026-05-20"
+    "lastUpdated": "2026-05-21"
   },
   "parameters": {
     "required": [
@@ -75,13 +75,26 @@
     },
     {
       "number": 4,
+      "name": "Fix PR Comments",
+      "stepRef": "@step:common/spawn-sub-process",
+      "output": "PR comments addressed and replied to",
+      "subProcessTrigger": {
+        "template": "sdlc/fix-pr-comments",
+        "parameters": {
+          "workItemId": "{{workItemId}}"
+        },
+        "syncPoint": "immediate"
+      }
+    },
+    {
+      "number": 5,
       "name": "Continuous Improvement",
       "stepRef": "@step:learning/continuous-improvement",
       "output": "Improvements implemented",
       "approvalRequired": true
     },
     {
-      "number": 5,
+      "number": 6,
       "name": "End Process Validation",
       "stepRef": "@step:common/end-process-validation",
       "output": "Compliance report"
@@ -97,7 +110,8 @@
       "sdlc/plan-work-item",
       "sdlc/create-test-plan",
       "sdlc/implement-work-item",
-      "sdlc/run-test-suite"
+      "sdlc/run-test-suite",
+      "sdlc/fix-pr-comments"
     ],
     "dependencies": []
   }

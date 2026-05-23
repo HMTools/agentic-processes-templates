@@ -5,7 +5,7 @@
 
 ## Description
 
-End-to-end SDLC orchestrator for Azure DevOps work items. Spawns sub-processes for each phase: planning, test planning, implementation, and test execution. Each sub-process is a native agentic-processes template with its own steps, approval gates, memory, and logging.
+End-to-end SDLC orchestrator for Azure DevOps work items. Spawns sub-processes for each phase: planning, test planning, implementation, test execution, and PR comment resolution. Each sub-process is a native agentic-processes template with its own steps, approval gates, memory, and logging.
 
 ## Purpose & Usage
 
@@ -51,9 +51,24 @@ flowchart TD
     E2 --> E3{Results Approved?}
     E3 -->|No| F[Fix & Re-run]
     F --> D
-    E3 -->|Yes| G[Step 4: Continuous Improvement]
+    E3 -->|Yes| PR[Step 4: Spawn fix-pr-comments]
 
-    G --> H[Step 5: End Process Validation]
+    PR --> PR0[Step 0: Detect Repository]
+    PR0 --> PR1[Step 1: Fetch PR & Comments]
+    PR1 --> PR1a{Active Comments?}
+    PR1a -->|None| PR6[Step 6: Continuous Improvement]
+    PR1a -->|Yes| PR2[Step 2: Analyze & Plan Fixes]
+    PR2 --> PR2a{Fix Plan Approved?}
+    PR2a -->|No| PR2
+    PR2a -->|Yes| PR3[Step 3: Implement Fixes]
+    PR3 --> PR4[Step 4: Reply to Comments]
+    PR4 --> PR5{Step 5: Await Reviewer Response\nPAUSED}
+    PR5 -->|New comments arrived| PR1
+    PR5 -->|PR approved / no more comments| PR6
+    PR6 --> PR7[Step 7: End Process Validation]
+    PR7 --> G[Step 5: Continuous Improvement]
+
+    G --> H[Step 6: End Process Validation]
     H --> I[End: Work Item Complete]
 ```
 
@@ -65,5 +80,6 @@ flowchart TD
 | 1 | Create Test Plan | `sdlc/create-test-plan` | In sub-process |
 | 2 | Implement Work Item | `sdlc/implement-work-item` | In sub-process |
 | 3 | Run Test Suite | `sdlc/run-test-suite` | In sub-process |
-| 4 | Continuous Improvement | — | Yes |
-| 5 | End Process Validation | — | No |
+| 4 | Fix PR Comments | `sdlc/fix-pr-comments` | In sub-process |
+| 5 | Continuous Improvement | — | Yes |
+| 6 | End Process Validation | — | No |

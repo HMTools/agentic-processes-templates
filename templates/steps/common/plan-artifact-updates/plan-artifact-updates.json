@@ -34,7 +34,7 @@
       "artifactPath": {
         "description": "Path to the artifact (relative to project root)",
         "type": "string",
-        "example": "~/.claude/agentic-processes/templates/processes/infrastructure/update-process-template"
+        "example": "~/.claude/agentic-processes/templates/infrastructure/update-process-template"
       },
       "updateDescription": {
         "description": "Description of what changes are needed",
@@ -78,6 +78,7 @@
     "mandatoryComponents": [
       "mandatory-logging.md"
     ],
+    "guidelineNote": "Use /process-QnA-session skill if information gaps identified during planning",
     "specificActions": [
       "Follow the substeps below in sequence",
       "Workflow: validate params → review requirements → load analysis → prompt compatibility → check consumers → design changes → (Q&A if needed) → create plan → review plan → present for approval",
@@ -109,7 +110,10 @@
       "Check for side effects and downstream consequences",
       "Keep the plan document human-readable — it's an approval deliverable",
       "Self-review the plan before presenting to the user",
-      "When user requests changes, loop through review again before re-presenting"
+      "When user requests changes, loop through review again before re-presenting",
+      "PATTERN: Iterative loops — When designing processes that interact with external reviewers, feedback sources, or any human-in-the-loop, default to iterative/loop patterns rather than single-pass designs. External feedback inherently requires multiple rounds (e.g., PR reviews, approval cycles, user testing).",
+      "PATTERN: Pause-and-resume — When an iterative process depends on external human responses that arrive asynchronously (hours/days later), default to pause-and-resume (approvalRequired checkpoint) rather than polling or immediate re-check. This avoids unnecessary spinning and matches the asynchronous nature of human workflows.",
+      "PATTERN: Process migration — When updating a template, proactively consider whether active process instances should be migrated. If the plan includes migration, ensure the apply step copies ALL step properties from the template (including subProcessTrigger, approvalRequired, output, loopBackTo), not just the step skeleton."
     ]
   },
   "artifactTypeConfig": {
@@ -142,7 +146,7 @@
       ],
       "consumerCheck": {
         "description": "Search for templates referencing this step",
-        "searchPath": "~/.claude/agentic-processes/templates/processes/",
+        "searchPath": "~/.claude/agentic-processes/templates/",
         "searchPattern": "Search for @step:{category}/{stepName} in template JSON files"
       },
       "compatibilityConcerns": [
@@ -171,7 +175,7 @@
   },
   "substeps": [
     {
-      "number": 1,
+      "number": 0,
       "name": "Validate Parameters",
       "description": "Confirm all required parameters are valid",
       "actions": [
@@ -183,7 +187,7 @@
       ]
     },
     {
-      "number": 2,
+      "number": 1,
       "name": "Review Update Requirements",
       "description": "Understand what changes are requested",
       "actions": [
@@ -194,7 +198,7 @@
       ]
     },
     {
-      "number": 3,
+      "number": 2,
       "name": "Load Artifact Analysis from Memory",
       "description": "Read the baseline analysis from the prior step",
       "actions": [
@@ -205,7 +209,7 @@
       ]
     },
     {
-      "number": 4,
+      "number": 3,
       "name": "Prompt User for Backward Compatibility",
       "description": "Ask the user about backward compatibility requirements",
       "actions": [
@@ -218,20 +222,20 @@
       ]
     },
     {
-      "number": 5,
+      "number": 4,
       "name": "Check for Active Consumers",
       "description": "Search for consumers of this artifact based on its type",
       "actions": [
         "Based on `artifactType`, check for active consumers using artifactTypeConfig",
         "For templates: search `~/.claude/agentic-processes/active/` for processes using this template",
-        "For steps: search `~/.claude/agentic-processes/templates/processes/` for templates referencing this step via `@step:{category}/{stepName}`",
+        "For steps: search `~/.claude/agentic-processes/templates/` for templates referencing this step via `@step:{category}/{stepName}`",
         "For processes: check `subProcessState` for parent/child relationships",
         "Report findings to the user",
         "If `preserveActiveConsumers` is true, flag changes that would break consumers"
       ]
     },
     {
-      "number": 6,
+      "number": 5,
       "name": "Design Specific Changes",
       "description": "Design each change using type-specific change targets",
       "actions": [
@@ -242,21 +246,20 @@
       ]
     },
     {
-      "number": 7,
+      "number": 6,
       "name": "Q&A Session (if needed)",
       "description": "Gather missing details from user if gaps found in change design",
       "conditional": true,
-      "component": "~/.claude/agentic-processes/templates/steps/_components/qa-session.md",
       "actions": [
         "If any gaps or ambiguities exist in the planned changes, ask the user for clarification",
-        "Use the qa-session component pattern",
+        "Use /process-QnA-session skill to conduct structured Q&A",
         "Log user responses to log.json",
         "Return to Substep 6 after gathering answers",
         "Skip this substep if all changes are well-defined"
       ]
     },
     {
-      "number": 8,
+      "number": 7,
       "name": "Create update-plan.md",
       "description": "Write the detailed change plan document",
       "actions": [
@@ -265,7 +268,7 @@
       ]
     },
     {
-      "number": 9,
+      "number": 8,
       "name": "Review and Refine Plan",
       "description": "Self-review the plan for quality before presenting to user",
       "actions": [
@@ -280,7 +283,7 @@
       ]
     },
     {
-      "number": 10,
+      "number": 9,
       "name": "Present Plan for User Approval",
       "description": "Summarize the plan and wait for user to approve or request changes",
       "actions": [
@@ -294,7 +297,7 @@
       ]
     },
     {
-      "number": 11,
+      "number": 10,
       "name": "End-Step: Compliance Check",
       "description": "Verify principles were followed in this step",
       "actions": [
@@ -319,9 +322,6 @@
     "requiredComponents": [
       "mandatory-logging.md"
     ],
-    "optionalComponents": [
-      "qa-session.md"
-    ],
     "requiredFiles": [],
     "requiredTools": [
       "read_file",
@@ -333,6 +333,7 @@
   "references": {
     "relatedSteps": [
       "analyze-current-artifact-state",
+      "init-process-principles",
       "end-process-validation"
     ],
     "usedInTemplates": [

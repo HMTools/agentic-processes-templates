@@ -27,7 +27,7 @@
       "artifactPath": {
         "description": "Path to the artifact (relative to project root)",
         "type": "string",
-        "example": "~/.claude/agentic-processes/templates/processes/infrastructure/update-process-template"
+        "example": "~/.claude/agentic-processes/templates/infrastructure/update-process-template"
       }
     }
   },
@@ -140,7 +140,7 @@
   },
   "substeps": [
     {
-      "number": 1,
+      "number": 0,
       "name": "Load Context from Memory",
       "description": "Get required references from prior steps in memory",
       "actions": [
@@ -150,7 +150,7 @@
       ]
     },
     {
-      "number": 2,
+      "number": 1,
       "name": "Read Update Plan",
       "description": "Parse the approved update plan into a list of changes",
       "actions": [
@@ -161,7 +161,7 @@
       ]
     },
     {
-      "number": 3,
+      "number": 2,
       "name": "Resolve and Read Artifact Files",
       "description": "Determine file paths by artifact type and read current state",
       "actions": [
@@ -173,7 +173,7 @@
       ]
     },
     {
-      "number": 4,
+      "number": 3,
       "name": "Apply Changes to JSON",
       "description": "Execute each JSON modification using type-specific change targets",
       "actions": [
@@ -184,7 +184,7 @@
       ]
     },
     {
-      "number": 5,
+      "number": 4,
       "name": "Apply Changes to MD",
       "description": "Execute each MD modification using type-specific change targets",
       "actions": [
@@ -195,7 +195,7 @@
       ]
     },
     {
-      "number": 6,
+      "number": 5,
       "name": "Update Diagram (Conditional)",
       "description": "Update mermaid diagram in MD if flow changed",
       "conditional": true,
@@ -204,6 +204,24 @@
         "If flow changed: update the mermaid diagram in the MD file to reflect new sequence",
         "If flow unchanged or artifact type has no diagram (process): skip",
         "Log: 'Diagram updated' or 'No flow changes — diagram unchanged'"
+      ]
+    },
+    {
+      "number": 6,
+      "name": "Migrate Active Process Instances (Conditional)",
+      "description": "If the plan includes process migration, apply changes to active process instances with full property preservation",
+      "conditional": true,
+      "actions": [
+        "Check if update-plan.md includes migration of active process instances",
+        "If no migration planned: skip this substep",
+        "For each process instance to migrate:",
+        "  - Read the process.json file",
+        "  - CRITICAL: When inserting new steps, copy ALL properties from the template step definition — not just the skeleton (id, number, name, status, stepRef). This includes: subProcessTrigger, approvalRequired, output, loopBackTo, and any other step-level properties",
+        "  - Verify: compare the inserted step's properties against the template definition to ensure nothing is missing",
+        "  - Renumber subsequent steps as specified in the plan",
+        "  - Preserve all existing step IDs, statuses, timestamps, and syncPoint references",
+        "  - Verify currentState pointer is unaffected",
+        "Log: 'Migrated {processName}: inserted step {number}, renumbered {count} steps, verified {propertyCount} properties preserved'"
       ]
     },
     {
@@ -229,7 +247,9 @@
         "  filesModified: list of modified file paths",
         "  verificationResults: pass/fail summary",
         "  diagramUpdated: boolean",
-        "Log completion: 'Step complete — {count} changes applied to {count} files'"
+        "  migratedProcesses: list of migrated process names and details (if applicable)",
+        "Log completion: 'Step complete — {count} changes applied to {count} files'",
+        "Update processWideObservations in log.json via update-log-observations: record any patterns detected during application (e.g., high iteration count, unexpected file conflicts, migration complexity) and efficiency metrics (files modified count, verification pass rate)"
       ]
     },
     {
@@ -244,14 +264,14 @@
     }
   ],
   "flow": {
-    "description": "Load context → Read plan → Resolve files by type → Read files → Apply JSON → Apply MD → Conditional diagram update → Verify (loop back to apply on failure) → Update memory"
+    "description": "Load context → Read plan → Resolve files by type → Read files → Apply JSON → Apply MD → Conditional diagram update → Conditional process migration → Verify (loop back to apply on failure) → Update memory"
   },
   "memoryFileUsage": {
     "readFrom": "Process parameters (artifactType, artifactPath) and previous step's plan (updatePlanRef from plan-artifact-updates)",
     "writeTo": "Step results and decisions",
     "fields": [
-      "Information Produced: changesApplied, filesModified, verificationResults, diagramUpdated",
-      "Decisions Made: Diagram update decision, retry decisions on verification failure"
+      "Information Produced: changesApplied, filesModified, verificationResults, diagramUpdated, migratedProcesses",
+      "Decisions Made: Diagram update decision, migration decision, retry decisions on verification failure"
     ]
   },
   "dependencies": {

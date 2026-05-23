@@ -1,0 +1,126 @@
+{
+  "type": "step",
+  "name": "await-reviewer-response",
+  "category": "sdlc",
+  "metadata": {
+    "title": "Await Reviewer Response",
+    "purposeAndUsage": "Pause-and-resume checkpoint after fixing and replying to PR comments. The process pauses here until the user resumes it — either because the reviewer has left new comments (loop back to fetch) or because the PR is approved/clean (exit to continuous improvement). Handles the asynchronous nature of code review where reviewers respond hours or days later.",
+    "lastUpdated": "2026-05-21"
+  },
+  "output": {
+    "description": "User decision: loop back for another iteration or exit the fix cycle",
+    "artifacts": [],
+    "memoryUpdates": [
+      "reviewerResponse.decision",
+      "reviewerResponse.iteration"
+    ]
+  },
+  "guidance": {
+    "prerequisites": [
+      "Replies posted in previous step (replies.posted available in memory)",
+      "This step has approvalRequired: true in the template"
+    ],
+    "mandatoryComponents": [
+      "mandatory-logging.md",
+      "mandatory-approval-checkpoint.md"
+    ],
+    "specificActions": [
+      "Follow the substeps below in sequence",
+      "Workflow: summarize iteration → present decision checkpoint → record user decision",
+      "This is a PAUSE point — the process stops here and waits for the user to resume",
+      "The user resumes when the reviewer has responded (hours/days later)",
+      "Present two clear options: loop back for new comments, or exit because PR is clean",
+      "Track the iteration number for logging (1st cycle, 2nd cycle, etc.)"
+    ],
+    "files": {
+      "read": [
+        "memory.json (replies.posted, replies.failed, fixPlan.stats, activeThreads from current iteration)"
+      ],
+      "create": [],
+      "update": []
+    },
+    "tools": [],
+    "bestPractices": [
+      "Summarize what was accomplished in this iteration before presenting the decision",
+      "Make the options clear and actionable — the user may be returning after hours/days away",
+      "Track iteration count to provide context (e.g., 'This was iteration 2 of the fix cycle')",
+      "If previous iterations had failures, mention them in the summary"
+    ]
+  },
+  "substeps": [
+    {
+      "number": 0,
+      "name": "Summarize Current Iteration",
+      "description": "Recap what was done in this fix cycle",
+      "actions": [
+        "Read from memory: fixPlan.stats, replies.posted, replies.failed, activeThreads",
+        "Calculate iteration number (check if reviewerResponse.iteration exists in memory, increment by 1)",
+        "Build summary: comments addressed (by category), replies posted/failed, files modified",
+        "Log: 'Iteration {n} complete: {valid} fixed, {partial} partially addressed, {disagree} disagreed, {posted} replies posted'"
+      ]
+    },
+    {
+      "number": 1,
+      "name": "Present Decision Checkpoint",
+      "description": "Pause the process and wait for user decision",
+      "actions": [
+        "Present the iteration summary to the user",
+        "Present approval checkpoint with options:",
+        "  - 'New comments arrived' → loop back to Step 1 (Fetch PR and Comments) for another cycle",
+        "  - 'PR approved / no more comments' → proceed to Step 6 (Continuous Improvement) and exit the fix loop",
+        "The process PAUSES here — the template's approvalRequired: true and loopBackTo: 1 handle the mechanics",
+        "The user will resume this when they're ready (could be hours or days later)"
+      ]
+    },
+    {
+      "number": 2,
+      "name": "Record Decision",
+      "description": "Store the user's decision in memory",
+      "actions": [
+        "Record user's decision: 'loop' or 'exit'",
+        "Record iteration count",
+        "If looping: log 'User indicated new comments — looping back to fetch'",
+        "If exiting: log 'User indicated PR is clean — proceeding to continuous improvement'"
+      ]
+    },
+    {
+      "number": 3,
+      "name": "End-Step: Compliance Check",
+      "description": "Verify principles were followed in this step",
+      "actions": [
+        "Verify: Was log.json updated for the user interaction?",
+        "Verify: Decision was recorded in memory",
+        "Output: 'Step completed in compliance with operating principles'"
+      ]
+    }
+  ],
+  "flow": {
+    "description": "Summarize iteration → Present pause-and-resume checkpoint (process PAUSES) → User resumes with decision → Record decision → Compliance check. The template's loopBackTo: 1 handles routing back to Step 1 if the user chooses to loop."
+  },
+  "memoryFileUsage": {
+    "readFrom": "fixPlan.stats, replies.posted, replies.failed, activeThreads from current iteration steps",
+    "writeTo": "User decision and iteration tracking",
+    "fields": [
+      "Information Produced: reviewerResponse.decision ('loop' or 'exit'), reviewerResponse.iteration (cycle number)",
+      "Decisions Made: User's decision to loop or exit",
+      "Notes: Iteration summary, any accumulated failures across iterations"
+    ]
+  },
+  "dependencies": {
+    "requiredComponents": [
+      "mandatory-logging.md",
+      "mandatory-approval-checkpoint.md"
+    ],
+    "requiredFiles": [],
+    "requiredTools": []
+  },
+  "references": {
+    "relatedSteps": [
+      "reply-to-comments",
+      "fetch-pr-comments"
+    ],
+    "usedInTemplates": [
+      "fix-pr-comments"
+    ]
+  }
+}

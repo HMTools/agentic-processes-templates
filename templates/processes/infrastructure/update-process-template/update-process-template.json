@@ -41,33 +41,34 @@
   },
   "steps": [
     {
-      "number": 1,
+      "number": 0,
       "name": "Analyze Current Artifact State",
       "stepRef": "@step:common/analyze-current-artifact-state",
       "output": "Baseline analysis of artifact structure recorded to memory"
     },
     {
-      "number": 2,
+      "number": 1,
       "name": "Plan Artifact Updates",
       "stepRef": "@step:common/plan-artifact-updates",
-      "output": "update-plan.md with proposed changes",
-      "approvalRequired": true
+      "output": "update-plan.md with proposed changes (including migration plan for active instances if applicable)",
+      "approvalRequired": true,
+      "guidance": "When planning changes, check for active process instances using this template. If found, proactively include a migration plan (inserting new steps, renumbering, preserving existing IDs/statuses). Do not wait for the user to request migration."
     },
     {
-      "number": 3,
+      "number": 2,
       "name": "Apply Artifact Updates",
       "stepRef": "@step:common/apply-artifact-updates",
       "output": "Modified artifact JSON and MD files with verified changes"
     },
     {
-      "number": 4,
+      "number": 3,
       "name": "Review and Validate Artifact Updates",
       "stepRef": "@step:common/review-and-validate-artifact-updates",
       "output": "review-report.md with plan compliance, quality assessment, and validation results",
       "approvalRequired": true
     },
     {
-      "number": 5,
+      "number": 4,
       "name": "Validate Process Steps Exist",
       "stepRef": "@step:template/validate-process-steps-exist",
       "output": "Validation report",
@@ -80,14 +81,14 @@
       "fallback": "manual PAUSE if user prefers"
     },
     {
-      "number": 6,
+      "number": 5,
       "name": "Continuous Improvement",
       "stepRef": "@step:learning/continuous-improvement",
       "output": "Improvements implemented",
       "approvalRequired": true
     },
     {
-      "number": 7,
+      "number": 6,
       "name": "End Process Validation",
       "stepRef": "@step:common/end-process-validation",
       "output": "Compliance report"
@@ -95,6 +96,7 @@
   ],
   "references": {
     "steps": [
+      "@step:common/init-process-principles",
       "@step:common/analyze-current-artifact-state",
       "@step:common/plan-artifact-updates",
       "@step:common/apply-artifact-updates",
