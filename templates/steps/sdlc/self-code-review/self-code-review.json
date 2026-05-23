@@ -1,0 +1,121 @@
+{
+  "type": "step",
+  "name": "self-code-review",
+  "category": "sdlc",
+  "metadata": {
+    "title": "Self Code Review",
+    "purposeAndUsage": "Perform an independent code review of implementation changes in an isolated subagent context. Reviews code against the implementation plan, codebase patterns, and quality standards. Supports iterative loop-back to the implementation step when issues are found.",
+    "lastUpdated": "2026-05-23"
+  },
+  "output": {
+    "description": "Code review findings — clean result or list of issues requiring fixes",
+    "artifacts": [],
+    "memoryUpdates": ["reviewFindings", "reviewIteration", "reviewDecision"]
+  },
+  "guidance": {
+    "prerequisites": [
+      "Execute Implementation step completed with code changes",
+      "Implementation plan available in memory"
+    ],
+    "mandatoryComponents": ["mandatory-logging.md"],
+    "specificActions": [
+      "MUST execute in an isolated subagent context (separate window) for independent review",
+      "Review all code changes from the Execute Implementation step",
+      "Compare changes against the implementation plan",
+      "Check for codebase pattern adherence",
+      "Check for bugs, edge cases, and security issues",
+      "Track iteration count and respect maxIterations from template",
+      "If issues found and iterations < max: record findings in memory and signal loop-back",
+      "If clean or iterations >= max: proceed to next step",
+      "When looping back, findings must be stored in memory so the implementation step can read them"
+    ],
+    "files": {
+      "read": ["All files modified/created during implementation (from memory)"],
+      "create": [],
+      "update": []
+    },
+    "tools": ["Read", "Grep", "Glob", "Bash - git diff"],
+    "bestPractices": [
+      "Review with fresh eyes — do not carry implementation context",
+      "Focus on substantive issues, not style nitpicks",
+      "Be specific: cite file, line, and what's wrong",
+      "Provide actionable fix suggestions, not vague complaints",
+      "Prioritize: bugs > security > logic errors > patterns > style",
+      "When iteration cap is reached, log a warning about unresolved findings"
+    ]
+  },
+  "substeps": [
+    {
+      "number": 0,
+      "name": "Load review context",
+      "description": "Read implementation results from memory",
+      "actions": [
+        "Read memory.json to get list of files modified/created",
+        "Read the implementation plan from memory",
+        "Determine current iteration number (check if reviewIteration exists in memory)",
+        "Check maxIterations parameter from template"
+      ]
+    },
+    {
+      "number": 1,
+      "name": "Review code changes",
+      "description": "Examine each changed file in isolated context",
+      "actions": [
+        "Use git diff to see all changes",
+        "Read each modified/created file",
+        "Compare implementation against the plan",
+        "Check for: correctness, pattern adherence, edge cases, security, naming conventions",
+        "If this is a subsequent iteration, focus on whether previous findings were addressed"
+      ]
+    },
+    {
+      "number": 2,
+      "name": "Compile findings",
+      "description": "Create structured list of issues found",
+      "actions": [
+        "Categorize findings: bug, security, logic-error, pattern-violation, improvement",
+        "For each finding: file, location, description, severity, suggested fix",
+        "Determine overall verdict: clean (no actionable findings) or needs-fixes"
+      ]
+    },
+    {
+      "number": 3,
+      "name": "Make loop decision",
+      "description": "Decide whether to loop back or proceed",
+      "actions": [
+        "If verdict is clean → proceed to next step",
+        "If verdict is needs-fixes AND iteration < maxIterations → store findings in memory, signal loop-back to Execute Implementation",
+        "If verdict is needs-fixes AND iteration >= maxIterations → log warning about unresolved findings, proceed to next step",
+        "Record reviewIteration, reviewFindings, and reviewDecision in memory"
+      ]
+    },
+    {
+      "number": 4,
+      "name": "End-Step: Compliance Check",
+      "description": "Verify principles were followed",
+      "actions": [
+        "Output: '✓ Step completed in compliance with operating principles'"
+      ]
+    }
+  ],
+  "flow": {
+    "description": "Load context → Review changes (isolated) → Compile findings → Loop decision (back to implementation or proceed)"
+  },
+  "memoryFileUsage": {
+    "readFrom": "Implementation results (filesModified, filesCreated, implementationProgress), implementation plan, previous review iterations",
+    "writeTo": "Review results and loop decision",
+    "fields": [
+      "Information Produced: reviewFindings (list of issues), reviewIteration (current iteration number), reviewDecision (clean/needs-fixes/cap-reached)",
+      "Decisions Made: Loop-back or proceed decision with justification"
+    ]
+  },
+  "dependencies": {
+    "requiredComponents": ["mandatory-logging.md"],
+    "requiredFiles": [],
+    "requiredTools": ["Read", "Grep", "Glob", "Bash"]
+  },
+  "references": {
+    "relatedSteps": ["execute-implementation", "run-local-tests"],
+    "usedInTemplates": ["implement-work-item"]
+  }
+}

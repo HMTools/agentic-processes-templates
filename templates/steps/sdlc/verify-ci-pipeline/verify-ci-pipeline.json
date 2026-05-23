@@ -1,0 +1,130 @@
+{
+  "type": "step",
+  "name": "verify-ci-pipeline",
+  "category": "sdlc",
+  "metadata": {
+    "title": "Verify CI Pipeline",
+    "purposeAndUsage": "Check CI/CD pipeline status after git push. If the pipeline fails, extract failure details and loop back to the implementation step for targeted fixes. Supports configurable max retries.",
+    "lastUpdated": "2026-05-23"
+  },
+  "output": {
+    "description": "CI pipeline status — passed confirmation or failure details with fix context",
+    "artifacts": [],
+    "memoryUpdates": ["ciPipelineStatus", "ciFailureDetails", "ciRetryIteration", "ciDecision"]
+  },
+  "guidance": {
+    "prerequisites": [
+      "Prepare for Review step completed (code committed and pushed)",
+      "Git remote and CI pipeline configured for the repository"
+    ],
+    "mandatoryComponents": ["mandatory-logging.md"],
+    "specificActions": [
+      "Identify the CI pipeline for the current repository and branch",
+      "Check pipeline status — poll if still running",
+      "If pipeline passed → proceed to next step",
+      "If pipeline failed → extract failure logs, error messages, and failing tests",
+      "Track retry iteration count and respect maxIterations from template",
+      "If failed and retries < max: store failure context in memory and signal loop-back",
+      "If failed and retries >= max: log warning about unresolved CI failure, proceed",
+      "When looping back, failure details must be stored in memory so the implementation step can target the fix"
+    ],
+    "files": {
+      "read": [],
+      "create": [],
+      "update": []
+    },
+    "tools": ["Bash - git, pipeline CLI", "mcp__azuredevops__pipelines_build", "mcp__azuredevops__pipelines_build_log"],
+    "bestPractices": [
+      "Wait for the pipeline to complete before checking — don't check prematurely",
+      "Extract the most relevant failure information: failing step, error message, failing test names",
+      "Provide actionable context for the implementation step to fix the issue",
+      "Distinguish between infrastructure failures (retry-worthy) and code failures (fix-worthy)",
+      "When retry cap is reached, clearly document what's still failing"
+    ]
+  },
+  "substeps": [
+    {
+      "number": 0,
+      "name": "Identify CI pipeline",
+      "description": "Find the relevant pipeline for the current branch",
+      "actions": [
+        "Determine the current repository and branch from git",
+        "Identify the CI pipeline (Azure DevOps Pipelines)",
+        "Check if a pipeline run was triggered by the recent push",
+        "Determine current retry iteration (check ciRetryIteration in memory)"
+      ]
+    },
+    {
+      "number": 1,
+      "name": "Wait for pipeline completion",
+      "description": "Poll pipeline status until complete",
+      "actions": [
+        "Check pipeline run status",
+        "If still running, poll at reasonable intervals",
+        "Wait until pipeline reaches a terminal state (succeeded, failed, canceled)"
+      ]
+    },
+    {
+      "number": 2,
+      "name": "Evaluate pipeline result",
+      "description": "Check if pipeline passed or failed",
+      "actions": [
+        "If succeeded → record success, proceed",
+        "If failed → extract build logs and error details",
+        "If canceled → treat as failure, note cancellation",
+        "Categorize failure: build error, test failure, infrastructure issue, timeout"
+      ]
+    },
+    {
+      "number": 3,
+      "name": "Extract failure context",
+      "description": "Gather actionable details for the implementation step",
+      "conditional": true,
+      "actions": [
+        "Only execute if pipeline failed",
+        "Read build logs from the failing stage/task",
+        "Extract: error messages, failing test names, stack traces",
+        "Summarize what needs to be fixed in a format the implementation step can act on"
+      ]
+    },
+    {
+      "number": 4,
+      "name": "Make retry decision",
+      "description": "Decide whether to loop back or proceed",
+      "actions": [
+        "If pipeline passed → proceed to next step",
+        "If pipeline failed AND retries < maxIterations → store failure context in memory, signal loop-back to Execute Implementation",
+        "If pipeline failed AND retries >= maxIterations → log warning about unresolved CI failure, proceed to next step",
+        "Record ciRetryIteration, ciPipelineStatus, ciFailureDetails, and ciDecision in memory"
+      ]
+    },
+    {
+      "number": 5,
+      "name": "End-Step: Compliance Check",
+      "description": "Verify principles were followed",
+      "actions": [
+        "Output: '✓ Step completed in compliance with operating principles'"
+      ]
+    }
+  ],
+  "flow": {
+    "description": "Identify pipeline → Wait for completion → Evaluate result → Extract failure context (if failed) → Retry decision (loop back or proceed)"
+  },
+  "memoryFileUsage": {
+    "readFrom": "Prepare for Review results (commits pushed), previous CI retry iterations",
+    "writeTo": "CI verification results and retry decision",
+    "fields": [
+      "Information Produced: ciPipelineStatus (passed/failed/canceled), ciFailureDetails (error messages, failing tests), ciRetryIteration (current retry number), ciDecision (passed/retry/cap-reached)",
+      "Decisions Made: Retry or proceed decision with justification"
+    ]
+  },
+  "dependencies": {
+    "requiredComponents": ["mandatory-logging.md"],
+    "requiredFiles": [],
+    "requiredTools": ["Bash", "mcp__azuredevops__pipelines_build", "mcp__azuredevops__pipelines_build_log"]
+  },
+  "references": {
+    "relatedSteps": ["prepare-for-review", "execute-implementation"],
+    "usedInTemplates": ["implement-work-item"]
+  }
+}
