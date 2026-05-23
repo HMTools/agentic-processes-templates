@@ -4,13 +4,13 @@
   "category": "sdlc",
   "metadata": {
     "title": "Verify CI Pipeline",
-    "purposeAndUsage": "Check CI/CD pipeline status after git push. If the pipeline fails, extract failure details and loop back to the implementation step for targeted fixes. Supports configurable max retries.",
+    "purposeAndUsage": "Check CI/CD pipeline status after git push. Loads pipeline configuration from .ai/deploy-config.json (with auto-discovery fallback). If the pipeline fails, extract failure details and loop back to the implementation step for targeted fixes. Supports configurable max retries.",
     "lastUpdated": "2026-05-23"
   },
   "output": {
     "description": "CI pipeline status — passed confirmation or failure details with fix context",
     "artifacts": [],
-    "memoryUpdates": ["ciPipelineStatus", "ciFailureDetails", "ciRetryIteration", "ciDecision"]
+    "memoryUpdates": ["deployConfig", "ciPipelineStatus", "ciFailureDetails", "ciRetryIteration", "ciDecision"]
   },
   "guidance": {
     "prerequisites": [
@@ -18,9 +18,27 @@
       "Git remote and CI pipeline configured for the repository"
     ],
     "mandatoryComponents": ["mandatory-logging.md"],
+    "configSchema": {
+      "path": ".ai/deploy-config.json",
+      "description": "Per-repo pipeline configuration. Currently holds CI (build) settings; will be extended with CD (deployment/release) settings in the future.",
+      "structure": {
+        "ado_project": "ADO project name (e.g. 'Payoneer') — shared across CI and CD",
+        "ci": {
+          "pipeline_definition_id": "CI/build pipeline definition ID to monitor",
+          "pipeline_name": "Pipeline name (for display/matching during auto-discovery)",
+          "timeout_minutes": "Max minutes to wait for pipeline completion (default: 15)",
+          "poll_interval_seconds": "Seconds between status checks (default: 30)"
+        }
+      },
+      "required": ["ado_project", "ci.pipeline_definition_id"],
+      "optional": ["ci.pipeline_name", "ci.timeout_minutes", "ci.poll_interval_seconds"],
+      "futureKeys": ["cd — will hold deployment/release pipeline settings"]
+    },
     "specificActions": [
-      "Identify the CI pipeline for the current repository and branch",
-      "Check pipeline status — poll if still running",
+      "Load deploy config from .ai/deploy-config.json",
+      "If config missing or incomplete: auto-discover from ADO and present to user for approval",
+      "Use config to identify the correct CI pipeline definition",
+      "Check pipeline status — poll if still running using config timeout/interval",
       "If pipeline passed → proceed to next step",
       "If pipeline failed → extract failure logs, error messages, and failing tests",
       "Track retry iteration count and respect maxIterations from template",
@@ -29,12 +47,20 @@
       "When looping back, failure details must be stored in memory so the implementation step can target the fix"
     ],
     "files": {
-      "read": [],
+      "read": [".ai/deploy-config.json (if exists)"],
       "create": [],
       "update": []
     },
-    "tools": ["Bash - git, pipeline CLI", "mcp__azuredevops__pipelines_build", "mcp__azuredevops__pipelines_build_log"],
+    "tools": [
+      "Read - Read .ai/deploy-config.json",
+      "Bash - git remote, branch detection",
+      "mcp__azuredevops__pipelines_definition - Auto-discover pipeline definitions for the repo",
+      "mcp__azuredevops__pipelines_build - Get pipeline build status",
+      "mcp__azuredevops__pipelines_build_log - Read build logs on failure"
+    ],
     "bestPractices": [
+      "Always try to load config from file first — only auto-discover if missing",
+      "When auto-discovering, present findings to user for confirmation before using them",
       "Wait for the pipeline to complete before checking — don't check prematurely",
       "Extract the most relevant failure information: failing step, error message, failing test names",
       "Provide actionable context for the implementation step to fix the issue",
@@ -45,27 +71,42 @@
   "substeps": [
     {
       "number": 0,
-      "name": "Identify CI pipeline",
-      "description": "Find the relevant pipeline for the current branch",
+      "name": "Load Deploy Config",
+      "description": "Read .ai/deploy-config.json or auto-discover pipeline settings",
       "actions": [
-        "Determine the current repository and branch from git",
-        "Identify the CI pipeline (Azure DevOps Pipelines)",
-        "Check if a pipeline run was triggered by the recent push",
+        "Check if .ai/deploy-config.json exists in the repo root",
+        "If exists: read and parse JSON, extract ado_project and ci.* fields",
+        "Validate required fields: ado_project and ci.pipeline_definition_id",
+        "If config missing or has null required fields: auto-discover from ADO",
+        "Auto-discovery: parse git remote for project/repo, list pipeline definitions via mcp__azuredevops__pipelines_definition, match by repo name",
+        "Present discovered values to user for confirmation before proceeding",
+        "Store resolved config in memory as deployConfig",
         "Determine current retry iteration (check ciRetryIteration in memory)"
       ]
     },
     {
       "number": 1,
-      "name": "Wait for pipeline completion",
-      "description": "Poll pipeline status until complete",
+      "name": "Identify CI pipeline run",
+      "description": "Find the pipeline run triggered by the recent push",
       "actions": [
-        "Check pipeline run status",
-        "If still running, poll at reasonable intervals",
-        "Wait until pipeline reaches a terminal state (succeeded, failed, canceled)"
+        "Using deployConfig.ci.pipeline_definition_id, query for recent builds on the current branch",
+        "Find the build triggered by the most recent push",
+        "If no build found, check if the pipeline is configured to trigger on this branch"
       ]
     },
     {
       "number": 2,
+      "name": "Wait for pipeline completion",
+      "description": "Poll pipeline status until complete",
+      "actions": [
+        "Check pipeline run status",
+        "If still running, poll at intervals (deployConfig.ci.poll_interval_seconds, default 30s)",
+        "Respect timeout (deployConfig.ci.timeout_minutes, default 15min)",
+        "Wait until pipeline reaches a terminal state (succeeded, failed, canceled) or timeout"
+      ]
+    },
+    {
+      "number": 3,
       "name": "Evaluate pipeline result",
       "description": "Check if pipeline passed or failed",
       "actions": [
@@ -76,19 +117,19 @@
       ]
     },
     {
-      "number": 3,
+      "number": 4,
       "name": "Extract failure context",
       "description": "Gather actionable details for the implementation step",
       "conditional": true,
       "actions": [
         "Only execute if pipeline failed",
-        "Read build logs from the failing stage/task",
+        "Read build logs from the failing stage/task via mcp__azuredevops__pipelines_build_log",
         "Extract: error messages, failing test names, stack traces",
         "Summarize what needs to be fixed in a format the implementation step can act on"
       ]
     },
     {
-      "number": 4,
+      "number": 5,
       "name": "Make retry decision",
       "description": "Decide whether to loop back or proceed",
       "actions": [
@@ -99,7 +140,7 @@
       ]
     },
     {
-      "number": 5,
+      "number": 6,
       "name": "End-Step: Compliance Check",
       "description": "Verify principles were followed",
       "actions": [
@@ -108,20 +149,20 @@
     }
   ],
   "flow": {
-    "description": "Identify pipeline → Wait for completion → Evaluate result → Extract failure context (if failed) → Retry decision (loop back or proceed)"
+    "description": "Load deploy config (.ai/deploy-config.json or auto-discover) → Identify pipeline run → Wait for completion → Evaluate result → Extract failure context (if failed) → Retry decision (loop back or proceed)"
   },
   "memoryFileUsage": {
-    "readFrom": "Prepare for Review results (commits pushed), previous CI retry iterations",
-    "writeTo": "CI verification results and retry decision",
+    "readFrom": "Prepare for Review results (commits pushed), .ai/deploy-config.json, previous CI retry iterations",
+    "writeTo": "Deploy config and CI verification results",
     "fields": [
-      "Information Produced: ciPipelineStatus (passed/failed/canceled), ciFailureDetails (error messages, failing tests), ciRetryIteration (current retry number), ciDecision (passed/retry/cap-reached)",
-      "Decisions Made: Retry or proceed decision with justification"
+      "Information Produced: deployConfig (ado_project, ci.*), ciPipelineStatus (passed/failed/canceled), ciFailureDetails (error messages, failing tests), ciRetryIteration (current retry number), ciDecision (passed/retry/cap-reached)",
+      "Decisions Made: Config source (file vs auto-discovered), retry or proceed decision with justification"
     ]
   },
   "dependencies": {
     "requiredComponents": ["mandatory-logging.md"],
     "requiredFiles": [],
-    "requiredTools": ["Bash", "mcp__azuredevops__pipelines_build", "mcp__azuredevops__pipelines_build_log"]
+    "requiredTools": ["Read", "Bash", "mcp__azuredevops__pipelines_definition", "mcp__azuredevops__pipelines_build", "mcp__azuredevops__pipelines_build_log"]
   },
   "references": {
     "relatedSteps": ["prepare-for-review", "execute-implementation"],
