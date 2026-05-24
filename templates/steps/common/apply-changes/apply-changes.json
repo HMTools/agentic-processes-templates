@@ -24,10 +24,6 @@
       "Approved change proposals from previous step",
       "Change proposals document with detailed instructions"
     ],
-    "mandatoryComponents": [
-      "mandatory-logging.md",
-      "mandatory-consultation.md"
-    ],
     "specificActions": [
       "Read approved change proposals from memory (IDs list and document path)",
       "Read change proposals document to get detailed instructions",
@@ -158,10 +154,6 @@
     ]
   },
   "dependencies": {
-    "requiredComponents": [
-      "mandatory-logging.md",
-      "mandatory-consultation.md"
-    ],
     "requiredFiles": [
       "memory.json",
       "change proposals document"

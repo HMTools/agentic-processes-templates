@@ -10,17 +10,22 @@
   "output": {
     "description": "CI pipeline status — passed confirmation or failure details with fix context",
     "artifacts": [],
-    "memoryUpdates": ["deployConfig", "ciPipelineStatus", "ciFailureDetails", "ciRetryIteration", "ciDecision"]
+    "memoryUpdates": [
+      "deployConfig",
+      "ciPipelineStatus",
+      "ciFailureDetails",
+      "ciRetryIteration",
+      "ciDecision"
+    ]
   },
   "guidance": {
     "prerequisites": [
       "Prepare for Review step completed (code committed and pushed)",
       "Git remote and CI pipeline configured for the repository"
     ],
-    "mandatoryComponents": ["mandatory-logging.md"],
     "configSchema": {
       "path": ".ai/deploy-config.json",
-      "description": "Per-repo pipeline configuration. Currently holds CI (build) settings; will be extended with CD (deployment/release) settings in the future.",
+      "description": "Per-repo pipeline configuration. Holds CI (build) settings. CD (deployment/release) settings are defined in the cd section and consumed by the deploy-to-testing sub-process.",
       "structure": {
         "ado_project": "ADO project name (e.g. 'Payoneer') — shared across CI and CD",
         "ci": {
@@ -30,9 +35,16 @@
           "poll_interval_seconds": "Seconds between status checks (default: 30)"
         }
       },
-      "required": ["ado_project", "ci.pipeline_definition_id"],
-      "optional": ["ci.pipeline_name", "ci.timeout_minutes", "ci.poll_interval_seconds"],
-      "futureKeys": ["cd — will hold deployment/release pipeline settings"]
+      "required": [
+        "ado_project",
+        "ci.pipeline_definition_id"
+      ],
+      "optional": [
+        "ci.pipeline_name",
+        "ci.timeout_minutes",
+        "ci.poll_interval_seconds"
+      ],
+      "futureKeys": []
     },
     "specificActions": [
       "Load deploy config from .ai/deploy-config.json",
@@ -47,7 +59,9 @@
       "When looping back, failure details must be stored in memory so the implementation step can target the fix"
     ],
     "files": {
-      "read": [".ai/deploy-config.json (if exists)"],
+      "read": [
+        ".ai/deploy-config.json (if exists)"
+      ],
       "create": [],
       "update": []
     },
@@ -160,12 +174,22 @@
     ]
   },
   "dependencies": {
-    "requiredComponents": ["mandatory-logging.md"],
     "requiredFiles": [],
-    "requiredTools": ["Read", "Bash", "mcp__azuredevops__pipelines_definition", "mcp__azuredevops__pipelines_build", "mcp__azuredevops__pipelines_build_log"]
+    "requiredTools": [
+      "Read",
+      "Bash",
+      "mcp__azuredevops__pipelines_definition",
+      "mcp__azuredevops__pipelines_build",
+      "mcp__azuredevops__pipelines_build_log"
+    ]
   },
   "references": {
-    "relatedSteps": ["prepare-for-review", "execute-implementation"],
-    "usedInTemplates": ["implement-work-item"]
+    "relatedSteps": [
+      "prepare-for-review",
+      "execute-implementation"
+    ],
+    "usedInTemplates": [
+      "implement-work-item"
+    ]
   }
 }

@@ -26,9 +26,6 @@
       "Clear understanding of what the step should accomplish",
       "Knowledge of existing steps to avoid duplication"
     ],
-    "mandatoryComponents": [
-      "mandatory-logging.md"
-    ],
     "specificActions": [
       "Follow the substeps below in sequence",
       "Workflow: review requirements → check existing → determine category → write purpose → define use cases → plan structure → design flow → plan substeps",
@@ -127,8 +124,7 @@
       "actions": [
         "Plan user documentation sections",
         "Plan guidance content (specific actions, tools, files)",
-        "Define expected output and memory updates",
-        "Check ~/.claude/agentic-processes/templates/steps/_components/ for applicable shared components (qa-session, mandatory-logging, etc.)"
+        "Define expected output and memory updates"
       ]
     },
     {
@@ -223,9 +219,6 @@
     }
   ],
   "dependencies": {
-    "requiredComponents": [
-      "mandatory-logging.md"
-    ],
     "requiredFiles": [
       "step-template.md",
       "steps/README.md"

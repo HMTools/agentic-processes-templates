@@ -24,9 +24,6 @@
       "Template design completed (purpose, parameters, steps, flow diagram)",
       "All referenced steps exist or are identified for creation"
     ],
-    "mandatoryComponents": [
-      "mandatory-logging.md"
-    ],
     "userGuidelines": [
       "~/.claude/agentic-processes/guidelines/docs/how-to-document-flows.md"
     ],
@@ -157,9 +154,6 @@
     ]
   },
   "dependencies": {
-    "requiredComponents": [
-      "mandatory-logging.md"
-    ],
     "requiredFiles": [],
     "requiredTools": [
       "write",

@@ -10,14 +10,17 @@
   "output": {
     "description": "Code review findings — clean result or list of issues requiring fixes",
     "artifacts": [],
-    "memoryUpdates": ["reviewFindings", "reviewIteration", "reviewDecision"]
+    "memoryUpdates": [
+      "reviewFindings",
+      "reviewIteration",
+      "reviewDecision"
+    ]
   },
   "guidance": {
     "prerequisites": [
       "Execute Implementation step completed with code changes",
       "Implementation plan available in memory"
     ],
-    "mandatoryComponents": ["mandatory-logging.md"],
     "specificActions": [
       "MUST execute in an isolated subagent context (separate window) for independent review",
       "Review all code changes from the Execute Implementation step",
@@ -30,11 +33,18 @@
       "When looping back, findings must be stored in memory so the implementation step can read them"
     ],
     "files": {
-      "read": ["All files modified/created during implementation (from memory)"],
+      "read": [
+        "All files modified/created during implementation (from memory)"
+      ],
       "create": [],
       "update": []
     },
-    "tools": ["Read", "Grep", "Glob", "Bash - git diff"],
+    "tools": [
+      "Read",
+      "Grep",
+      "Glob",
+      "Bash - git diff"
+    ],
     "bestPractices": [
       "Review with fresh eyes — do not carry implementation context",
       "Focus on substantive issues, not style nitpicks",
@@ -110,12 +120,21 @@
     ]
   },
   "dependencies": {
-    "requiredComponents": ["mandatory-logging.md"],
     "requiredFiles": [],
-    "requiredTools": ["Read", "Grep", "Glob", "Bash"]
+    "requiredTools": [
+      "Read",
+      "Grep",
+      "Glob",
+      "Bash"
+    ]
   },
   "references": {
-    "relatedSteps": ["execute-implementation", "run-local-tests"],
-    "usedInTemplates": ["implement-work-item"]
+    "relatedSteps": [
+      "execute-implementation",
+      "run-local-tests"
+    ],
+    "usedInTemplates": [
+      "implement-work-item"
+    ]
   }
 }

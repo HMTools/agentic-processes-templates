@@ -23,9 +23,6 @@
       "userStoryId parameter available from process",
       "Process context established"
     ],
-    "mandatoryComponents": [
-      "mandatory-logging.md"
-    ],
     "userGuidelines": [
       "~/.claude/agentic-processes/guidelines/planning/how-to-get-user-story-parameters.md"
     ],
@@ -147,9 +144,6 @@
     ]
   },
   "dependencies": {
-    "requiredComponents": [
-      "mandatory-logging.md"
-    ],
     "requiredFiles": [],
     "requiredTools": [
       "read_file",

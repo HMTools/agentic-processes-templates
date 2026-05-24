@@ -23,9 +23,6 @@
       "Template file to validate exists",
       "Template contains @framework-step references"
     ],
-    "mandatoryComponents": [
-      "mandatory-logging.md"
-    ],
     "specificActions": [
       "Follow the substeps below in sequence",
       "Workflow: read template → extract references → check existence → create report → handle missing",
@@ -158,9 +155,6 @@
     "location": "~/.claude/agentic-processes/templates/steps/category/step-name.md"
   },
   "dependencies": {
-    "requiredComponents": [
-      "mandatory-logging.md"
-    ],
     "requiredFiles": [
       "Template file to validate"
     ],

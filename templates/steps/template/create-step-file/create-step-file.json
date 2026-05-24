@@ -24,9 +24,6 @@
       "Step design completed (purpose, category, structure, flow diagram)",
       "Category directory identified"
     ],
-    "mandatoryComponents": [
-      "mandatory-logging.md"
-    ],
     "userGuidelines": [
       "~/.claude/agentic-processes/guidelines/docs/how-to-document-flows.md"
     ],
@@ -153,9 +150,6 @@
     ]
   },
   "dependencies": {
-    "requiredComponents": [
-      "mandatory-logging.md"
-    ],
     "requiredFiles": [
       "step-template.md"
     ],

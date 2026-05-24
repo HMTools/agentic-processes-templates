@@ -5,10 +5,6 @@ Purpose: Review applied changes against approved plan, assess implementation qua
 
 # Step: Review and Validate Artifact Updates
 
-## Required Components
-
-- [mandatory-logging.md](../../_components/mandatory-logging.md) - Logging guidelines
-
 ## Description
 
 Review and validate changes applied to a framework artifact (template, step, or process) by comparing actual modifications against the approved update plan, assessing implementation quality, and performing type-specific structural validation. This is the "review" phase in the **Analyze → Plan → Apply → Review** pipeline.

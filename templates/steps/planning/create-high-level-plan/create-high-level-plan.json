@@ -23,9 +23,6 @@
     "prerequisites": [
       "User story context with title, description, and acceptance criteria"
     ],
-    "mandatoryComponents": [
-      "mandatory-logging.md"
-    ],
     "specificActions": [
       "Gather Requirements: Extract user story title, description, and acceptance criteria; identify affected components (API, Service, Repository, etc.); understand the feature's purpose and goals",
       "Identify Missing Information: Check for external APIs, infrastructure setup, third-party libraries, business rules, data structures; list assumptions needing user confirmation; create Q&A section with specific questions - do not proceed with LLD until answers provided",
@@ -180,9 +177,6 @@
   },
   "approvalRequired": true,
   "dependencies": {
-    "requiredComponents": [
-      "mandatory-logging.md"
-    ],
     "requiredFiles": [],
     "requiredTools": [
       "read_file",

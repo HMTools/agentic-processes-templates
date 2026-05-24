@@ -75,9 +75,6 @@
       "Analysis baseline (currentStructure) is available in memory.json from prior step",
       "updateDescription is available in process parameters"
     ],
-    "mandatoryComponents": [
-      "mandatory-logging.md"
-    ],
     "guidelineNote": "Use /process-QnA-session skill if information gaps identified during planning",
     "specificActions": [
       "Follow the substeps below in sequence",
@@ -113,7 +110,7 @@
       "When user requests changes, loop through review again before re-presenting",
       "PATTERN: Iterative loops — When designing processes that interact with external reviewers, feedback sources, or any human-in-the-loop, default to iterative/loop patterns rather than single-pass designs. External feedback inherently requires multiple rounds (e.g., PR reviews, approval cycles, user testing).",
       "PATTERN: Pause-and-resume — When an iterative process depends on external human responses that arrive asynchronously (hours/days later), default to pause-and-resume (approvalRequired checkpoint) rather than polling or immediate re-check. This avoids unnecessary spinning and matches the asynchronous nature of human workflows.",
-      "PATTERN: Process migration — When updating a template, proactively consider whether active process instances should be migrated. If the plan includes migration, ensure the apply step copies ALL step properties from the template (including subProcessTrigger, approvalRequired, output, loopBackTo), not just the step skeleton.",
+      "PATTERN: Process migration — When updating a template and active process instances are found, DEFAULT to including a migration plan for each active instance. Do not wait for the user to request migration — draft it proactively as part of the plan. For each instance, determine appropriate step status (pending if not yet reached, skipped if already past). If the plan includes migration, ensure the apply step copies ALL step properties from the template (including subProcessTrigger, approvalRequired, output, loopBackTo), not just the step skeleton.",
       "PATTERN: Loop caps — Every loopBackTo step MUST have a corresponding maxIterations with a configurable parameter. Never design unbounded loops. Proactively propose iteration caps for each loop step and confirm with the user during plan approval."
     ]
   },
@@ -232,7 +229,8 @@
         "For steps: search `~/.claude/agentic-processes/templates/` for templates referencing this step via `@step:{category}/{stepName}`",
         "For processes: check `subProcessState` for parent/child relationships",
         "Report findings to the user",
-        "If `preserveActiveConsumers` is true, flag changes that would break consumers"
+        "If `preserveActiveConsumers` is true, flag changes that would break consumers",
+        "If active consumers are found: DEFAULT to drafting a migration plan for each instance — read their process.json, determine current step, plan how to insert/renumber steps with appropriate statuses (pending if not yet reached, skipped if past). Do not wait for user to request migration."
       ]
     },
     {
@@ -320,9 +318,6 @@
     ]
   },
   "dependencies": {
-    "requiredComponents": [
-      "mandatory-logging.md"
-    ],
     "requiredFiles": [],
     "requiredTools": [
       "read_file",

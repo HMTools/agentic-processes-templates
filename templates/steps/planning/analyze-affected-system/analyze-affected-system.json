@@ -26,9 +26,6 @@
       "Access to the target codebase",
       "Gathered information available from gather-relevant-information step"
     ],
-    "mandatoryComponents": [
-      "mandatory-logging.md"
-    ],
     "specificActions": [
       "Follow the substeps below in sequence",
       "Workflow: understand scope → review gathered info → validate sources → identify entry points → map components → analyze dependencies → find patterns → assess impact → document",
@@ -325,9 +322,6 @@
     "description": "If analysis reveals information gaps (early check at substep 3) or discovers blocking gaps during analysis (final check at substep 9), return to gather-relevant-information to collect missing data. Do NOT proceed to LLD creation with unresolved gaps."
   },
   "dependencies": {
-    "requiredComponents": [
-      "mandatory-logging.md"
-    ],
     "requiredFiles": [
       "memory.json"
     ],

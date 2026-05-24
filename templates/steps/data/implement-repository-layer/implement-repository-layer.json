@@ -24,9 +24,6 @@
       "Domain models defined",
       "MongoDB collections designed"
     ],
-    "mandatoryComponents": [
-      "mandatory-logging.md"
-    ],
     "userGuidelines": [
       "~/.claude/agentic-processes/guidelines/data-access/how-to-implement-repositories.md",
       "~/.claude/agentic-processes/guidelines/data-access/how-to-use-mongodb.md"
@@ -158,9 +155,6 @@
     }
   },
   "dependencies": {
-    "requiredComponents": [
-      "mandatory-logging.md"
-    ],
     "requiredFiles": [
       "Domain models"
     ],

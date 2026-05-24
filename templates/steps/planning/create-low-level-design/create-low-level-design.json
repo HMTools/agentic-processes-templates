@@ -25,10 +25,6 @@
       "Gathered information (from gather-relevant-information step)",
       "System analysis report (from analyze-affected-system step)"
     ],
-    "mandatoryComponents": [
-      "mandatory-logging.md",
-      "qa-session.md"
-    ],
     "userGuidelines": [
       "~/.claude/agentic-processes/guidelines/planning/how-to-write-low-level-design.md"
     ],
@@ -128,9 +124,8 @@
       "name": "Handle information gaps",
       "conditional": true,
       "description": "Gather missing info from user or trigger feedback loop",
-      "component": "qa-session.md",
       "actions": [
-        "If gaps can be answered by user: Conduct Q&A session following qa-session.md workflow",
+        "If gaps can be answered by user: Conduct Q&A session using the process-QnA-session skill",
         "If deeper analysis needed: Trigger feedback loop to Step 3 (gather-relevant-information)",
         "Log Q&A session results to log.json",
         "Record: key answers"
@@ -210,10 +205,6 @@
   },
   "approvalRequired": true,
   "dependencies": {
-    "requiredComponents": [
-      "mandatory-logging.md",
-      "qa-session.md"
-    ],
     "requiredFiles": [
       "memory.json with context from previous steps"
     ],

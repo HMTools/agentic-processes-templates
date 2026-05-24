@@ -23,9 +23,6 @@
       "High-level plan approved (from create-high-level-plan step)",
       "All required process-steps exist in ~/.claude/agentic-processes/templates/steps/ library"
     ],
-    "mandatoryComponents": [
-      "mandatory-logging.md"
-    ],
     "userGuidelines": [],
     "specificActions": [
       "Load High-Level Plan: Read approved high-level plan from plans/{user-story-name}/plan.md",
@@ -247,9 +244,6 @@
     "location": "plans/{user-story-name}/"
   },
   "dependencies": {
-    "requiredComponents": [
-      "mandatory-logging.md"
-    ],
     "requiredFiles": [
       "Approved high-level plan (plan.md)",
       "Process-steps in ~/.claude/agentic-processes/templates/steps/"

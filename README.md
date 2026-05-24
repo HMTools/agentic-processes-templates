@@ -17,7 +17,6 @@ templates/
     review/                # Review and verification workflows
     testing/               # Testing workflows
   steps/                   # Step templates (individual step definitions)
-    _components/           # Shared components used across steps
     api/                   # API layer steps
     common/                # Common/shared steps
     data/                  # Data layer steps

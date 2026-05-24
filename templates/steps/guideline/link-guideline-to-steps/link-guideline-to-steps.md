@@ -26,11 +26,6 @@ Use this step when you need to:
 | `guidelinePurpose` | Previous step | What the guideline is for |
 | `relatedSteps` (optional) | Parameters | Pre-identified steps to update |
 
-| Component | Purpose |
-|-----------|---------|
-| `qa-session.md` | Confirm which steps to link |
-| `mandatory-logging.md` | Log user interactions |
-
 ## Flow
 
 ```mermaid

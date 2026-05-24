@@ -10,19 +10,35 @@
   "output": {
     "description": "Test results — all passing or failures identified and fixed",
     "artifacts": [],
-    "memoryUpdates": ["testResults", "failuresFixed"]
+    "memoryUpdates": [
+      "testResults",
+      "failuresFixed"
+    ]
   },
   "guidance": {
-    "prerequisites": ["Implementation complete", "Test framework configured"],
-    "mandatoryComponents": ["mandatory-logging.md"],
+    "prerequisites": [
+      "Implementation complete",
+      "Test framework configured"
+    ],
     "specificActions": [
       "Identify test commands from project configuration",
       "Run unit tests and integration tests",
       "Fix any regressions introduced by implementation",
       "Re-run until all tests pass"
     ],
-    "files": { "read": ["package.json", "test configuration files"], "create": [], "update": [] },
-    "tools": ["Bash - run test commands", "Read - read test config", "Edit - fix test failures"],
+    "files": {
+      "read": [
+        "package.json",
+        "test configuration files"
+      ],
+      "create": [],
+      "update": []
+    },
+    "tools": [
+      "Bash - run test commands",
+      "Read - read test config",
+      "Edit - fix test failures"
+    ],
     "bestPractices": [
       "Run tests before making any fixes to establish baseline",
       "Only fix regressions caused by the implementation",
@@ -30,15 +46,87 @@
     ]
   },
   "substeps": [
-    { "number": 0, "name": "Identify test commands", "description": "Find correct test commands from project config", "actions": ["Read package.json scripts", "Check for test framework config (jest.config, .mocharc, etc.)"] },
-    { "number": 1, "name": "Run unit tests", "description": "Execute unit test suite", "actions": ["Run unit test command", "Capture output and results", "Note any failures"] },
-    { "number": 2, "name": "Run integration tests", "description": "Execute integration test suite if available", "actions": ["Run integration test command", "Capture output and results"] },
-    { "number": 3, "name": "Fix regressions", "description": "Fix test failures caused by implementation", "conditional": true, "actions": ["Analyze each failure", "Fix regressions in implementation or test code", "Re-run tests until all pass"] },
-    { "number": 4, "name": "Store test results", "description": "Record test outcomes", "actions": ["Store pass/fail counts", "Document failures fixed"] },
-    { "number": 5, "name": "End-Step: Compliance Check", "description": "Verify principles were followed", "actions": ["Output: '✓ Step completed in compliance with operating principles'"] }
+    {
+      "number": 0,
+      "name": "Identify test commands",
+      "description": "Find correct test commands from project config",
+      "actions": [
+        "Read package.json scripts",
+        "Check for test framework config (jest.config, .mocharc, etc.)"
+      ]
+    },
+    {
+      "number": 1,
+      "name": "Run unit tests",
+      "description": "Execute unit test suite",
+      "actions": [
+        "Run unit test command",
+        "Capture output and results",
+        "Note any failures"
+      ]
+    },
+    {
+      "number": 2,
+      "name": "Run integration tests",
+      "description": "Execute integration test suite if available",
+      "actions": [
+        "Run integration test command",
+        "Capture output and results"
+      ]
+    },
+    {
+      "number": 3,
+      "name": "Fix regressions",
+      "description": "Fix test failures caused by implementation",
+      "conditional": true,
+      "actions": [
+        "Analyze each failure",
+        "Fix regressions in implementation or test code",
+        "Re-run tests until all pass"
+      ]
+    },
+    {
+      "number": 4,
+      "name": "Store test results",
+      "description": "Record test outcomes",
+      "actions": [
+        "Store pass/fail counts",
+        "Document failures fixed"
+      ]
+    },
+    {
+      "number": 5,
+      "name": "End-Step: Compliance Check",
+      "description": "Verify principles were followed",
+      "actions": [
+        "Output: '✓ Step completed in compliance with operating principles'"
+      ]
+    }
   ],
-  "flow": { "description": "Identify commands → run unit tests → run integration tests → fix regressions (conditional) → store results" },
-  "memoryFileUsage": { "readFrom": "Implementation results", "writeTo": "Test results", "fields": ["testResults", "failuresFixed"] },
-  "dependencies": { "requiredComponents": ["mandatory-logging.md"], "requiredFiles": [], "requiredTools": ["Bash"] },
-  "references": { "relatedSteps": ["execute-implementation", "prepare-for-review"], "usedInTemplates": ["implement-work-item"] }
+  "flow": {
+    "description": "Identify commands → run unit tests → run integration tests → fix regressions (conditional) → store results"
+  },
+  "memoryFileUsage": {
+    "readFrom": "Implementation results",
+    "writeTo": "Test results",
+    "fields": [
+      "testResults",
+      "failuresFixed"
+    ]
+  },
+  "dependencies": {
+    "requiredFiles": [],
+    "requiredTools": [
+      "Bash"
+    ]
+  },
+  "references": {
+    "relatedSteps": [
+      "execute-implementation",
+      "prepare-for-review"
+    ],
+    "usedInTemplates": [
+      "implement-work-item"
+    ]
+  }
 }

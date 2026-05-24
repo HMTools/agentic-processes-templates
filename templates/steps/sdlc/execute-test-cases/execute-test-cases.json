@@ -9,19 +9,35 @@
   },
   "output": {
     "description": "Test results with evidence JSON files for each step",
-    "artifacts": ["Evidence JSON files: {testCaseId}-step{stepNum}-{type}.json"],
-    "memoryUpdates": ["testResults", "passCount", "failCount"]
+    "artifacts": [
+      "Evidence JSON files: {testCaseId}-step{stepNum}-{type}.json"
+    ],
+    "memoryUpdates": [
+      "testResults",
+      "passCount",
+      "failCount"
+    ]
   },
   "guidance": {
-    "prerequisites": ["Test cases parsed", "Environment configured and AWS session active"],
-    "mandatoryComponents": ["mandatory-logging.md"],
+    "prerequisites": [
+      "Test cases parsed",
+      "Environment configured and AWS session active"
+    ],
     "specificActions": [
       "For each test case, initialize empty test context dictionary",
       "For each step: identify assertion type, execute, capture evidence, compare results",
       "Clear test context between test cases"
     ],
-    "files": { "read": [], "create": ["Evidence JSON files per step"], "update": [] },
-    "tools": ["Bash - curl.exe, aws CLI, mongosh"],
+    "files": {
+      "read": [],
+      "create": [
+        "Evidence JSON files per step"
+      ],
+      "update": []
+    },
+    "tools": [
+      "Bash - curl.exe, aws CLI, mongosh"
+    ],
     "bestPractices": [
       "Evidence MUST contain actual command output — NEVER summarize or reconstruct from memory",
       "Save evidence JSON immediately after each step executes",
@@ -47,16 +63,99 @@
     }
   },
   "substeps": [
-    { "number": 0, "name": "Initialize test case execution", "description": "Prepare for test case", "actions": ["Initialize empty test context dictionary", "Log test case start"] },
-    { "number": 1, "name": "Identify assertion type", "description": "Determine what type of assertion each step requires", "actions": ["Check step text against patterns in order: setup actions, HTTP, MongoDB, SQS, S3, Coralogix", "Setup actions checked first (external API calls, account holder creation)"] },
-    { "number": 2, "name": "Execute step", "description": "Run the assertion based on type", "actions": ["Setup: call external API, extract IDs, store in test context", "HTTP: make request via curl.exe", "MongoDB: query via mongosh", "SQS: use AWS CLI with --profile and --region", "S3: use AWS CLI with --profile and --region", "Coralogix: query via DataPrime HTTP API"] },
-    { "number": 3, "name": "Capture evidence", "description": "Save evidence JSON immediately", "actions": ["Save to {testCaseId}-step{stepNum}-{type}.json in output directory", "Include: timestamp, testCaseId, stepNumber, stepType, assertionType, input, output, assertion (expected, actual, passed)"] },
-    { "number": 4, "name": "Compare results for ValidateStep", "description": "Check actual vs expected", "actions": ["For ValidateStep: compare actual result against expected", "Mark PASS if assertion matches, FAIL with details if not"] },
-    { "number": 5, "name": "Record and continue", "description": "Store result and move to next step/test case", "actions": ["Record step result", "Continue to next step or next test case", "Clear test context between test cases"] },
-    { "number": 6, "name": "End-Step: Compliance Check", "description": "Verify principles were followed", "actions": ["Output: '✓ Step completed in compliance with operating principles'"] }
+    {
+      "number": 0,
+      "name": "Initialize test case execution",
+      "description": "Prepare for test case",
+      "actions": [
+        "Initialize empty test context dictionary",
+        "Log test case start"
+      ]
+    },
+    {
+      "number": 1,
+      "name": "Identify assertion type",
+      "description": "Determine what type of assertion each step requires",
+      "actions": [
+        "Check step text against patterns in order: setup actions, HTTP, MongoDB, SQS, S3, Coralogix",
+        "Setup actions checked first (external API calls, account holder creation)"
+      ]
+    },
+    {
+      "number": 2,
+      "name": "Execute step",
+      "description": "Run the assertion based on type",
+      "actions": [
+        "Setup: call external API, extract IDs, store in test context",
+        "HTTP: make request via curl.exe",
+        "MongoDB: query via mongosh",
+        "SQS: use AWS CLI with --profile and --region",
+        "S3: use AWS CLI with --profile and --region",
+        "Coralogix: query via DataPrime HTTP API"
+      ]
+    },
+    {
+      "number": 3,
+      "name": "Capture evidence",
+      "description": "Save evidence JSON immediately",
+      "actions": [
+        "Save to {testCaseId}-step{stepNum}-{type}.json in output directory",
+        "Include: timestamp, testCaseId, stepNumber, stepType, assertionType, input, output, assertion (expected, actual, passed)"
+      ]
+    },
+    {
+      "number": 4,
+      "name": "Compare results for ValidateStep",
+      "description": "Check actual vs expected",
+      "actions": [
+        "For ValidateStep: compare actual result against expected",
+        "Mark PASS if assertion matches, FAIL with details if not"
+      ]
+    },
+    {
+      "number": 5,
+      "name": "Record and continue",
+      "description": "Store result and move to next step/test case",
+      "actions": [
+        "Record step result",
+        "Continue to next step or next test case",
+        "Clear test context between test cases"
+      ]
+    },
+    {
+      "number": 6,
+      "name": "End-Step: Compliance Check",
+      "description": "Verify principles were followed",
+      "actions": [
+        "Output: '✓ Step completed in compliance with operating principles'"
+      ]
+    }
   ],
-  "flow": { "description": "For each TC: init context → for each step: identify type → execute → capture evidence → compare → record → next TC" },
-  "memoryFileUsage": { "readFrom": "Parsed test cases and environment config", "writeTo": "Test execution results", "fields": ["testResults", "passCount", "failCount"] },
-  "dependencies": { "requiredComponents": ["mandatory-logging.md"], "requiredFiles": [], "requiredTools": ["Bash"] },
-  "references": { "relatedSteps": ["fetch-test-cases", "generate-test-results"], "usedInTemplates": ["run-test-suite"] }
+  "flow": {
+    "description": "For each TC: init context → for each step: identify type → execute → capture evidence → compare → record → next TC"
+  },
+  "memoryFileUsage": {
+    "readFrom": "Parsed test cases and environment config",
+    "writeTo": "Test execution results",
+    "fields": [
+      "testResults",
+      "passCount",
+      "failCount"
+    ]
+  },
+  "dependencies": {
+    "requiredFiles": [],
+    "requiredTools": [
+      "Bash"
+    ]
+  },
+  "references": {
+    "relatedSteps": [
+      "fetch-test-cases",
+      "generate-test-results"
+    ],
+    "usedInTemplates": [
+      "run-test-suite"
+    ]
+  }
 }

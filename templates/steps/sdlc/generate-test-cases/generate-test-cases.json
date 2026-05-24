@@ -26,9 +26,6 @@
       "Test plan context approved",
       "Test case writing guidelines loaded"
     ],
-    "mandatoryComponents": [
-      "mandatory-logging.md"
-    ],
     "specificActions": [
       "Calibrate scope based on PBI type",
       "Resolve target suite path in ADO",
@@ -68,8 +65,8 @@
     },
     "coverageClassification": {
       "new": "No existing coverage",
-      "update": "Existing test needs new steps \u2014 include current+proposed for diff",
-      "skip": "Fully covered \u2014 just link",
+      "update": "Existing test needs new steps — include current+proposed for diff",
+      "skip": "Fully covered — just link",
       "obsolete": "Flow removed by PBI"
     }
   },
@@ -157,9 +154,6 @@
     ]
   },
   "dependencies": {
-    "requiredComponents": [
-      "mandatory-logging.md"
-    ],
     "requiredFiles": [],
     "requiredTools": [
       "MCP",

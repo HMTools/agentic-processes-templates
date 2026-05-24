@@ -5,10 +5,6 @@ Purpose: Collect relevant information from various sources using team's guidelin
 
 # Step: Gather Relevant Information
 
-## Required Components
-
-- [mandatory-logging.md](../_components/mandatory-logging.md) - Logging guidelines
-
 ## Description
 
 Collect relevant information from various sources (documentation, code patterns, specifications, SME input) using the team's configured guideline-based approach to support upcoming design, analysis, or implementation work.

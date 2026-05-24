@@ -24,9 +24,6 @@
       "All previous investigation steps completed",
       "Data available in memory from previous steps"
     ],
-    "mandatoryComponents": [
-      "mandatory-logging.md"
-    ],
     "specificActions": [
       "Read all investigation data from previous steps in memory",
       "Compile into organized sections",
@@ -164,9 +161,6 @@
     "Conclusion"
   ],
   "dependencies": {
-    "requiredComponents": [
-      "mandatory-logging.md"
-    ],
     "requiredFiles": [
       "memory.json",
       "findings-report.md (if exists)",

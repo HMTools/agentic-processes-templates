@@ -64,9 +64,6 @@
       "Artifact must exist (relevant files based on type)",
       "Artifact type must be specified"
     ],
-    "mandatoryComponents": [
-      "mandatory-logging.md"
-    ],
     "specificActions": [
       "Follow the substeps below in sequence",
       "Workflow: validate params → locate files → load files → parse structure → record baseline",
@@ -231,9 +228,6 @@
     ]
   },
   "dependencies": {
-    "requiredComponents": [
-      "mandatory-logging.md"
-    ],
     "requiredFiles": [],
     "requiredTools": [
       "read_file",

@@ -19,9 +19,6 @@
     "prerequisites": [
       "Implemented fix from previous step"
     ],
-    "mandatoryComponents": [
-      "mandatory-logging.md"
-    ],
     "specificActions": [
       "Run the specific test that was failing",
       "Capture complete test output",
@@ -130,9 +127,6 @@
     }
   ],
   "dependencies": {
-    "requiredComponents": [
-      "mandatory-logging.md"
-    ],
     "requiredFiles": [
       "Previous step memory"
     ],

@@ -20,10 +20,6 @@
       "Replies posted in previous step (replies.posted available in memory)",
       "This step has approvalRequired: true in the template"
     ],
-    "mandatoryComponents": [
-      "mandatory-logging.md",
-      "mandatory-approval-checkpoint.md"
-    ],
     "specificActions": [
       "Follow the substeps below in sequence",
       "Workflow: summarize iteration → present decision checkpoint → record user decision",
@@ -107,10 +103,6 @@
     ]
   },
   "dependencies": {
-    "requiredComponents": [
-      "mandatory-logging.md",
-      "mandatory-approval-checkpoint.md"
-    ],
     "requiredFiles": [],
     "requiredTools": []
   },

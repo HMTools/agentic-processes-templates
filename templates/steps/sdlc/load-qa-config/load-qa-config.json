@@ -25,9 +25,6 @@
       "Work item ID available in process parameters",
       "Access to Azure DevOps MCP tools"
     ],
-    "mandatoryComponents": [
-      "mandatory-logging.md"
-    ],
     "specificActions": [
       "Follow the substeps below in sequence",
       "Config file path: .ai/qa-config.json in the repository root",
@@ -144,9 +141,6 @@
     ]
   },
   "dependencies": {
-    "requiredComponents": [
-      "mandatory-logging.md"
-    ],
     "requiredFiles": [],
     "requiredTools": [
       "read_file",

@@ -5,10 +5,6 @@ Purpose: Parse a comma-separated repository list into a structured repositories-
 
 # Step: Parse Repository List
 
-## Required Components
-
-- [mandatory-logging.md](../../_components/mandatory-logging.md) - Logging guidelines
-
 ## Description
 
 Parse a user-provided comma-separated string of repository references into a validated, structured `repositories-list.json` file that downstream steps can consume. Each entry is classified as either a remote URL, a local filesystem path, or unknown, validated for basic correctness, and enriched with metadata (name, source type). Invalid entries are preserved with `valid: false` rather than silently dropped.

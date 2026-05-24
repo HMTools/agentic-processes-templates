@@ -9,20 +9,35 @@
   },
   "output": {
     "description": "Clean commits, AC verification, change summary",
-    "artifacts": ["Git commits"],
-    "memoryUpdates": ["commitsSummary", "acVerification", "changeSummary", "planDeviations"]
+    "artifacts": [
+      "Git commits"
+    ],
+    "memoryUpdates": [
+      "commitsSummary",
+      "acVerification",
+      "changeSummary",
+      "planDeviations"
+    ]
   },
   "guidance": {
-    "prerequisites": ["Implementation complete", "Tests passing"],
-    "mandatoryComponents": ["mandatory-logging.md"],
+    "prerequisites": [
+      "Implementation complete",
+      "Tests passing"
+    ],
     "specificActions": [
       "Review all changes made during implementation",
       "Create commits with clear, descriptive messages",
       "Verify each acceptance criterion is met",
       "Summarize all changes and note any plan deviations"
     ],
-    "files": { "read": [], "create": [], "update": [] },
-    "tools": ["Bash - git commands"],
+    "files": {
+      "read": [],
+      "create": [],
+      "update": []
+    },
+    "tools": [
+      "Bash - git commands"
+    ],
     "bestPractices": [
       "Group related changes into logical commits",
       "Write commit messages that explain WHY, not just WHAT",
@@ -30,15 +45,89 @@
     ]
   },
   "substeps": [
-    { "number": 0, "name": "Review all changes", "description": "Inspect changes made", "actions": ["Run git diff to see all changes", "Verify no unintended changes included"] },
-    { "number": 1, "name": "Create commits", "description": "Stage and commit with clear messages", "actions": ["Group related changes into logical commits", "Write descriptive commit messages", "Ensure no sensitive files committed"] },
-    { "number": 2, "name": "Verify acceptance criteria", "description": "Check each AC is met", "actions": ["List each AC from the work item", "Verify each criterion is met", "Document evidence for each"] },
-    { "number": 3, "name": "Document deviations", "description": "Note differences from plan", "actions": ["Compare implementation against plan", "Document deviations with justification"] },
-    { "number": 4, "name": "Summarize changes", "description": "Create change summary", "actions": ["List files created/modified/deleted", "Summarize components affected", "Store in memory"] },
-    { "number": 5, "name": "End-Step: Compliance Check", "description": "Verify principles were followed", "actions": ["Output: '✓ Step completed in compliance with operating principles'"] }
+    {
+      "number": 0,
+      "name": "Review all changes",
+      "description": "Inspect changes made",
+      "actions": [
+        "Run git diff to see all changes",
+        "Verify no unintended changes included"
+      ]
+    },
+    {
+      "number": 1,
+      "name": "Create commits",
+      "description": "Stage and commit with clear messages",
+      "actions": [
+        "Group related changes into logical commits",
+        "Write descriptive commit messages",
+        "Ensure no sensitive files committed"
+      ]
+    },
+    {
+      "number": 2,
+      "name": "Verify acceptance criteria",
+      "description": "Check each AC is met",
+      "actions": [
+        "List each AC from the work item",
+        "Verify each criterion is met",
+        "Document evidence for each"
+      ]
+    },
+    {
+      "number": 3,
+      "name": "Document deviations",
+      "description": "Note differences from plan",
+      "actions": [
+        "Compare implementation against plan",
+        "Document deviations with justification"
+      ]
+    },
+    {
+      "number": 4,
+      "name": "Summarize changes",
+      "description": "Create change summary",
+      "actions": [
+        "List files created/modified/deleted",
+        "Summarize components affected",
+        "Store in memory"
+      ]
+    },
+    {
+      "number": 5,
+      "name": "End-Step: Compliance Check",
+      "description": "Verify principles were followed",
+      "actions": [
+        "Output: '✓ Step completed in compliance with operating principles'"
+      ]
+    }
   ],
-  "flow": { "description": "Review changes → create commits → verify AC → document deviations → summarize" },
-  "memoryFileUsage": { "readFrom": "Implementation results and work item AC", "writeTo": "Review preparation", "fields": ["commitsSummary", "acVerification", "changeSummary", "planDeviations"] },
-  "dependencies": { "requiredComponents": ["mandatory-logging.md"], "requiredFiles": [], "requiredTools": ["Bash"] },
-  "references": { "relatedSteps": ["execute-implementation", "run-local-tests"], "usedInTemplates": ["implement-work-item"] }
+  "flow": {
+    "description": "Review changes → create commits → verify AC → document deviations → summarize"
+  },
+  "memoryFileUsage": {
+    "readFrom": "Implementation results and work item AC",
+    "writeTo": "Review preparation",
+    "fields": [
+      "commitsSummary",
+      "acVerification",
+      "changeSummary",
+      "planDeviations"
+    ]
+  },
+  "dependencies": {
+    "requiredFiles": [],
+    "requiredTools": [
+      "Bash"
+    ]
+  },
+  "references": {
+    "relatedSteps": [
+      "execute-implementation",
+      "run-local-tests"
+    ],
+    "usedInTemplates": [
+      "implement-work-item"
+    ]
+  }
 }

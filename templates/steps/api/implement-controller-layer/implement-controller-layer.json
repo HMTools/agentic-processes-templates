@@ -27,9 +27,6 @@
       "Authentication requirements",
       "Service layer contracts (Arguments, Results)"
     ],
-    "mandatoryComponents": [
-      "mandatory-logging.md"
-    ],
     "userGuidelines": [
       "~/.claude/agentic-processes/guidelines/api-design/how-to-implement-controllers.md",
       "~/.claude/agentic-processes/guidelines/api-design/how-to-handle-authentication.md",
@@ -182,9 +179,6 @@
     }
   ],
   "dependencies": {
-    "requiredComponents": [
-      "mandatory-logging.md"
-    ],
     "requiredFiles": [
       "Service layer contracts (Arguments, Results)"
     ],

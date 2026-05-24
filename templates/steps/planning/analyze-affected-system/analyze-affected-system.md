@@ -5,10 +5,6 @@ Purpose: Analyze current system to identify affected components, dependencies, p
 
 # Step: Analyze Affected System
 
-## Required Components
-
-- [mandatory-logging.md](_components/mandatory-logging.md) - Logging guidelines
-
 ## Description
 
 Analyze the current system (codebase AND gathered information from various sources) to identify affected components, dependencies, patterns, and impact areas for implementing a user story. This step provides structured impact assessment to inform low-level design decisions.

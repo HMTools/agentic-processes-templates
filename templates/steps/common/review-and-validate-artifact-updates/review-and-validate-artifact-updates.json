@@ -51,9 +51,6 @@
       "Memory contains: updatePlanRef (path to update-plan.md) from plan step",
       "Memory contains: artifactType, artifactPath from earlier steps"
     ],
-    "mandatoryComponents": [
-      "mandatory-logging.md"
-    ],
     "specificActions": [
       "Follow the substeps below in sequence",
       "Workflow: load context → read plan → read artifact → compare against plan → assess quality → validate structure → generate report → present for approval",
@@ -363,9 +360,6 @@
     ]
   },
   "dependencies": {
-    "requiredComponents": [
-      "mandatory-logging.md"
-    ],
     "requiredFiles": [
       "update-plan.md (in process folder, path from memory)"
     ],

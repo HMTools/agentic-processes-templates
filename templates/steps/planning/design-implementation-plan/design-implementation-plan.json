@@ -28,9 +28,6 @@
       "Findings report with current state analysis",
       "Process parameters (conceptDescription, requestedState, verificationCriteria)"
     ],
-    "mandatoryComponents": [
-      "mandatory-logging.md"
-    ],
     "specificActions": [
       "Read Context from Previous Steps: Read from memory.json (concept definition, findings, gaps); read from process.md (conceptDescription, requestedState, verificationCriteria); read the findings report to understand current state",
       "Understand Requested State: If requestedState parameter provided, use as specification; if NOT provided, derive from concept description and characteristics; document requested state specification clearly",
@@ -239,9 +236,6 @@
   },
   "approvalRequired": true,
   "dependencies": {
-    "requiredComponents": [
-      "mandatory-logging.md"
-    ],
     "requiredFiles": [
       "memory.json",
       "process.md",

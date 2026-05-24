@@ -43,9 +43,6 @@
     "prerequisites": [
       "This must be a sub-process with a parent reference"
     ],
-    "mandatoryComponents": [
-      "mandatory-logging.md"
-    ],
     "specificActions": [
       "Check if Sub-Process: Read own memory.json 'Sub-Process State' section; check 'Parent Process' field; if 'None' or not a sub-process, skip this step",
       "Read Parent Memory: Locate parent process directory from parent reference; read parent's memory.json",

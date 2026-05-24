@@ -55,9 +55,6 @@
     "prerequisites": [
       "Parent process must be active"
     ],
-    "mandatoryComponents": [
-      "mandatory-logging.md"
-    ],
     "specificActions": [
       "Determine Sub-Process Configuration: Identify template to use; gather parameters for the sub-process; determine sync point (when parent should wait)",
       "Create Sub-Process: Use /process-new with the specified template; pass parent process path as context; sub-process memory will have parent reference",

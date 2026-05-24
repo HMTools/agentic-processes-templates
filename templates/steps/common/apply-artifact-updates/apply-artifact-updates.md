@@ -5,10 +5,6 @@ Purpose: Apply approved changes from update-plan.md to artifact files and verify
 
 # Step: Apply Artifact Updates
 
-## Required Components
-
-- [mandatory-logging.md](../../_components/mandatory-logging.md) - Logging guidelines
-
 ## Description
 
 Apply approved changes from `update-plan.md` to artifact files (JSON and MD), executing each planned modification according to the artifact type and verifying changes were applied correctly. This is the "apply" phase in the **Analyze → Plan → Apply → Review** pipeline.

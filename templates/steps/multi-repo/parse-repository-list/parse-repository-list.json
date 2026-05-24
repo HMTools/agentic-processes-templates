@@ -24,9 +24,6 @@
     "prerequisites": [
       "repositoryList parameter available in process context (from process.json parameters or memory.json)"
     ],
-    "mandatoryComponents": [
-      "mandatory-logging.md"
-    ],
     "specificActions": [
       "Read the repositoryList parameter from process.json parameters or memory.json",
       "Split the comma-separated string by comma and trim whitespace from each entry",
@@ -160,9 +157,6 @@
     }
   },
   "dependencies": {
-    "requiredComponents": [
-      "mandatory-logging.md"
-    ],
     "requiredFiles": [
       "process.json or memory.json (parameter source)"
     ],

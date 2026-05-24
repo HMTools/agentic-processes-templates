@@ -24,9 +24,6 @@
       "Issues list from previous step (issues-list.json)",
       "Findings report from previous step"
     ],
-    "mandatoryComponents": [
-      "mandatory-logging.md"
-    ],
     "specificActions": [
       "Read issues from previous step, analyze each issue with context",
       "Create detailed fix proposals with what, how, and why",
@@ -175,9 +172,6 @@
   ],
   "approvalRequired": true,
   "dependencies": {
-    "requiredComponents": [
-      "mandatory-logging.md"
-    ],
     "requiredFiles": [
       "memory.json",
       "issues-list.json",

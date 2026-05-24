@@ -9,12 +9,25 @@
   },
   "output": {
     "description": "Output directory created, config loaded, AWS session verified, environment confirmed by user",
-    "artifacts": ["Output directory"],
-    "memoryUpdates": ["outputDir", "config", "environment", "awsProfile", "awsRegion", "s3Bucket", "triggerQueueUrl", "customerQueueUrl"]
+    "artifacts": [
+      "Output directory"
+    ],
+    "memoryUpdates": [
+      "outputDir",
+      "config",
+      "environment",
+      "awsProfile",
+      "awsRegion",
+      "s3Bucket",
+      "triggerQueueUrl",
+      "customerQueueUrl"
+    ]
   },
   "guidance": {
-    "prerequisites": ["Test suite ID available", "Config file exists"],
-    "mandatoryComponents": ["mandatory-logging.md"],
+    "prerequisites": [
+      "Test suite ID available",
+      "Config file exists"
+    ],
     "specificActions": [
       "Create output directory: skills-outputs/test-runner/{suiteId}/{timestamp}/",
       "Load config from .cursor/skills/run-test-suite/config.json",
@@ -23,11 +36,19 @@
       "Confirm environment details with user"
     ],
     "files": {
-      "read": [".cursor/skills/run-test-suite/config.json", ".devops/gitops-values/aws/config-files/{appConfigPath}/config-map.json"],
-      "create": ["skills-outputs/test-runner/{suiteId}/{timestamp}/"],
+      "read": [
+        ".cursor/skills/run-test-suite/config.json",
+        ".devops/gitops-values/aws/config-files/{appConfigPath}/config-map.json"
+      ],
+      "create": [
+        "skills-outputs/test-runner/{suiteId}/{timestamp}/"
+      ],
       "update": []
     },
-    "tools": ["Bash - AWS CLI commands, mkdir", "Read - config files"],
+    "tools": [
+      "Bash - AWS CLI commands, mkdir",
+      "Read - config files"
+    ],
     "bestPractices": [
       "All AWS CLI commands must include --profile and --region",
       "Account ID mismatch = abort immediately with clear error",
@@ -36,16 +57,103 @@
     ]
   },
   "substeps": [
-    { "number": 0, "name": "Create output directory", "description": "Set up directory for test evidence and reports", "actions": ["Create skills-outputs/test-runner/{suiteId}/{YYYY-MM-DD_HH-mm-ss}/"] },
-    { "number": 1, "name": "Load config", "description": "Read test runner configuration", "actions": ["Read .cursor/skills/run-test-suite/config.json", "If missing, instruct user to copy from config.example.json and stop", "Resolve target environment: use --env if provided, otherwise defaultEnvironment"] },
-    { "number": 2, "name": "Load app config-map", "description": "Resolve AWS service endpoints", "actions": ["Read .devops/gitops-values/aws/config-files/{appConfigPath}/config-map.json", "Extract: triggerQueueUrl, customerQueueUrl, s3Bucket, awsRegion", "Extract externalApis from environment config"] },
-    { "number": 3, "name": "Verify AWS SSO session", "description": "Ensure AWS session is active and correct", "actions": ["Run aws sts get-caller-identity --profile {awsProfile}", "If fails: run aws sso login --profile {awsProfile}", "Compare Account field against awsAccountId — if mismatch, ABORT with clear error"] },
-    { "number": 4, "name": "Confirm environment with user", "description": "Display resolved environment and get confirmation", "actions": ["Display: environment, baseUrl, awsProfile, awsAccountId, awsRegion, s3Bucket, queues, coralogix, account holder service", "Ask user to confirm via AskQuestion", "If user declines, abort the run"] },
-    { "number": 5, "name": "Store config in memory", "description": "Save resolved configuration", "actions": ["Store all resolved config values in memory for subsequent steps"] },
-    { "number": 6, "name": "End-Step: Compliance Check", "description": "Verify principles were followed", "actions": ["Output: '✓ Step completed in compliance with operating principles'"] }
+    {
+      "number": 0,
+      "name": "Create output directory",
+      "description": "Set up directory for test evidence and reports",
+      "actions": [
+        "Create skills-outputs/test-runner/{suiteId}/{YYYY-MM-DD_HH-mm-ss}/"
+      ]
+    },
+    {
+      "number": 1,
+      "name": "Load config",
+      "description": "Read test runner configuration",
+      "actions": [
+        "Read .cursor/skills/run-test-suite/config.json",
+        "If missing, instruct user to copy from config.example.json and stop",
+        "Resolve target environment: use --env if provided, otherwise defaultEnvironment"
+      ]
+    },
+    {
+      "number": 2,
+      "name": "Load app config-map",
+      "description": "Resolve AWS service endpoints",
+      "actions": [
+        "Read .devops/gitops-values/aws/config-files/{appConfigPath}/config-map.json",
+        "Extract: triggerQueueUrl, customerQueueUrl, s3Bucket, awsRegion",
+        "Extract externalApis from environment config"
+      ]
+    },
+    {
+      "number": 3,
+      "name": "Verify AWS SSO session",
+      "description": "Ensure AWS session is active and correct",
+      "actions": [
+        "Run aws sts get-caller-identity --profile {awsProfile}",
+        "If fails: run aws sso login --profile {awsProfile}",
+        "Compare Account field against awsAccountId — if mismatch, ABORT with clear error"
+      ]
+    },
+    {
+      "number": 4,
+      "name": "Confirm environment with user",
+      "description": "Display resolved environment and get confirmation",
+      "actions": [
+        "Display: environment, baseUrl, awsProfile, awsAccountId, awsRegion, s3Bucket, queues, coralogix, account holder service",
+        "Ask user to confirm via AskQuestion",
+        "If user declines, abort the run"
+      ]
+    },
+    {
+      "number": 5,
+      "name": "Store config in memory",
+      "description": "Save resolved configuration",
+      "actions": [
+        "Store all resolved config values in memory for subsequent steps"
+      ]
+    },
+    {
+      "number": 6,
+      "name": "End-Step: Compliance Check",
+      "description": "Verify principles were followed",
+      "actions": [
+        "Output: '✓ Step completed in compliance with operating principles'"
+      ]
+    }
   ],
-  "flow": { "description": "Create output dir → load config → load app config-map → verify AWS → confirm with user → store" },
-  "memoryFileUsage": { "readFrom": "Config files", "writeTo": "Environment configuration", "fields": ["outputDir", "config", "environment", "awsProfile", "awsRegion", "s3Bucket", "triggerQueueUrl", "customerQueueUrl"] },
-  "dependencies": { "requiredComponents": ["mandatory-logging.md"], "requiredFiles": [".cursor/skills/run-test-suite/config.json"], "requiredTools": ["Bash", "Read"] },
-  "references": { "relatedSteps": ["fetch-test-cases"], "usedInTemplates": ["run-test-suite"] }
+  "flow": {
+    "description": "Create output dir → load config → load app config-map → verify AWS → confirm with user → store"
+  },
+  "memoryFileUsage": {
+    "readFrom": "Config files",
+    "writeTo": "Environment configuration",
+    "fields": [
+      "outputDir",
+      "config",
+      "environment",
+      "awsProfile",
+      "awsRegion",
+      "s3Bucket",
+      "triggerQueueUrl",
+      "customerQueueUrl"
+    ]
+  },
+  "dependencies": {
+    "requiredFiles": [
+      ".cursor/skills/run-test-suite/config.json"
+    ],
+    "requiredTools": [
+      "Bash",
+      "Read"
+    ]
+  },
+  "references": {
+    "relatedSteps": [
+      "fetch-test-cases"
+    ],
+    "usedInTemplates": [
+      "run-test-suite"
+    ]
+  }
 }

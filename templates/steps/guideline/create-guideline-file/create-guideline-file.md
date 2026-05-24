@@ -26,11 +26,6 @@ Use this step when you need to:
 | `guidelineCategory` | Previous step | Category folder (e.g., `api-design`) |
 | `guidelinePurpose` | Previous step | The "How to" question this answers |
 
-| Component | Purpose |
-|-----------|---------|
-| `qa-session.md` | Gather missing info if context incomplete |
-| `mandatory-logging.md` | Log user interactions |
-
 ## Flow
 
 ```mermaid

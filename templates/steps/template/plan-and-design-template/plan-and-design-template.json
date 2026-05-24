@@ -22,9 +22,6 @@
       "Clear understanding of the workflow to be templated",
       "Knowledge of existing templates and steps"
     ],
-    "mandatoryComponents": [
-      "mandatory-logging.md"
-    ],
     "specificActions": [
       "Follow the substeps below in sequence",
       "Workflow: review requirements → check existing → purpose → use cases → check reusable steps → plan steps → identify parameters → design flow → create diagram",
@@ -320,9 +317,6 @@
     }
   ],
   "dependencies": {
-    "requiredComponents": [
-      "mandatory-logging.md"
-    ],
     "requiredFiles": [
       "templates/README.md"
     ],

@@ -5,11 +5,6 @@ Purpose: Plan specific changes to an existing framework artifact and produce an 
 
 # Step: Plan Artifact Updates
 
-## Required Components
-
-- [mandatory-logging.md](../../_components/mandatory-logging.md) - Logging guidelines
-- [qa-session.md](../../_components/qa-session.md) - Q&A session pattern (conditional)
-
 ## Description
 
 Plan specific changes to an existing framework artifact (template, step, or process) by reviewing the update description, loading the baseline analysis from a prior step, prompting the user about backward compatibility, checking for active consumers, and producing an `update-plan.md` document for approval. This step adapts its behavior based on artifact type — the same parameterized approach used by `analyze-current-artifact-state`.

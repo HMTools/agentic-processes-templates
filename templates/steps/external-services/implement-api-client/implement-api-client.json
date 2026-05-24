@@ -26,10 +26,6 @@
       "Authentication requirements",
       "Request/response contracts"
     ],
-    "mandatoryComponents": [
-      "mandatory-logging.md",
-      "pre-implementation-patterns.md"
-    ],
     "userGuidelines": [
       "~/.claude/agentic-processes/guidelines/api-design/how-to-handle-authentication.md",
       "~/.claude/agentic-processes/guidelines/implementation/how-to-handle-errors.md"
@@ -200,10 +196,6 @@
     }
   },
   "dependencies": {
-    "requiredComponents": [
-      "mandatory-logging.md",
-      "pre-implementation-patterns.md"
-    ],
     "requiredFiles": [
       "API documentation"
     ],

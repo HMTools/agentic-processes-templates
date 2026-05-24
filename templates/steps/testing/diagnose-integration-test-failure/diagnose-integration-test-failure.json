@@ -20,9 +20,6 @@
     "prerequisites": [
       "Captured failure information from previous step"
     ],
-    "mandatoryComponents": [
-      "mandatory-logging.md"
-    ],
     "specificActions": [
       "Review test failure information from previous step",
       "Validate test expectations match business requirements",
@@ -172,9 +169,6 @@
     }
   ],
   "dependencies": {
-    "requiredComponents": [
-      "mandatory-logging.md"
-    ],
     "requiredFiles": [
       "Previous step memory with failure info"
     ],

@@ -5,7 +5,7 @@
   "metadata": {
     "title": "SDLC Orchestrator",
     "purposeAndUsage": "End-to-end SDLC orchestrator that spawns sub-processes for planning, test planning, implementation, and test execution. Use when implementing an ADO work item with full lifecycle coverage.",
-    "lastUpdated": "2026-05-21"
+    "lastUpdated": "2026-05-24"
   },
   "parameters": {
     "required": [
@@ -62,6 +62,22 @@
     },
     {
       "number": 3,
+      "name": "Deploy to Testing Environments",
+      "stepRef": "@step:common/spawn-sub-process",
+      "output": "CD pipeline deployment status -- deployed successfully or failure details",
+      "subProcessTrigger": {
+        "template": "sdlc/deploy-to-testing",
+        "parameters": {
+          "workItemId": "{{workItemId}}"
+        },
+        "syncPoint": "immediate"
+      },
+      "loopBackTo": 2,
+      "loopCondition": "CD deployment failed, routing back to Implement Work Item for fix",
+      "maxIterations": 3
+    },
+    {
+      "number": 4,
       "name": "Run Test Suite",
       "stepRef": "@step:common/spawn-sub-process",
       "output": "Test execution results report",
@@ -74,7 +90,7 @@
       }
     },
     {
-      "number": 4,
+      "number": 5,
       "name": "Fix PR Comments",
       "stepRef": "@step:common/spawn-sub-process",
       "output": "PR comments addressed and replied to",
@@ -87,14 +103,14 @@
       }
     },
     {
-      "number": 5,
+      "number": 6,
       "name": "Continuous Improvement",
       "stepRef": "@step:learning/continuous-improvement",
       "output": "Improvements implemented",
       "approvalRequired": true
     },
     {
-      "number": 6,
+      "number": 7,
       "name": "End Process Validation",
       "stepRef": "@step:common/end-process-validation",
       "output": "Compliance report"
@@ -110,6 +126,7 @@
       "sdlc/plan-work-item",
       "sdlc/create-test-plan",
       "sdlc/implement-work-item",
+      "sdlc/deploy-to-testing",
       "sdlc/run-test-suite",
       "sdlc/fix-pr-comments"
     ],

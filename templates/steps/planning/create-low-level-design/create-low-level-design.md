@@ -1,10 +1,5 @@
 # Step: Create Low-Level Design
 
-## Required Components
-
-- [mandatory-logging.md](../_components/mandatory-logging.md) - Logging guidelines
-- [qa-session.md](../_components/qa-session.md) - Q&A session workflow
-
 ## Description
 
 Create a comprehensive low-level design (LLD) document that serves as the technical specification for implementing a user story. The step is guideline-driven - the actual LLD content and structure are defined by the team's guideline, with a default fallback structure available.

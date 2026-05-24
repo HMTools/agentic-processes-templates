@@ -22,9 +22,6 @@
       "Local workspace on the correct PR branch",
       "Git remote configured and push access available"
     ],
-    "mandatoryComponents": [
-      "mandatory-logging.md"
-    ],
     "specificActions": [
       "Follow the substeps below in sequence",
       "Workflow: read approved plan → apply code fixes → stage files → commit → push → store results",
@@ -142,9 +139,6 @@
     ]
   },
   "dependencies": {
-    "requiredComponents": [
-      "mandatory-logging.md"
-    ],
     "requiredFiles": [
       "Source code files referenced in fix plan"
     ],

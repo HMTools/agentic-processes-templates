@@ -49,9 +49,6 @@
       "Approved update-plan.md from plan-artifact-updates step",
       "Memory contains: updatePlanRef (path to update-plan.md), artifactPath, artifactType from prior steps"
     ],
-    "mandatoryComponents": [
-      "mandatory-logging.md"
-    ],
     "specificActions": [
       "Follow the substeps below in sequence",
       "Workflow: load context → read plan → resolve files by type → read files → apply JSON → apply MD → conditional diagram update → verify (retry on failure) → update memory",
@@ -275,9 +272,6 @@
     ]
   },
   "dependencies": {
-    "requiredComponents": [
-      "mandatory-logging.md"
-    ],
     "requiredFiles": [
       "update-plan.md (in process folder)"
     ],

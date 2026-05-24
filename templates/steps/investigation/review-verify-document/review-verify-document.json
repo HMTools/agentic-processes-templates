@@ -29,9 +29,6 @@
       "Identified files list from previous step",
       "Investigation scope and verification criteria"
     ],
-    "mandatoryComponents": [
-      "mandatory-logging.md"
-    ],
     "specificActions": [
       "Follow the substeps below in sequence",
       "Workflow: read files → analyze content → verify against criteria → identify issues → categorize → document findings",
@@ -170,9 +167,6 @@
     "Low"
   ],
   "dependencies": {
-    "requiredComponents": [
-      "mandatory-logging.md"
-    ],
     "requiredFiles": [
       "memory.json",
       "identified-files.json"

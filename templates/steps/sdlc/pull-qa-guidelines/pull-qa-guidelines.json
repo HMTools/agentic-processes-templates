@@ -10,11 +10,17 @@
   "output": {
     "description": "Parsed guideline content stored in memory for downstream consumption",
     "artifacts": [],
-    "memoryUpdates": ["guidelines.content", "guidelines.source", "guidelines.files"]
+    "memoryUpdates": [
+      "guidelines.content",
+      "guidelines.source",
+      "guidelines.files"
+    ]
   },
   "guidance": {
-    "prerequisites": ["Access to Azure DevOps MCP tools", "QA guidelines repository ID: 9b4f0be0-9a6b-43d1-a3b1-fd5f73714b19"],
-    "mandatoryComponents": ["mandatory-logging.md"],
+    "prerequisites": [
+      "Access to Azure DevOps MCP tools",
+      "QA guidelines repository ID: 9b4f0be0-9a6b-43d1-a3b1-fd5f73714b19"
+    ],
     "specificActions": [
       "Follow the substeps below in sequence",
       "Repository ID for qa-guidelines: 9b4f0be0-9a6b-43d1-a3b1-fd5f73714b19",
@@ -24,18 +30,103 @@
       "For test case guidelines: test-plan-creation/test-case-writing.md, test-plan-creation/test-types-reference.md, test-plan-creation/test-case-metadata.md, test-plan-creation/examples.md",
       "Fallback: If mcp__azuredevops__search_code or mcp__azuredevops__repo_file fails (e.g., unindexed repo), clone the repo locally to a temp directory and read files directly from the filesystem"
     ],
-    "files": {"read": ["memory.json (for process context and which files to read)", "qa-guidelines repo files (via ADO MCP or local clone)"], "create": [], "update": []},
-    "tools": ["mcp__azuredevops__repo_file - Read files from qa-guidelines repo", "mcp__azuredevops__repo_repository - Get repo details if needed", "mcp__azuredevops__search_code - Search for files in repo", "git clone - Fallback: clone repo locally if MCP file access fails", "read_file - Read files from local clone"],
-    "bestPractices": ["Always try MCP file access first before falling back to local clone", "Log which access method was used (MCP vs local clone)", "Parse and structure guideline content for downstream use", "Store full guideline text in memory since downstream steps need the complete content", "When cloning locally, use a temp directory and note the path for cleanup"]
+    "files": {
+      "read": [
+        "memory.json (for process context and which files to read)",
+        "qa-guidelines repo files (via ADO MCP or local clone)"
+      ],
+      "create": [],
+      "update": []
+    },
+    "tools": [
+      "mcp__azuredevops__repo_file - Read files from qa-guidelines repo",
+      "mcp__azuredevops__repo_repository - Get repo details if needed",
+      "mcp__azuredevops__search_code - Search for files in repo",
+      "git clone - Fallback: clone repo locally if MCP file access fails",
+      "read_file - Read files from local clone"
+    ],
+    "bestPractices": [
+      "Always try MCP file access first before falling back to local clone",
+      "Log which access method was used (MCP vs local clone)",
+      "Parse and structure guideline content for downstream use",
+      "Store full guideline text in memory since downstream steps need the complete content",
+      "When cloning locally, use a temp directory and note the path for cleanup"
+    ]
   },
   "substeps": [
-    {"number": 0, "name": "List directory in qa-guidelines repo", "description": "List the repository contents to verify file paths and availability", "actions": ["Use mcp__azuredevops__repo_file to list the directory structure of the qa-guidelines repo (repoId: 9b4f0be0-9a6b-43d1-a3b1-fd5f73714b19)", "Verify the target files exist at expected paths", "If listing fails: note that fallback to local clone will be needed"]},
-    {"number": 1, "name": "Read specified guideline files", "description": "Read each guideline file specified in the template step guidance", "actions": ["Read each file path specified in the template step's guidance.files array", "Use mcp__azuredevops__repo_file for each file", "If any file read fails: attempt fallback — clone repo locally to temp directory and read files from filesystem", "Collect raw content from all files"]},
-    {"number": 2, "name": "Parse content and store in memory", "description": "Parse the raw guideline content and store structured data in memory", "actions": ["Parse markdown content from each guideline file", "Extract key sections, checklists, rules, and examples", "Store parsed content in memory under guidelines object", "Include file source paths for traceability", "Note which access method was used (MCP direct vs local clone)"]},
-    {"number": 3, "name": "End-Step: Compliance Check", "description": "Verify principles were followed in this step", "actions": ["Verify: Was log.json updated for any user interactions?", "Verify: All specified guideline files were read and parsed", "Verify: Were mandatory actions confirmed with output?", "Output: 'Step completed in compliance with operating principles'"]}
+    {
+      "number": 0,
+      "name": "List directory in qa-guidelines repo",
+      "description": "List the repository contents to verify file paths and availability",
+      "actions": [
+        "Use mcp__azuredevops__repo_file to list the directory structure of the qa-guidelines repo (repoId: 9b4f0be0-9a6b-43d1-a3b1-fd5f73714b19)",
+        "Verify the target files exist at expected paths",
+        "If listing fails: note that fallback to local clone will be needed"
+      ]
+    },
+    {
+      "number": 1,
+      "name": "Read specified guideline files",
+      "description": "Read each guideline file specified in the template step guidance",
+      "actions": [
+        "Read each file path specified in the template step's guidance.files array",
+        "Use mcp__azuredevops__repo_file for each file",
+        "If any file read fails: attempt fallback — clone repo locally to temp directory and read files from filesystem",
+        "Collect raw content from all files"
+      ]
+    },
+    {
+      "number": 2,
+      "name": "Parse content and store in memory",
+      "description": "Parse the raw guideline content and store structured data in memory",
+      "actions": [
+        "Parse markdown content from each guideline file",
+        "Extract key sections, checklists, rules, and examples",
+        "Store parsed content in memory under guidelines object",
+        "Include file source paths for traceability",
+        "Note which access method was used (MCP direct vs local clone)"
+      ]
+    },
+    {
+      "number": 3,
+      "name": "End-Step: Compliance Check",
+      "description": "Verify principles were followed in this step",
+      "actions": [
+        "Verify: Was log.json updated for any user interactions?",
+        "Verify: All specified guideline files were read and parsed",
+        "Verify: Were mandatory actions confirmed with output?",
+        "Output: 'Step completed in compliance with operating principles'"
+      ]
+    }
   ],
-  "flow": {"description": "List repo directory to verify paths -> Read each specified guideline file via MCP -> If MCP fails, fallback to cloning repo locally -> Parse content and store in memory. This step is reusable: it is called twice in create-test-plan with different file lists."},
-  "memoryFileUsage": {"readFrom": "Template step guidance for which files to read", "writeTo": "guidelines object with parsed content from each file", "fields": ["Information Produced: guidelines.content (parsed guideline text), guidelines.files (list of files read), guidelines.source (MCP or local clone)", "Decisions Made: Access method (MCP vs local clone fallback)", "Notes: Any files that failed to load, fallback usage"]},
-  "dependencies": {"requiredComponents": ["mandatory-logging.md"], "requiredFiles": [], "requiredTools": ["mcp__azuredevops__repo_file", "mcp__azuredevops__repo_repository", "read_file", "git"]},
-  "references": {"relatedSteps": ["execute-sniffing", "generate-test-cases"], "usedInTemplates": ["create-test-plan"]}
+  "flow": {
+    "description": "List repo directory to verify paths -> Read each specified guideline file via MCP -> If MCP fails, fallback to cloning repo locally -> Parse content and store in memory. This step is reusable: it is called twice in create-test-plan with different file lists."
+  },
+  "memoryFileUsage": {
+    "readFrom": "Template step guidance for which files to read",
+    "writeTo": "guidelines object with parsed content from each file",
+    "fields": [
+      "Information Produced: guidelines.content (parsed guideline text), guidelines.files (list of files read), guidelines.source (MCP or local clone)",
+      "Decisions Made: Access method (MCP vs local clone fallback)",
+      "Notes: Any files that failed to load, fallback usage"
+    ]
+  },
+  "dependencies": {
+    "requiredFiles": [],
+    "requiredTools": [
+      "mcp__azuredevops__repo_file",
+      "mcp__azuredevops__repo_repository",
+      "read_file",
+      "git"
+    ]
+  },
+  "references": {
+    "relatedSteps": [
+      "execute-sniffing",
+      "generate-test-cases"
+    ],
+    "usedInTemplates": [
+      "create-test-plan"
+    ]
+  }
 }

@@ -28,10 +28,6 @@
       "Repository layer (if data access needed)",
       "External service integrations (if applicable)"
     ],
-    "mandatoryComponents": [
-      "mandatory-logging.md",
-      "pre-implementation-patterns.md"
-    ],
     "userGuidelines": [
       "~/.claude/agentic-processes/guidelines/implementation/how-to-implement-services.md",
       "~/.claude/agentic-processes/guidelines/implementation/how-to-use-dependency-injection.md",
@@ -201,10 +197,6 @@
     }
   },
   "dependencies": {
-    "requiredComponents": [
-      "mandatory-logging.md",
-      "pre-implementation-patterns.md"
-    ],
     "requiredFiles": [],
     "requiredTools": [
       "read_file",

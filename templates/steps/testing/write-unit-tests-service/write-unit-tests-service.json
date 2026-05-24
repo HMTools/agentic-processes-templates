@@ -23,10 +23,6 @@
       "Service layer implementation completed",
       "Business logic finalized"
     ],
-    "mandatoryComponents": [
-      "mandatory-logging.md",
-      "pre-implementation-patterns.md"
-    ],
     "userGuidelines": [
       "~/.claude/agentic-processes/guidelines/testing/how-to-write-unit-tests.md",
       "~/.claude/agentic-processes/guidelines/testing/how-to-mock-dependencies.md"
@@ -184,10 +180,6 @@
     }
   },
   "dependencies": {
-    "requiredComponents": [
-      "mandatory-logging.md",
-      "pre-implementation-patterns.md"
-    ],
     "requiredFiles": [
       "Service implementation"
     ],

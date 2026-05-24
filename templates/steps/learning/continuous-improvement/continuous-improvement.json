@@ -26,9 +26,6 @@
     "prerequisites": [
       "Process execution log (log.json) with user interactions"
     ],
-    "mandatoryComponents": [
-      "mandatory-logging.md"
-    ],
     "specificActions": [
       "Read Process Log: Load log.json; parse all user interactions and change requests; identify patterns and recurring issues; note high iteration counts",
       "Analyze for Improvements: Group similar user corrections; identify corrections that could be automated; find missing validations; detect documentation gaps",
@@ -242,9 +239,6 @@
     "No more high-priority improvements remain"
   ],
   "dependencies": {
-    "requiredComponents": [
-      "mandatory-logging.md"
-    ],
     "requiredFiles": [
       "log.json"
     ],

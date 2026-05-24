@@ -24,9 +24,6 @@
       "activeThreadCount > 0 (if 0, this step should not run — template handles early exit)",
       "Local workspace checked out to the PR branch"
     ],
-    "mandatoryComponents": [
-      "mandatory-logging.md"
-    ],
     "specificActions": [
       "Follow the substeps below in sequence",
       "Workflow: extract comment metadata → read affected code → categorize comments → generate fix plan → present for approval",
@@ -170,9 +167,6 @@
     ]
   },
   "dependencies": {
-    "requiredComponents": [
-      "mandatory-logging.md"
-    ],
     "requiredFiles": [
       "Local source code files referenced by PR comments"
     ],

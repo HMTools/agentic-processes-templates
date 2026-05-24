@@ -10,11 +10,20 @@
   "output": {
     "description": "Sniffing findings including scope/impact, risks, cross-service concerns, code changes, and requirements vs code mapping",
     "artifacts": [],
-    "memoryUpdates": ["sniffingFindings.scopeAndImpact", "sniffingFindings.risks", "sniffingFindings.crossServiceConcerns", "sniffingFindings.codeChanges", "sniffingFindings.requirementsVsCode"]
+    "memoryUpdates": [
+      "sniffingFindings.scopeAndImpact",
+      "sniffingFindings.risks",
+      "sniffingFindings.crossServiceConcerns",
+      "sniffingFindings.codeChanges",
+      "sniffingFindings.requirementsVsCode"
+    ]
   },
   "guidance": {
-    "prerequisites": ["Work item details fetched and stored in memory", "Sniffing guidelines loaded from qa-guidelines repo", "QA config resolved (base_branch available)"],
-    "mandatoryComponents": ["mandatory-logging.md"],
+    "prerequisites": [
+      "Work item details fetched and stored in memory",
+      "Sniffing guidelines loaded from qa-guidelines repo",
+      "QA config resolved (base_branch available)"
+    ],
     "specificActions": [
       "Follow the substeps below in sequence",
       "Run git diff against base_branch from qaConfig to identify all changed files",
@@ -25,20 +34,136 @@
       "Exploration budget: git diff = High priority, parent WI = Medium, grandparent/epic = Low, cross-repo = Low (only if cross-service calls found in code)",
       "Stop condition: Can articulate what the feature does, what flows are affected, and what could go wrong"
     ],
-    "files": {"read": ["memory.json (for work item details, config, sniffing guidelines)", "Changed files from git diff (controllers, services, models)"], "create": [], "update": []},
-    "tools": ["git diff - Diff against base_branch to identify changed files", "read_file - Read changed files for analysis", "grep - Search for patterns in changed code (endpoints, service calls)", "mcp__azuredevops__wit_work_item - Fetch parent/grandparent work items", "codebase_search - Find related code patterns"],
-    "bestPractices": ["Start with git diff as the primary source of truth for what changed", "Group files by architectural layer for structured analysis", "Focus on user-visible behavior changes, not internal refactoring", "When traversing hierarchy, stop at the first level that provides sufficient context", "Cross-reference should produce actionable findings, not just observations", "Flag security-relevant changes (authentication, authorization, data access) as high-priority risks"]
+    "files": {
+      "read": [
+        "memory.json (for work item details, config, sniffing guidelines)",
+        "Changed files from git diff (controllers, services, models)"
+      ],
+      "create": [],
+      "update": []
+    },
+    "tools": [
+      "git diff - Diff against base_branch to identify changed files",
+      "read_file - Read changed files for analysis",
+      "grep - Search for patterns in changed code (endpoints, service calls)",
+      "mcp__azuredevops__wit_work_item - Fetch parent/grandparent work items",
+      "codebase_search - Find related code patterns"
+    ],
+    "bestPractices": [
+      "Start with git diff as the primary source of truth for what changed",
+      "Group files by architectural layer for structured analysis",
+      "Focus on user-visible behavior changes, not internal refactoring",
+      "When traversing hierarchy, stop at the first level that provides sufficient context",
+      "Cross-reference should produce actionable findings, not just observations",
+      "Flag security-relevant changes (authentication, authorization, data access) as high-priority risks"
+    ]
   },
   "substeps": [
-    {"number": 0, "name": "Run git diff and group files", "description": "Run git diff against base_branch from config, group changed files by type", "actions": ["Run git diff against base_branch (from qaConfig) to get list of all changed files", "Group files by type: controllers, services, models, tests, config, migrations, other", "For each changed file, note the type of change: added, modified, deleted", "Identify the primary areas of change (which services, which layers)"]},
-    {"number": 1, "name": "Identify endpoints and business logic changes", "description": "Analyze changed files to identify affected endpoints and business logic", "actions": ["Read changed controller/route files to identify affected API endpoints", "Read changed service files to identify business logic modifications", "Read changed model files to identify data model changes", "Note new dependencies, changed method signatures, modified validation rules", "Summarize: what endpoints are affected, what business logic changed, what data flows are impacted"]},
-    {"number": 2, "name": "Traverse work item hierarchy", "description": "Fetch parent work item (1 level), go further only if parent lacks acceptance criteria", "actions": ["Fetch parent work item using relations from the work item details", "Check if parent has acceptance criteria", "If parent has AC: record parent context and stop hierarchy traversal", "If parent lacks AC: fetch grandparent (go one more level up)", "Budget: parent = Medium priority, grandparent/epic = Low priority", "Record hierarchy context: parent title, parent AC (if any), epic/feature context"]},
-    {"number": 3, "name": "Cross-reference AC vs code", "description": "Compare acceptance criteria against code changes to find gaps and unstated behaviors", "actions": ["For each acceptance criterion: check if corresponding code changes exist", "For each code change: check if it maps to an acceptance criterion", "Flag: requirements not covered in code (AC without matching code)", "Flag: code changes not in requirements (code without matching AC)", "Flag: unstated behaviors (implicit behaviors in code not mentioned in AC)", "Classify each finding: gap, extra, unstated, aligned"]},
-    {"number": 4, "name": "Store findings in memory", "description": "Compile and store all sniffing findings in structured format", "actions": ["Store scopeAndImpact: summary of what changed, affected endpoints, affected flows", "Store risks: potential failure modes, edge cases, security concerns", "Store crossServiceConcerns: any cross-service calls found, upstream/downstream impacts", "Store codeChanges: grouped file changes with descriptions", "Store requirementsVsCode: mapping of each AC to code status (covered/not-covered/partial)", "Include cross-service analysis only if cross-service calls were found in code changes"]},
-    {"number": 5, "name": "End-Step: Compliance Check", "description": "Verify principles were followed in this step", "actions": ["Verify: Was log.json updated for any user interactions?", "Verify: Can articulate what the feature does, what flows are affected, what could go wrong (stop condition met)", "Verify: Were mandatory actions confirmed with output?", "Output: 'Step completed in compliance with operating principles'"]}
+    {
+      "number": 0,
+      "name": "Run git diff and group files",
+      "description": "Run git diff against base_branch from config, group changed files by type",
+      "actions": [
+        "Run git diff against base_branch (from qaConfig) to get list of all changed files",
+        "Group files by type: controllers, services, models, tests, config, migrations, other",
+        "For each changed file, note the type of change: added, modified, deleted",
+        "Identify the primary areas of change (which services, which layers)"
+      ]
+    },
+    {
+      "number": 1,
+      "name": "Identify endpoints and business logic changes",
+      "description": "Analyze changed files to identify affected endpoints and business logic",
+      "actions": [
+        "Read changed controller/route files to identify affected API endpoints",
+        "Read changed service files to identify business logic modifications",
+        "Read changed model files to identify data model changes",
+        "Note new dependencies, changed method signatures, modified validation rules",
+        "Summarize: what endpoints are affected, what business logic changed, what data flows are impacted"
+      ]
+    },
+    {
+      "number": 2,
+      "name": "Traverse work item hierarchy",
+      "description": "Fetch parent work item (1 level), go further only if parent lacks acceptance criteria",
+      "actions": [
+        "Fetch parent work item using relations from the work item details",
+        "Check if parent has acceptance criteria",
+        "If parent has AC: record parent context and stop hierarchy traversal",
+        "If parent lacks AC: fetch grandparent (go one more level up)",
+        "Budget: parent = Medium priority, grandparent/epic = Low priority",
+        "Record hierarchy context: parent title, parent AC (if any), epic/feature context"
+      ]
+    },
+    {
+      "number": 3,
+      "name": "Cross-reference AC vs code",
+      "description": "Compare acceptance criteria against code changes to find gaps and unstated behaviors",
+      "actions": [
+        "For each acceptance criterion: check if corresponding code changes exist",
+        "For each code change: check if it maps to an acceptance criterion",
+        "Flag: requirements not covered in code (AC without matching code)",
+        "Flag: code changes not in requirements (code without matching AC)",
+        "Flag: unstated behaviors (implicit behaviors in code not mentioned in AC)",
+        "Classify each finding: gap, extra, unstated, aligned"
+      ]
+    },
+    {
+      "number": 4,
+      "name": "Store findings in memory",
+      "description": "Compile and store all sniffing findings in structured format",
+      "actions": [
+        "Store scopeAndImpact: summary of what changed, affected endpoints, affected flows",
+        "Store risks: potential failure modes, edge cases, security concerns",
+        "Store crossServiceConcerns: any cross-service calls found, upstream/downstream impacts",
+        "Store codeChanges: grouped file changes with descriptions",
+        "Store requirementsVsCode: mapping of each AC to code status (covered/not-covered/partial)",
+        "Include cross-service analysis only if cross-service calls were found in code changes"
+      ]
+    },
+    {
+      "number": 5,
+      "name": "End-Step: Compliance Check",
+      "description": "Verify principles were followed in this step",
+      "actions": [
+        "Verify: Was log.json updated for any user interactions?",
+        "Verify: Can articulate what the feature does, what flows are affected, what could go wrong (stop condition met)",
+        "Verify: Were mandatory actions confirmed with output?",
+        "Output: 'Step completed in compliance with operating principles'"
+      ]
+    }
   ],
-  "flow": {"description": "Run git diff and group files by type -> Identify affected endpoints and business logic changes -> Traverse work item hierarchy (parent, conditionally grandparent) -> Cross-reference AC vs code changes -> Store all findings in memory. Exploration stops when the stop condition is met: can articulate what the feature does, what flows are affected, and what could go wrong."},
-  "memoryFileUsage": {"readFrom": "Work item details, sniffing guidelines, qaConfig (base_branch)", "writeTo": "sniffingFindings object with scopeAndImpact, risks, crossServiceConcerns, codeChanges, requirementsVsCode", "fields": ["Information Produced: sniffingFindings.scopeAndImpact, sniffingFindings.risks, sniffingFindings.crossServiceConcerns, sniffingFindings.codeChanges, sniffingFindings.requirementsVsCode", "Decisions Made: Hierarchy traversal depth, exploration budget allocation", "Notes: Stop condition assessment, cross-service calls detected, security-relevant changes"]},
-  "dependencies": {"requiredComponents": ["mandatory-logging.md"], "requiredFiles": [], "requiredTools": ["git", "read_file", "grep", "mcp__azuredevops__wit_work_item", "codebase_search"]},
-  "references": {"relatedSteps": ["pull-qa-guidelines", "fetch-work-item", "load-qa-config", "qa-session-if-needed"], "usedInTemplates": ["create-test-plan"]}
+  "flow": {
+    "description": "Run git diff and group files by type -> Identify affected endpoints and business logic changes -> Traverse work item hierarchy (parent, conditionally grandparent) -> Cross-reference AC vs code changes -> Store all findings in memory. Exploration stops when the stop condition is met: can articulate what the feature does, what flows are affected, and what could go wrong."
+  },
+  "memoryFileUsage": {
+    "readFrom": "Work item details, sniffing guidelines, qaConfig (base_branch)",
+    "writeTo": "sniffingFindings object with scopeAndImpact, risks, crossServiceConcerns, codeChanges, requirementsVsCode",
+    "fields": [
+      "Information Produced: sniffingFindings.scopeAndImpact, sniffingFindings.risks, sniffingFindings.crossServiceConcerns, sniffingFindings.codeChanges, sniffingFindings.requirementsVsCode",
+      "Decisions Made: Hierarchy traversal depth, exploration budget allocation",
+      "Notes: Stop condition assessment, cross-service calls detected, security-relevant changes"
+    ]
+  },
+  "dependencies": {
+    "requiredFiles": [],
+    "requiredTools": [
+      "git",
+      "read_file",
+      "grep",
+      "mcp__azuredevops__wit_work_item",
+      "codebase_search"
+    ]
+  },
+  "references": {
+    "relatedSteps": [
+      "pull-qa-guidelines",
+      "fetch-work-item",
+      "load-qa-config",
+      "qa-session-if-needed"
+    ],
+    "usedInTemplates": [
+      "create-test-plan"
+    ]
+  }
 }

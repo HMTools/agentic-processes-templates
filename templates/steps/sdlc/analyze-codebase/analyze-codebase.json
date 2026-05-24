@@ -26,9 +26,6 @@
       "Work item details available in memory from fetch-work-item step",
       "Access to the target codebase"
     ],
-    "mandatoryComponents": [
-      "mandatory-logging.md"
-    ],
     "specificActions": [
       "Follow the substeps below in sequence",
       "Workflow: read context from memory → launch parallel explore subagents → group findings by area → store in memory → compliance check",
@@ -134,50 +131,73 @@
   "outputStructure": {
     "filesToCreate": {
       "description": "New files that need to be created",
-      "structure": ["Array of { path, description, patternSource }"]
+      "structure": [
+        "Array of { path, description, patternSource }"
+      ]
     },
     "filesToModify": {
       "description": "Existing files that need changes",
-      "structure": ["Array of { path, changeType, description }"]
+      "structure": [
+        "Array of { path, changeType, description }"
+      ]
     },
     "existingPatterns": {
       "description": "Patterns found in the codebase that new code should follow",
-      "structure": ["Array of { pattern, exampleFile, description }"]
+      "structure": [
+        "Array of { pattern, exampleFile, description }"
+      ]
     },
     "dependencies": {
       "description": "Upstream and downstream dependencies",
       "structure": {
-        "upstream": ["Components/services that call affected code"],
-        "downstream": ["Components/services called by affected code"]
+        "upstream": [
+          "Components/services that call affected code"
+        ],
+        "downstream": [
+          "Components/services called by affected code"
+        ]
       }
     },
     "integrationPoints": {
       "description": "External services, events, and cross-cutting concerns",
-      "structure": ["Array of { type, name, description }"]
+      "structure": [
+        "Array of { type, name, description }"
+      ]
     },
     "infraChanges": {
       "description": "Infrastructure and deployment changes needed",
-      "structure": ["Array of { path, changeType, description }"]
+      "structure": [
+        "Array of { path, changeType, description }"
+      ]
     },
     "configChanges": {
       "description": "Configuration and environment changes needed",
-      "structure": ["Array of { path, changeType, description }"]
+      "structure": [
+        "Array of { path, changeType, description }"
+      ]
     },
     "groupedFindings": {
       "description": "All findings grouped by architectural area",
       "structure": {
-        "controllers": ["API layer findings"],
-        "services": ["Business logic layer findings"],
-        "models": ["Data/domain model findings"],
-        "config": ["Configuration findings"],
-        "infra": ["Infrastructure findings"]
+        "controllers": [
+          "API layer findings"
+        ],
+        "services": [
+          "Business logic layer findings"
+        ],
+        "models": [
+          "Data/domain model findings"
+        ],
+        "config": [
+          "Configuration findings"
+        ],
+        "infra": [
+          "Infrastructure findings"
+        ]
       }
     }
   },
   "dependencies": {
-    "requiredComponents": [
-      "mandatory-logging.md"
-    ],
     "requiredFiles": [
       "memory.json"
     ],

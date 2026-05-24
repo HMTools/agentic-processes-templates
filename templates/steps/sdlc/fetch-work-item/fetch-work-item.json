@@ -28,9 +28,6 @@
       "workItemId parameter available from process parameters",
       "Azure DevOps MCP tools accessible"
     ],
-    "mandatoryComponents": [
-      "mandatory-logging.md"
-    ],
     "specificActions": [
       "Follow the substeps below in sequence",
       "Workflow: call ADO MCP tool → extract fields → store in memory → compliance check",
@@ -120,9 +117,6 @@
     ]
   },
   "dependencies": {
-    "requiredComponents": [
-      "mandatory-logging.md"
-    ],
     "requiredFiles": [],
     "requiredTools": [
       "mcp__azuredevops__wit_work_item"

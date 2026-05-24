@@ -22,9 +22,6 @@
       "Components implemented",
       "Integration test infrastructure available"
     ],
-    "mandatoryComponents": [
-      "mandatory-logging.md"
-    ],
     "userGuidelines": [
       "~/.claude/agentic-processes/guidelines/testing/how-to-write-integration-tests.md",
       "~/.claude/agentic-processes/guidelines/testing/how-to-generate-test-data.md"
@@ -165,9 +162,6 @@
     }
   },
   "dependencies": {
-    "requiredComponents": [
-      "mandatory-logging.md"
-    ],
     "requiredFiles": [
       "Components to test"
     ],

@@ -23,9 +23,6 @@
       "repository.id and pullRequestId available in memory from detect-repository step",
       "Azure DevOps MCP tools accessible"
     ],
-    "mandatoryComponents": [
-      "mandatory-logging.md"
-    ],
     "specificActions": [
       "Follow the substeps below in sequence",
       "Workflow: read context from memory → fetch PR details → list active threads → fetch full comments per thread → store in memory",
@@ -135,9 +132,6 @@
     ]
   },
   "dependencies": {
-    "requiredComponents": [
-      "mandatory-logging.md"
-    ],
     "requiredFiles": [],
     "requiredTools": [
       "mcp__azuredevops__repo_pull_request",

@@ -22,9 +22,6 @@
     "prerequisites": [
       "Root cause analysis from previous step"
     ],
-    "mandatoryComponents": [
-      "mandatory-logging.md"
-    ],
     "userGuidelines": [
       "~/.claude/agentic-processes/guidelines/testing/how-to-write-integration-tests.md",
       "~/.claude/agentic-processes/guidelines/testing/how-to-mock-dependencies.md"
@@ -152,9 +149,6 @@
     }
   ],
   "dependencies": {
-    "requiredComponents": [
-      "mandatory-logging.md"
-    ],
     "requiredFiles": [
       "Previous step memory with root cause"
     ],

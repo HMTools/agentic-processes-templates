@@ -26,9 +26,6 @@
       "Work item details available in memory from fetch-work-item step",
       "Codebase analysis available in memory from analyze-codebase step"
     ],
-    "mandatoryComponents": [
-      "mandatory-logging.md"
-    ],
     "specificActions": [
       "Follow the substeps below in sequence",
       "Workflow: read context from memory → generate plan with all sections → store in memory → compliance check",
@@ -128,13 +125,21 @@
     },
     "affectedFiles": {
       "description": "Table of file paths with change type and description, ordered by dependency layer",
-      "columns": ["File Path", "Change Type", "Description"],
+      "columns": [
+        "File Path",
+        "Change Type",
+        "Description"
+      ],
       "ordering": "config -> models -> services -> controllers -> infra -> tests"
     },
     "tasks": {
       "description": "Ordered implementation tasks in business-domain language",
       "ordering": "dependencies/config -> module wiring -> feature code -> infra/DevOps -> tests",
-      "rules": ["Describe WHAT, not HOW", "Use business-domain names", "Map each task to acceptance criteria"]
+      "rules": [
+        "Describe WHAT, not HOW",
+        "Use business-domain names",
+        "Map each task to acceptance criteria"
+      ]
     },
     "architectureDiagram": {
       "description": "Mermaid diagram showing component/service flow",
@@ -153,9 +158,6 @@
     "Step ordering: dependencies/config -> module wiring -> feature code -> infra/DevOps -> tests"
   ],
   "dependencies": {
-    "requiredComponents": [
-      "mandatory-logging.md"
-    ],
     "requiredFiles": [
       "memory.json"
     ],

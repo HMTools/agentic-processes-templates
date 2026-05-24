@@ -20,9 +20,6 @@
     "prerequisites": [
       "Failing test identified"
     ],
-    "mandatoryComponents": [
-      "mandatory-logging.md"
-    ],
     "specificActions": [
       "Run the specific failing test in isolation",
       "Capture complete error message and exception type",
@@ -163,9 +160,6 @@
     }
   ],
   "dependencies": {
-    "requiredComponents": [
-      "mandatory-logging.md"
-    ],
     "requiredFiles": [],
     "requiredTools": [
       "run_terminal_cmd",

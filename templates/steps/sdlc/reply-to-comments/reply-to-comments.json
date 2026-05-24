@@ -21,9 +21,6 @@
       "fixPlan.comments available in memory with categorized comments",
       "repository.id and pullRequestId available in memory"
     ],
-    "mandatoryComponents": [
-      "mandatory-logging.md"
-    ],
     "specificActions": [
       "Follow the substeps below in sequence",
       "Workflow: read context → generate replies → post via MCP → record results",
@@ -125,9 +122,6 @@
     ]
   },
   "dependencies": {
-    "requiredComponents": [
-      "mandatory-logging.md"
-    ],
     "requiredFiles": [],
     "requiredTools": [
       "mcp__azuredevops__repo_pull_request_thread_write"

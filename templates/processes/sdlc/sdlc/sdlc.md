@@ -5,7 +5,7 @@
 
 ## Description
 
-End-to-end SDLC orchestrator for Azure DevOps work items. Spawns sub-processes for each phase: planning, test planning, implementation, test execution, and PR comment resolution. Each sub-process is a native agentic-processes template with its own steps, approval gates, memory, and logging.
+End-to-end SDLC orchestrator for Azure DevOps work items. Spawns sub-processes for each phase: planning, test planning, implementation, CD deployment to testing environments, test execution, and PR comment resolution. Each sub-process is a native agentic-processes template with its own steps, approval gates, memory, and logging.
 
 ## Purpose & Usage
 
@@ -44,14 +44,20 @@ flowchart TD
     D1 --> D2[Review Plan → Implement → Test → Prepare]
     D2 --> D3{Implementation Approved?}
     D3 -->|No| D2
-    D3 -->|Yes| E[Step 3: Spawn run-test-suite]
+    D3 -->|Yes| CD[Step 3: Spawn deploy-to-testing]
+
+    CD --> CD1[Sub-Process: deploy-to-testing]
+    CD1 --> CD2[Load Config → Trigger CD → Monitor → Evaluate]
+    CD2 --> CD3{Deployment Passed?}
+    CD3 -->|No, retries < max| D
+    CD3 -->|Yes or max retries reached| E[Step 4: Spawn run-test-suite]
 
     E --> E1[Sub-Process: run-test-suite]
     E1 --> E2[Setup → Fetch TCs → Execute → Report]
     E2 --> E3{Results Approved?}
     E3 -->|No| F[Fix & Re-run]
     F --> D
-    E3 -->|Yes| PR[Step 4: Spawn fix-pr-comments]
+    E3 -->|Yes| PR[Step 5: Spawn fix-pr-comments]
 
     PR --> PR0[Step 0: Detect Repository]
     PR0 --> PR1[Step 1: Fetch PR & Comments]
@@ -66,20 +72,21 @@ flowchart TD
     PR5 -->|New comments arrived| PR1
     PR5 -->|PR approved / no more comments| PR6
     PR6 --> PR7[Step 7: End Process Validation]
-    PR7 --> G[Step 5: Continuous Improvement]
+    PR7 --> G[Step 6: Continuous Improvement]
 
-    G --> H[Step 6: End Process Validation]
+    G --> H[Step 7: End Process Validation]
     H --> I[End: Work Item Complete]
 ```
 
 ## Steps Summary
 
-| Step | Name | Sub-Process | Approval |
-|------|------|-------------|----------|
-| 0 | Plan Work Item | `sdlc/plan-work-item` | In sub-process |
-| 1 | Create Test Plan | `sdlc/create-test-plan` | In sub-process |
-| 2 | Implement Work Item | `sdlc/implement-work-item` | In sub-process |
-| 3 | Run Test Suite | `sdlc/run-test-suite` | In sub-process |
-| 4 | Fix PR Comments | `sdlc/fix-pr-comments` | In sub-process |
-| 5 | Continuous Improvement | — | Yes |
-| 6 | End Process Validation | — | No |
+| Step | Name | Sub-Process | Approval | Loop |
+|------|------|-------------|----------|------|
+| 0 | Plan Work Item | `sdlc/plan-work-item` | In sub-process | -- |
+| 1 | Create Test Plan | `sdlc/create-test-plan` | In sub-process | -- |
+| 2 | Implement Work Item | `sdlc/implement-work-item` | In sub-process | -- |
+| **3** | **Deploy to Testing Environments** | **`sdlc/deploy-to-testing`** | **In sub-process** | **-> Step 2 (max 3)** |
+| 4 | Run Test Suite | `sdlc/run-test-suite` | In sub-process | -- |
+| 5 | Fix PR Comments | `sdlc/fix-pr-comments` | In sub-process | -- |
+| 6 | Continuous Improvement | -- | Yes | -- |
+| 7 | End Process Validation | -- | No | -- |

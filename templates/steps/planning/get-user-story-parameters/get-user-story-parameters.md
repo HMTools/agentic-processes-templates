@@ -5,10 +5,6 @@ Purpose: Collect user story details from userStoryId using team's guideline-base
 
 # Step: Get User Story Parameters
 
-## Required Components
-
-- [mandatory-logging.md](../_components/mandatory-logging.md) - Logging guidelines
-
 ## Description
 
 Collect user story details (title, description, acceptance criteria) from a userStoryId using the team's configured guideline-based approach. This step supports various methods: Jira, Azure DevOps, GitHub, manual entry, or requirements documents.

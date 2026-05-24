@@ -5,13 +5,6 @@ Purpose: [What this step accomplishes]
 
 # Step: [Step Name]
 
-## Required Components
-
-[List all framework components that must be read alongside this step. Agents must read these files when reading this step. Note: User guidelines should be specified in the step's JSON file in the guidance.userGuidelines field.]
-
-- [mandatory-logging.md](_components/mandatory-logging.md) - Logging guidelines
-- [pre-implementation-patterns.md](_components/pre-implementation-patterns.md) - Pattern verification (if step involves creating new implementations)
-
 ## Description
 
 [Provide a clear, concise description of what needs to be done in this step. Be specific about the objective and scope.]
@@ -28,8 +21,6 @@ Purpose: [What this step accomplishes]
 ## Guidance
 
 [Provide detailed guidance on how to complete this step, including:]
-
-<!-- @include: _components/mandatory-logging.md -->
 
 **Specific Actions:**
 - Action 1: [Detailed instruction]
@@ -116,10 +107,8 @@ When creating a new step from this template:
 6. **Remove these instructions** before saving
 
 **Remember:**
-- Steps are self-contained and cannot reference other steps (but can reference shared components)
-- Use shared components to reduce duplication (see `_components/` directory)
+- Steps are self-contained and cannot reference other steps
 - Provide rich, detailed guidance since steps are reused
 - Use project-specific paths, tools, and conventions
 - Make substeps actionable and specific
 - Examples and Common Pitfalls sections are optional - include them only if they add value
-- List all required components in the "Required Components" section at the top

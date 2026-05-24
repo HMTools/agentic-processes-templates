@@ -1,0 +1,183 @@
+{
+  "type": "step",
+  "name": "load-deploy-config",
+  "category": "sdlc",
+  "metadata": {
+    "title": "Load Deploy Config",
+    "purposeAndUsage": "Read .ai/deploy-config.json cd section, validate required fields (ado_project, cd.pipeline_definition_id, cd.target_environments), auto-discover from ADO if missing, and present to user for approval. Shares the deploy-config.json file with verify-ci-pipeline (which owns the ci section).",
+    "lastUpdated": "2026-05-24"
+  },
+  "output": {
+    "description": "Resolved CD pipeline configuration ready for use by trigger-cd-pipeline",
+    "artifacts": [],
+    "memoryUpdates": [
+      "deployConfig",
+      "cdRetryIteration"
+    ]
+  },
+  "guidance": {
+    "prerequisites": [
+      "CI pipeline verification completed (verify-ci-pipeline step passed)",
+      "Git remote and CD pipeline configured for the repository"
+    ],
+    "configSchema": {
+      "path": ".ai/deploy-config.json",
+      "description": "Per-repo pipeline configuration. The cd section holds deployment/release settings consumed by the deploy-to-testing sub-process. The ci section is managed by verify-ci-pipeline.",
+      "structure": {
+        "ado_project": "ADO project name (e.g. 'Payoneer') — shared across CI and CD",
+        "cd": {
+          "pipeline_definition_id": "CD/release pipeline definition ID to trigger",
+          "pipeline_name": "Pipeline name (for display/matching during auto-discovery)",
+          "target_environments": "Ordered array of deployment targets (e.g. [\"QA\", \"SB\"])",
+          "timeout_minutes": "Max minutes to wait for pipeline completion (default: 20)",
+          "poll_interval_seconds": "Seconds between status checks (default: 30)",
+          "source_branch": "Source branch override (optional, defaults to current branch)"
+        }
+      },
+      "required": [
+        "ado_project",
+        "cd.pipeline_definition_id",
+        "cd.target_environments"
+      ],
+      "optional": [
+        "cd.pipeline_name",
+        "cd.timeout_minutes",
+        "cd.poll_interval_seconds",
+        "cd.source_branch"
+      ]
+    },
+    "specificActions": [
+      "Check if deployConfig already exists in memory from a previous CI step",
+      "Read .ai/deploy-config.json from the repo root",
+      "Validate cd section: pipeline_definition_id and target_environments are required",
+      "Validate target_environments is an ordered array (e.g. [\"QA\"] or [\"QA\", \"SB\"])",
+      "If config missing or incomplete: auto-discover from ADO using mcp__azuredevops__pipelines_definition",
+      "Present resolved config to user for approval before proceeding",
+      "Store resolved config in memory as deployConfig (cd section)",
+      "Initialize or read cdRetryIteration from memory"
+    ],
+    "files": {
+      "read": [
+        ".ai/deploy-config.json (if exists)"
+      ],
+      "create": [],
+      "update": []
+    },
+    "tools": [
+      "Read - Read .ai/deploy-config.json",
+      "Bash - git remote, branch detection",
+      "mcp__azuredevops__pipelines_definition - Auto-discover pipeline definitions for the repo"
+    ],
+    "bestPractices": [
+      "Always check memory first — the CI step may have already loaded the shared config",
+      "Only auto-discover if the config file is missing or has null required fields",
+      "When auto-discovering, present findings to user for confirmation before using them",
+      "Validate that target_environments is a non-empty array with valid environment names",
+      "The target_environments order controls deployment sequence — [\"QA\"] for QA only, [\"QA\", \"SB\"] for QA then sandbox",
+      "Distinguish between shared fields (ado_project) and cd-specific fields",
+      "If cdRetryIteration exists in memory, this is a retry — preserve existing config"
+    ]
+  },
+  "substeps": [
+    {
+      "number": 0,
+      "name": "Check Memory for Existing Config",
+      "description": "Check if deployConfig already exists in memory from the CI step",
+      "actions": [
+        "Read memory to check for existing deployConfig",
+        "If deployConfig exists with ado_project populated, note it for reuse",
+        "Check if cdRetryIteration exists — if so, this is a retry iteration"
+      ]
+    },
+    {
+      "number": 1,
+      "name": "Read Deploy Config File",
+      "description": "Read .ai/deploy-config.json and extract the cd section",
+      "actions": [
+        "Check if .ai/deploy-config.json exists in the repo root",
+        "If exists: read and parse JSON, extract ado_project and cd.* fields",
+        "Merge with any existing deployConfig from memory (cd section may be new)"
+      ]
+    },
+    {
+      "number": 2,
+      "name": "Validate CD Section",
+      "description": "Ensure all required cd fields are present and valid",
+      "actions": [
+        "Validate required fields: ado_project, cd.pipeline_definition_id, cd.target_environments",
+        "Validate target_environments is a non-empty ordered array",
+        "Validate environment names are recognized (e.g. QA, SB)",
+        "Apply defaults: timeout_minutes=20, poll_interval_seconds=30"
+      ]
+    },
+    {
+      "number": 3,
+      "name": "Auto-Discover if Missing",
+      "description": "Use ADO API to discover pipeline settings if config is incomplete",
+      "conditional": true,
+      "actions": [
+        "Only execute if required fields are missing or null",
+        "Parse git remote for project and repo name",
+        "List pipeline definitions via mcp__azuredevops__pipelines_definition",
+        "Match CD/release pipelines by repo name and pipeline type",
+        "Prompt user for target_environments if not discoverable"
+      ]
+    },
+    {
+      "number": 4,
+      "name": "Present Config for Approval",
+      "description": "Show resolved config to user for confirmation",
+      "actions": [
+        "Display the resolved CD config: pipeline ID, name, target environments, timeout, poll interval",
+        "Present to user for approval before proceeding",
+        "If user rejects, allow manual correction"
+      ]
+    },
+    {
+      "number": 5,
+      "name": "Store Config in Memory",
+      "description": "Persist resolved config and retry state to memory",
+      "actions": [
+        "Store deployConfig with cd section in memory",
+        "Set cdRetryIteration (0 if first run, increment if retry)",
+        "Record config source (file vs auto-discovered) in memory"
+      ]
+    },
+    {
+      "number": 6,
+      "name": "End-Step: Compliance Check",
+      "description": "Verify principles were followed",
+      "actions": [
+        "Output: '✓ Step completed in compliance with operating principles'"
+      ]
+    }
+  ],
+  "flow": {
+    "description": "Check memory for existing config → Read .ai/deploy-config.json → Validate cd section → Auto-discover if missing → Present to user for approval → Store in memory"
+  },
+  "memoryFileUsage": {
+    "readFrom": "CI step results (deployConfig with ado_project), .ai/deploy-config.json, previous CD retry iterations",
+    "writeTo": "Deploy config (cd section) and retry iteration state",
+    "fields": [
+      "Information Produced: deployConfig (ado_project, cd.pipeline_definition_id, cd.pipeline_name, cd.target_environments, cd.timeout_minutes, cd.poll_interval_seconds, cd.source_branch), cdRetryIteration (current retry number)",
+      "Decisions Made: Config source (file vs auto-discovered vs memory), target environments validated"
+    ]
+  },
+  "dependencies": {
+    "requiredFiles": [],
+    "requiredTools": [
+      "Read",
+      "Bash",
+      "mcp__azuredevops__pipelines_definition"
+    ]
+  },
+  "references": {
+    "relatedSteps": [
+      "verify-ci-pipeline",
+      "trigger-cd-pipeline"
+    ],
+    "usedInTemplates": [
+      "deploy-to-testing"
+    ]
+  }
+}

@@ -5,10 +5,6 @@ Purpose: Load and analyze an existing framework artifact to document its current
 
 # Step: Analyze Current Artifact State
 
-## Required Components
-
-- [mandatory-logging.md](../_components/mandatory-logging.md) - Logging guidelines
-
 ## Description
 
 Load and analyze an existing framework artifact (template, step, or process) to document its current state before making updates. This step provides a parameterized analysis capability that adapts its parsing logic based on artifact type. It is a **read-only** step — it does not modify the artifact, only documents its structure and state.

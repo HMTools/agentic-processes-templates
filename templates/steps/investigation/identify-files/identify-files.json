@@ -5,7 +5,7 @@
   "metadata": {
     "title": "Identify Files",
     "purposeAndUsage": "Identify which files and directories need to be processed based on flexible criteria (patterns, scope descriptions, or both). Use when you need to create a comprehensive list of files for subsequent processing.",
-    "lastUpdated": "2026-01-21"
+    "lastUpdated": "2026-05-24"
   },
   "output": {
     "description": "File list and identification report",
@@ -25,9 +25,6 @@
   "guidance": {
     "prerequisites": [
       "Context parameters from process.md or memory.json"
-    ],
-    "mandatoryComponents": [
-      "mandatory-logging.md"
     ],
     "specificActions": [
       "Follow the substeps below - workflow depends on search depth mode (simple or deep)",
@@ -97,6 +94,30 @@
     },
     {
       "number": 4,
+      "name": "Broad Text-Reference Search",
+      "description": "Search for all textual references to target files, directories, or concepts — not just structured references like JSON arrays",
+      "actions": [
+        "Identify the key names being targeted (file names, directory names, concept names)",
+        "Run broad grep searches across ALL file types (.json, .md, .ts, .js, .py, .sh, etc.) for these names",
+        "Search for references in: inline text/comments, markdown links, import statements, documentation prose, directory listings, type definitions, and configuration files",
+        "Compare broad search results against the structured search results from substep 3 — flag any files found by broad search but missed by structured search",
+        "Log the delta: how many additional files were found by broad search"
+      ]
+    },
+    {
+      "number": 5,
+      "name": "Cross-Repository Scope Verification",
+      "description": "Verify whether the search scope covers all repositories that may reference the targets",
+      "actions": [
+        "Review the list of project paths provided in the process parameters",
+        "Consider: are there related repositories, downstream consumers, or other codebases that might reference the identified targets?",
+        "If the process involves shared infrastructure (templates, types, APIs, UI components), check for references in consuming repositories",
+        "If additional repositories are identified, extend the search to cover them and document the scope expansion",
+        "Log: repositories checked and whether scope was expanded"
+      ]
+    },
+    {
+      "number": 6,
       "name": "Apply Exclusion Patterns",
       "description": "Filter out excluded files from results",
       "actions": [
@@ -106,7 +127,7 @@
       ]
     },
     {
-      "number": 5,
+      "number": 7,
       "name": "Create File Identification Report",
       "description": "Document the search results and flag content preservation needs",
       "actions": [
@@ -117,7 +138,7 @@
       ]
     },
     {
-      "number": 6,
+      "number": 8,
       "name": "Save Results to JSON File and Update Memory",
       "description": "Save results and update memory reference",
       "actions": [
@@ -128,7 +149,7 @@
       ]
     },
     {
-      "number": 7,
+      "number": 9,
       "name": "End-Step: Compliance Check",
       "description": "Verify principles were followed in this step",
       "actions": [
@@ -139,7 +160,7 @@
     }
   ],
   "flow": {
-    "description": "Read parameters → Choose search mode (simple/deep) → Execute search → Apply exclusions → Create report → Save results → Update memory"
+    "description": "Read parameters → Choose search mode (simple/deep) → Execute search → Broad text-reference search → Cross-repo scope verification → Apply exclusions → Create report → Save results → Update memory"
   },
   "memoryFileUsage": {
     "readFrom": "Previous step section in memory.json or process.md - context parameters (filePatterns, scope, excludePatterns, searchDepth, includeMatchReason)",
@@ -188,9 +209,6 @@
     }
   },
   "dependencies": {
-    "requiredComponents": [
-      "mandatory-logging.md"
-    ],
     "requiredFiles": [
       "memory.json or process.md"
     ],

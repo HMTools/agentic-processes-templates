@@ -10,19 +10,33 @@
   "output": {
     "description": "Understood plan: scope, affected files, step order, dependencies, testing strategy",
     "artifacts": [],
-    "memoryUpdates": ["planScope", "affectedFiles", "implementationOrder", "testingStrategy"]
+    "memoryUpdates": [
+      "planScope",
+      "affectedFiles",
+      "implementationOrder",
+      "testingStrategy"
+    ]
   },
   "guidance": {
-    "prerequisites": ["Implementation plan exists in parent process memory"],
-    "mandatoryComponents": ["mandatory-logging.md"],
+    "prerequisites": [
+      "Implementation plan exists in parent process memory"
+    ],
     "specificActions": [
       "Read the implementation plan from parent process memory",
       "Understand scope and affected files",
       "Identify implementation step order and dependencies",
       "Note testing strategy for later verification"
     ],
-    "files": { "read": ["Parent process memory.json"], "create": [], "update": [] },
-    "tools": ["Read - read parent process memory"],
+    "files": {
+      "read": [
+        "Parent process memory.json"
+      ],
+      "create": [],
+      "update": []
+    },
+    "tools": [
+      "Read - read parent process memory"
+    ],
     "bestPractices": [
       "Verify the plan is complete before starting implementation",
       "Note any ambiguities that need clarification before coding",
@@ -30,15 +44,85 @@
     ]
   },
   "substeps": [
-    { "number": 0, "name": "Read implementation plan from parent memory", "description": "Load the plan produced by plan-work-item", "actions": ["Read parent process memory.json", "Extract the implementation plan document", "Note the plan structure and sections"] },
-    { "number": 1, "name": "Understand scope and affected files", "description": "Identify what files need to be created, modified, or deleted", "actions": ["Review affected files table from the plan", "Group files by change type (create/modify/delete)"] },
-    { "number": 2, "name": "Identify implementation order", "description": "Understand the sequence of tasks", "actions": ["Review step-by-step tasks", "Note ordering: dependencies/config → module wiring → feature code → infra/DevOps → tests"] },
-    { "number": 3, "name": "Note testing strategy", "description": "Understand verification approach", "actions": ["Review testing strategy from the plan", "Note verification checklist items"] },
-    { "number": 4, "name": "Store in memory", "description": "Record plan understanding", "actions": ["Store planScope, affectedFiles, implementationOrder, testingStrategy in memory"] },
-    { "number": 5, "name": "End-Step: Compliance Check", "description": "Verify principles were followed", "actions": ["Output: '✓ Step completed in compliance with operating principles'"] }
+    {
+      "number": 0,
+      "name": "Read implementation plan from parent memory",
+      "description": "Load the plan produced by plan-work-item",
+      "actions": [
+        "Read parent process memory.json",
+        "Extract the implementation plan document",
+        "Note the plan structure and sections"
+      ]
+    },
+    {
+      "number": 1,
+      "name": "Understand scope and affected files",
+      "description": "Identify what files need to be created, modified, or deleted",
+      "actions": [
+        "Review affected files table from the plan",
+        "Group files by change type (create/modify/delete)"
+      ]
+    },
+    {
+      "number": 2,
+      "name": "Identify implementation order",
+      "description": "Understand the sequence of tasks",
+      "actions": [
+        "Review step-by-step tasks",
+        "Note ordering: dependencies/config → module wiring → feature code → infra/DevOps → tests"
+      ]
+    },
+    {
+      "number": 3,
+      "name": "Note testing strategy",
+      "description": "Understand verification approach",
+      "actions": [
+        "Review testing strategy from the plan",
+        "Note verification checklist items"
+      ]
+    },
+    {
+      "number": 4,
+      "name": "Store in memory",
+      "description": "Record plan understanding",
+      "actions": [
+        "Store planScope, affectedFiles, implementationOrder, testingStrategy in memory"
+      ]
+    },
+    {
+      "number": 5,
+      "name": "End-Step: Compliance Check",
+      "description": "Verify principles were followed",
+      "actions": [
+        "Output: '✓ Step completed in compliance with operating principles'"
+      ]
+    }
   ],
-  "flow": { "description": "Read plan → understand scope → identify order → note testing → store in memory" },
-  "memoryFileUsage": { "readFrom": "Parent process memory (implementation plan)", "writeTo": "Step results", "fields": ["planScope", "affectedFiles", "implementationOrder", "testingStrategy"] },
-  "dependencies": { "requiredComponents": ["mandatory-logging.md"], "requiredFiles": [], "requiredTools": ["Read"] },
-  "references": { "relatedSteps": ["create-implementation-plan"], "usedInTemplates": ["implement-work-item"] }
+  "flow": {
+    "description": "Read plan → understand scope → identify order → note testing → store in memory"
+  },
+  "memoryFileUsage": {
+    "readFrom": "Parent process memory (implementation plan)",
+    "writeTo": "Step results",
+    "fields": [
+      "planScope",
+      "affectedFiles",
+      "implementationOrder",
+      "testingStrategy"
+    ]
+  },
+  "dependencies": {
+    "requiredFiles": [],
+    "requiredTools": [
+      "Read"
+    ]
+  },
+  "references": {
+    "relatedSteps": [
+      "create-implementation-plan"
+    ],
+    "usedInTemplates": [
+      "implement-work-item"
+    ]
+  }
 }

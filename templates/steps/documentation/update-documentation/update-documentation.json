@@ -24,9 +24,6 @@
       "Implementation step completed",
       "Code changes identified"
     ],
-    "mandatoryComponents": [
-      "mandatory-logging.md"
-    ],
     "userGuidelines": [
       "~/.claude/agentic-processes/guidelines/docs/how-to-document-flows.md"
     ],
@@ -178,9 +175,6 @@
     ]
   },
   "dependencies": {
-    "requiredComponents": [
-      "mandatory-logging.md"
-    ],
     "requiredFiles": [
       "memory.json"
     ],

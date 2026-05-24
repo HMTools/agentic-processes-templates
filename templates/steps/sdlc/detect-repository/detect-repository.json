@@ -23,9 +23,6 @@
       "Git remote configured with Azure DevOps URL",
       "Azure DevOps MCP tools accessible"
     ],
-    "mandatoryComponents": [
-      "mandatory-logging.md"
-    ],
     "specificActions": [
       "Follow the substeps below in sequence",
       "Workflow: parse git remote → call MCP for repo ID → find linked PR → store in memory",
@@ -128,9 +125,6 @@
     ]
   },
   "dependencies": {
-    "requiredComponents": [
-      "mandatory-logging.md"
-    ],
     "requiredFiles": [],
     "requiredTools": [
       "Bash",
