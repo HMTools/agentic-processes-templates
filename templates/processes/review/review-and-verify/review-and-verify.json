@@ -84,19 +84,6 @@
       "name": "Final summary",
       "stepRef": "@step:investigation/final-summary",
       "output": "Final summary document"
-    },
-    {
-      "number": 8,
-      "name": "Continuous Improvement",
-      "stepRef": "@step:learning/continuous-improvement",
-      "output": "Improvements implemented",
-      "approvalRequired": true
-    },
-    {
-      "number": 9,
-      "name": "End Process Validation",
-      "stepRef": "@step:common/end-process-validation",
-      "output": "Compliance report"
     }
   ],
   "references": {
@@ -106,9 +93,7 @@
       "@step:investigation/review-verify-document",
       "@step:investigation/propose-fixes",
       "@step:common/apply-changes",
-      "@step:investigation/final-summary",
-      "@step:learning/continuous-improvement",
-      "@step:common/end-process-validation"
+      "@step:investigation/final-summary"
     ],
     "relatedTemplates": [
       "set-concept"

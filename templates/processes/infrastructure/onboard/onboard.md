@@ -36,8 +36,7 @@ flowchart TD
     C -->|Yes| D{User Approves List?}
     D -->|Revise| B
     D -->|Yes| E[Step 2: Create Guidelines Batch]
-    E --> F[Step 3: Continuous Improvement]
-    F --> G[End: Onboarding Complete]
+    E --> F[End: Onboarding Complete]
 ```
 
 ## Steps Summary
@@ -46,7 +45,6 @@ flowchart TD
 |------|------|-------------------|
 | 1 | Identify missing guidelines | Yes (review findings) |
 | 2 | Create guidelines (batch) | No* |
-| 3 | Continuous Improvement | Yes (per improvement) |
 
 *Step 2 spawns `create-guideline` sub-processes with immediate sync - each completes before the next starts.
 
@@ -63,11 +61,6 @@ flowchart TD
   - **Description**: For each approved missing guideline, spawn a `create-guideline` sub-process
   - **Output**: Created guideline files in `~/.claude/agentic-processes/guidelines/{category}/`
   - **Sync**: Immediate (one guideline at a time)
-
-- [ ] **Step 3: Continuous Improvement**
-  - **Step**: `@step:learning/continuous-improvement`
-  - **Description**: Analyze process log and implement improvements for future iterations
-  - **Output**: Improvements implemented
 
 ## How It Works
 

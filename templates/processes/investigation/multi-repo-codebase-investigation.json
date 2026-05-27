@@ -114,22 +114,6 @@
       "reused": true,
       "context": "Structures the final report based on the outputFormat parameter. Draws from comparative-analysis.md (Step 4) and per-repository findings. Sections include: Executive Summary, Research Question, Repositories Investigated (total/relevant/not-relevant counts), Per-Repository Findings, Comparative Analysis, Common Patterns, Unique Approaches, Recommendations, Conclusion.",
       "outputFile": "investigation-report.{md|json}"
-    },
-    {
-      "number": 6,
-      "name": "Continuous Improvement",
-      "stepRef": "@step:learning/continuous-improvement",
-      "output": "Improvements implemented to template, step definitions, or process",
-      "approvalRequired": true,
-      "reused": true
-    },
-    {
-      "number": 7,
-      "name": "End Process Validation",
-      "stepRef": "@step:common/end-process-validation",
-      "output": "Compliance report confirming all steps completed, all artifacts present, and process files valid",
-      "approvalRequired": false,
-      "reused": true
     }
   ],
   "guidance": {
@@ -199,9 +183,7 @@
       "@step:multi-repo/parse-repository-list",
       "@step:common/spawn-sub-process",
       "@step:multi-repo/aggregate-and-synthesize-findings",
-      "@step:investigation/create-research-report",
-      "@step:learning/continuous-improvement",
-      "@step:common/end-process-validation"
+      "@step:investigation/create-research-report"
     ],
     "newStepsRequired": [
       "@step:multi-repo/parse-repository-list",

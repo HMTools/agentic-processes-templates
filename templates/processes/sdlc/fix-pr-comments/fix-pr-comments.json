@@ -59,19 +59,6 @@
       "output": "User decision: loop or exit",
       "approvalRequired": true,
       "loopBackTo": 1
-    },
-    {
-      "number": 6,
-      "name": "Continuous Improvement",
-      "stepRef": "@step:learning/continuous-improvement",
-      "output": "Improvements implemented",
-      "approvalRequired": true
-    },
-    {
-      "number": 7,
-      "name": "End Process Validation",
-      "stepRef": "@step:common/end-process-validation",
-      "output": "Compliance report"
     }
   ],
   "references": {
@@ -81,9 +68,7 @@
       "@step:sdlc/analyze-plan-fixes",
       "@step:sdlc/implement-fixes",
       "@step:sdlc/reply-to-comments",
-      "@step:sdlc/await-reviewer-response",
-      "@step:learning/continuous-improvement",
-      "@step:common/end-process-validation"
+      "@step:sdlc/await-reviewer-response"
     ],
     "relatedTemplates": [
       "sdlc"

@@ -43,19 +43,6 @@
           "triggeringContext": "Onboard process identified missing guideline"
         }
       }
-    },
-    {
-      "number": 3,
-      "name": "Continuous Improvement",
-      "stepRef": "@step:learning/continuous-improvement",
-      "output": "Improvements implemented",
-      "approvalRequired": true
-    },
-    {
-      "number": 4,
-      "name": "End Process Validation",
-      "stepRef": "@step:common/end-process-validation",
-      "output": "Compliance report"
     }
   ],
   "guidance": {
@@ -86,8 +73,7 @@
   "references": {
     "steps": [
       "@step:investigation/identify-files",
-      "@step:common/spawn-sub-process",
-      "@step:learning/continuous-improvement"
+      "@step:common/spawn-sub-process"
     ],
     "relatedTemplates": [
       "create-guideline"

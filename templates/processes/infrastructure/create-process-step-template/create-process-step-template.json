@@ -81,28 +81,13 @@
       "name": "Validate step structure",
       "stepRef": "@step:template/validate-step-structure",
       "output": "Comprehensive validation report"
-    },
-    {
-      "number": 4,
-      "name": "Continuous Improvement",
-      "stepRef": "@step:learning/continuous-improvement",
-      "output": "Improvements implemented",
-      "approvalRequired": true
-    },
-    {
-      "number": 5,
-      "name": "End Process Validation",
-      "stepRef": "@step:common/end-process-validation",
-      "output": "Compliance report"
     }
   ],
   "references": {
     "steps": [
       "@step:template/plan-and-design-step",
       "@step:template/create-step-file",
-      "@step:template/validate-step-structure",
-      "@step:learning/continuous-improvement",
-      "@step:common/end-process-validation"
+      "@step:template/validate-step-structure"
     ],
     "relatedTemplates": [
       "create-process-template"

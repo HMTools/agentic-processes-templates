@@ -132,19 +132,6 @@
       "guidance": {
         "actions": ["Backfill ADO IDs into review JSON", "Regenerate HTML with clickable ADO links", "Display summary of all actions taken"]
       }
-    },
-    {
-      "number": 10,
-      "name": "Continuous Improvement",
-      "stepRef": "@step:learning/continuous-improvement",
-      "output": "Improvements implemented",
-      "approvalRequired": true
-    },
-    {
-      "number": 11,
-      "name": "End Process Validation",
-      "stepRef": "@step:common/end-process-validation",
-      "output": "Compliance report"
     }
   ],
   "references": {
@@ -157,9 +144,7 @@
       "@step:sdlc/generate-test-context",
       "@step:sdlc/generate-test-cases",
       "@step:sdlc/push-test-plan-ado",
-      "@step:sdlc/report-test-plan-results",
-      "@step:learning/continuous-improvement",
-      "@step:common/end-process-validation"
+      "@step:sdlc/report-test-plan-results"
     ],
     "relatedTemplates": [
       "sdlc/sdlc"

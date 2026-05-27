@@ -76,28 +76,13 @@
       "stepRef": "@step:guideline/link-guideline-to-steps",
       "output": "Updated step files",
       "optional": true
-    },
-    {
-      "number": 4,
-      "name": "Continuous Improvement",
-      "stepRef": "@step:learning/continuous-improvement",
-      "output": "Improvements implemented",
-      "approvalRequired": true
-    },
-    {
-      "number": 5,
-      "name": "End Process Validation",
-      "stepRef": "@step:common/end-process-validation",
-      "output": "Compliance report"
     }
   ],
   "references": {
     "steps": [
       "@step:planning/understand-context",
       "@step:guideline/create-guideline-file",
-      "@step:guideline/link-guideline-to-steps",
-      "@step:learning/continuous-improvement",
-      "@step:common/end-process-validation"
+      "@step:guideline/link-guideline-to-steps"
     ],
     "relatedTemplates": [
       "create-process-step-template"

@@ -58,7 +58,8 @@
       "Provide rationale: Explain why each change is needed",
       "Keep proposals atomic: Each proposal should be self-contained",
       "Use consistent IDs: Makes it easy for user to approve specific proposals",
-      "CATEGORIZE ALL FILES: Implementation plans must explicitly address ALL file groups in scope: (1) Files to CREATE, (2) Files to MODIFY, (3) Files to DELETE, (4) Files UNCHANGED with brief explanation why they're out of scope. This prevents 'what about X?' questions."
+      "CATEGORIZE ALL FILES: Implementation plans must explicitly address ALL file groups in scope: (1) Files to CREATE, (2) Files to MODIFY, (3) Files to DELETE, (4) Files UNCHANGED with brief explanation why they're out of scope. This prevents 'what about X?' questions.",
+      "MIGRATION STRATEGY EARLY: When the plan involves changing existing patterns or moving responsibilities, present 'clean migration vs backward compatibility' as an explicit decision point BEFORE designing the detailed approach. Don't default to the most complex option — ask the user which strategy they prefer."
     ]
   },
   "substeps": [
@@ -115,6 +116,18 @@
     },
     {
       "number": 6,
+      "name": "Decide migration strategy",
+      "description": "When changing existing patterns, present migration options early",
+      "conditional": true,
+      "actions": [
+        "If the implementation involves changing an existing pattern, moving responsibilities, or replacing an approach:",
+        "Present migration strategy options to the user: (a) Clean migration — update everything at once, no backward compat, (b) Gradual migration — backward compatibility during transition, (c) Other approach the user prefers",
+        "Get user decision BEFORE designing the detailed implementation",
+        "This avoids designing complex backward-compat logic that the user may not want"
+      ]
+    },
+    {
+      "number": 7,
       "name": "Design implementation approach",
       "description": "Design the overall approach for implementing changes",
       "actions": [
@@ -124,7 +137,7 @@
       ]
     },
     {
-      "number": 7,
+      "number": 8,
       "name": "Create modification proposals",
       "description": "Create change proposals for existing file modifications",
       "actions": [
@@ -137,7 +150,7 @@
       ]
     },
     {
-      "number": 8,
+      "number": 9,
       "name": "Create new file proposals",
       "description": "Create change proposals for new files to be created",
       "actions": [
@@ -148,7 +161,7 @@
       ]
     },
     {
-      "number": 9,
+      "number": 10,
       "name": "Create implementation-plan.md",
       "description": "Create the implementation plan document",
       "actions": [
@@ -159,7 +172,7 @@
       ]
     },
     {
-      "number": 10,
+      "number": 11,
       "name": "Present plan to user",
       "description": "Present implementation plan and explain approval options",
       "actions": [
@@ -169,7 +182,7 @@
       ]
     },
     {
-      "number": 11,
+      "number": 12,
       "name": "Process user response",
       "description": "Handle user's approval, modification request, or rejection",
       "actions": [
@@ -180,7 +193,7 @@
       ]
     },
     {
-      "number": 12,
+      "number": 13,
       "name": "Update memory with approval status",
       "description": "Record plan summary and approval status",
       "actions": [
@@ -190,7 +203,7 @@
       ]
     },
     {
-      "number": 13,
+      "number": 14,
       "name": "End-Step: Compliance Check",
       "description": "Verify principles were followed in this step",
       "actions": [

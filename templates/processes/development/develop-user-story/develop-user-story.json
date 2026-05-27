@@ -99,9 +99,7 @@
     "implementation": "Derived from approved high-level plan",
     "unitTests": "@step:testing/write-unit-tests-service",
     "integrationTests": "@step:testing/write-integration-tests-api",
-    "documentation": "@step:documentation/update-documentation",
-    "continuousImprovement": "@step:learning/continuous-improvement",
-    "endProcessValidation": "@step:common/end-process-validation"
+    "documentation": "@step:documentation/update-documentation"
   },
   "references": {
     "steps": [
@@ -112,8 +110,7 @@
       "@step:data/implement-repository-layer",
       "@step:testing/write-unit-tests-service",
       "@step:testing/write-integration-tests-api",
-      "@step:documentation/update-documentation",
-      "@step:learning/continuous-improvement"
+      "@step:documentation/update-documentation"
     ],
     "relatedTemplates": [],
     "dependencies": []

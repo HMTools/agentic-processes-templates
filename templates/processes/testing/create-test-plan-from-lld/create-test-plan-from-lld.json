@@ -94,22 +94,6 @@
       "conditional": "Only executes if sync is configured in how-to-sync-test-management.md guideline",
       "approvalRequired": false,
       "notes": "Conditional step - skipped if no sync configured"
-    },
-    {
-      "number": 5,
-      "name": "Continuous Improvement",
-      "stepRef": "@step:learning/continuous-improvement",
-      "description": "Review the process execution and capture learnings: what worked well, what could be improved, suggested enhancements to guidelines or process.",
-      "output": "Improvements documented",
-      "approvalRequired": true
-    },
-    {
-      "number": 6,
-      "name": "End Process Validation",
-      "stepRef": "@step:common/end-process-validation",
-      "description": "Final compliance check to ensure all process requirements were met.",
-      "output": "Compliance report",
-      "approvalRequired": false
     }
   ],
   "memoryFileStructure": {
@@ -133,9 +117,7 @@
       "@step:planning/understand-context",
       "@step:testing/gather-test-requirements",
       "@step:testing/create-test-plan",
-      "@step:testing/sync-test-management",
-      "@step:learning/continuous-improvement",
-      "@step:common/end-process-validation"
+      "@step:testing/sync-test-management"
     ],
     "relatedTemplates": [
       "low-level-design-user-story",

@@ -68,28 +68,13 @@
         "syncPoint": "immediate"
       },
       "fallback": "manual PAUSE if user prefers"
-    },
-    {
-      "number": 4,
-      "name": "Continuous Improvement",
-      "stepRef": "@step:learning/continuous-improvement",
-      "output": "Improvements implemented",
-      "approvalRequired": true
-    },
-    {
-      "number": 5,
-      "name": "End Process Validation",
-      "stepRef": "@step:common/end-process-validation",
-      "output": "Compliance report"
     }
   ],
   "references": {
     "steps": [
       "@step:template/plan-and-design-template",
       "@step:template/create-template-file",
-      "@step:template/validate-process-steps-exist",
-      "@step:learning/continuous-improvement",
-      "@step:common/end-process-validation"
+      "@step:template/validate-process-steps-exist"
     ],
     "relatedTemplates": [
       "create-process-step-template"

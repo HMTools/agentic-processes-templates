@@ -47,11 +47,7 @@ graph TD
     J --> K{Findings Approved?}
     K -->|No - Revise| J
     K -->|Yes| L[Create Investigation Report]
-    L --> M[Continuous Improvement]
-    M --> N{Improvements Approved?}
-    N -->|No| M
-    N -->|Yes| O[End Process Validation]
-    O --> P[End]
+    L --> P[End]
 ```
 
 ## Steps
@@ -75,9 +71,3 @@ graph TD
 - [ ] Step 5: Create Investigation Report (@step:investigation/create-research-report)
   - Output: `investigation-report.{md|json}` with executive summary, per-repository findings, comparative analysis, and recommendations
 
-- [ ] Step 6: Continuous Improvement (@step:learning/continuous-improvement)
-  - Output: Improvements implemented to the template and process
-  - Approval: Required
-
-- [ ] Step 7: End Process Validation (@step:common/end-process-validation)
-  - Output: Compliance report confirming all steps completed and artifacts present

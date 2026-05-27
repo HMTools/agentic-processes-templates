@@ -50,19 +50,6 @@
       "name": "Evaluate Deployment Result",
       "stepRef": "@step:sdlc/evaluate-deployment-result",
       "output": "Deployment decision: proceed, retry, or cap reached"
-    },
-    {
-      "number": 4,
-      "name": "Continuous Improvement",
-      "stepRef": "@step:learning/continuous-improvement",
-      "approvalRequired": true,
-      "output": "Improvements implemented"
-    },
-    {
-      "number": 5,
-      "name": "End Process Validation",
-      "stepRef": "@step:common/end-process-validation",
-      "output": "Compliance report"
     }
   ],
   "flow": {
@@ -73,9 +60,7 @@
       "@step:sdlc/load-deploy-config",
       "@step:sdlc/trigger-cd-pipeline",
       "@step:sdlc/monitor-deployment",
-      "@step:sdlc/evaluate-deployment-result",
-      "@step:learning/continuous-improvement",
-      "@step:common/end-process-validation"
+      "@step:sdlc/evaluate-deployment-result"
     ],
     "relatedTemplates": [
       "sdlc/sdlc",

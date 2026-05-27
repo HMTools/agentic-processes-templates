@@ -56,28 +56,13 @@
           "Order: dependencies/config → module wiring → feature code → infra/DevOps → tests"
         ]
       }
-    },
-    {
-      "number": 3,
-      "name": "Continuous Improvement",
-      "stepRef": "@step:learning/continuous-improvement",
-      "output": "Improvements implemented",
-      "approvalRequired": true
-    },
-    {
-      "number": 4,
-      "name": "End Process Validation",
-      "stepRef": "@step:common/end-process-validation",
-      "output": "Compliance report"
     }
   ],
   "references": {
     "steps": [
       "@step:sdlc/fetch-work-item",
       "@step:sdlc/analyze-codebase",
-      "@step:sdlc/create-implementation-plan",
-      "@step:learning/continuous-improvement",
-      "@step:common/end-process-validation"
+      "@step:sdlc/create-implementation-plan"
     ],
     "relatedTemplates": [
       "sdlc/sdlc"

@@ -95,19 +95,6 @@
         "evidenceIntegrity": "MUST source evidence data from saved JSON files, NEVER from memory. If evidence file missing, mark as missing.",
         "openInBrowser": true
       }
-    },
-    {
-      "number": 4,
-      "name": "Continuous Improvement",
-      "stepRef": "@step:learning/continuous-improvement",
-      "output": "Improvements implemented",
-      "approvalRequired": true
-    },
-    {
-      "number": 5,
-      "name": "End Process Validation",
-      "stepRef": "@step:common/end-process-validation",
-      "output": "Compliance report"
     }
   ],
   "references": {
@@ -115,9 +102,7 @@
       "@step:sdlc/setup-test-environment",
       "@step:sdlc/fetch-test-cases",
       "@step:sdlc/execute-test-cases",
-      "@step:sdlc/generate-test-results",
-      "@step:learning/continuous-improvement",
-      "@step:common/end-process-validation"
+      "@step:sdlc/generate-test-results"
     ],
     "relatedTemplates": [
       "sdlc/sdlc",

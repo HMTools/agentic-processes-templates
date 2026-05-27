@@ -101,26 +101,11 @@
         },
         "syncPoint": "immediate"
       }
-    },
-    {
-      "number": 6,
-      "name": "Continuous Improvement",
-      "stepRef": "@step:learning/continuous-improvement",
-      "output": "Improvements implemented",
-      "approvalRequired": true
-    },
-    {
-      "number": 7,
-      "name": "End Process Validation",
-      "stepRef": "@step:common/end-process-validation",
-      "output": "Compliance report"
     }
   ],
   "references": {
     "steps": [
-      "@step:common/spawn-sub-process",
-      "@step:learning/continuous-improvement",
-      "@step:common/end-process-validation"
+      "@step:common/spawn-sub-process"
     ],
     "relatedTemplates": [
       "sdlc/plan-work-item",

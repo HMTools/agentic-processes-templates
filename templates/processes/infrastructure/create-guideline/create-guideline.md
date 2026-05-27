@@ -40,9 +40,8 @@ flowchart TD
     G --> E
     F -->|Yes| H{Link to Steps?}
     H -->|Yes| I[Step 3: Link Guideline to Steps]
-    H -->|No| J[Step 4: Continuous Improvement]
+    H -->|No| J[End: Guideline Complete]
     I --> J
-    J --> K[End: Guideline Complete]
 ```
 
 ## Steps Summary
@@ -52,7 +51,6 @@ flowchart TD
 | 1 | Understand context | No |
 | 2 | Create guideline file | Yes |
 | 3 | Link guideline to steps | No (optional) |
-| 4 | Continuous Improvement | Yes (per improvement) |
 
 ## Steps
 
@@ -72,8 +70,4 @@ flowchart TD
   - **Description**: Update step JSON files to reference the new guideline in `userGuidelines`
   - **Output**: Updated step files
 
-- [ ] **Step 4: Continuous Improvement**
-  - **Step**: `@step:learning/continuous-improvement`
-  - **Description**: Analyze process log and implement improvements for future iterations
-  - **Output**: Improvements implemented
 

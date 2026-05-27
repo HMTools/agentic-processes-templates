@@ -79,19 +79,6 @@
         "syncPoint": "immediate"
       },
       "fallback": "manual PAUSE if user prefers"
-    },
-    {
-      "number": 5,
-      "name": "Continuous Improvement",
-      "stepRef": "@step:learning/continuous-improvement",
-      "output": "Improvements implemented",
-      "approvalRequired": true
-    },
-    {
-      "number": 6,
-      "name": "End Process Validation",
-      "stepRef": "@step:common/end-process-validation",
-      "output": "Compliance report"
     }
   ],
   "references": {
@@ -101,9 +88,7 @@
       "@step:common/plan-artifact-updates",
       "@step:common/apply-artifact-updates",
       "@step:common/review-and-validate-artifact-updates",
-      "@step:template/validate-process-steps-exist",
-      "@step:learning/continuous-improvement",
-      "@step:common/end-process-validation"
+      "@step:template/validate-process-steps-exist"
     ],
     "relatedTemplates": [
       "create-process-template",

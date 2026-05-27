@@ -95,19 +95,6 @@
       "name": "Verify implementation",
       "stepRef": "@step:investigation/review-verify-document",
       "output": "Verification report"
-    },
-    {
-      "number": 7,
-      "name": "Continuous Improvement",
-      "stepRef": "@step:learning/continuous-improvement",
-      "output": "Improvements implemented",
-      "approvalRequired": true
-    },
-    {
-      "number": 8,
-      "name": "End Process Validation",
-      "stepRef": "@step:common/end-process-validation",
-      "output": "Compliance report"
     }
   ],
   "references": {
@@ -116,8 +103,7 @@
       "@step:investigation/identify-files",
       "@step:investigation/review-verify-document",
       "@step:planning/design-implementation-plan",
-      "@step:common/apply-changes",
-      "@step:learning/continuous-improvement"
+      "@step:common/apply-changes"
     ],
     "relatedTemplates": [
       "review-and-verify"

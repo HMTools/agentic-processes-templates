@@ -71,19 +71,6 @@
         "returnToStep": 3,
         "description": "If design creation reveals information gaps, return to Step 3 to gather additional data"
       }
-    },
-    {
-      "number": 6,
-      "name": "Continuous Improvement",
-      "stepRef": "@step:learning/continuous-improvement",
-      "output": "Process improvements implemented",
-      "approvalRequired": true
-    },
-    {
-      "number": 7,
-      "name": "End Process Validation",
-      "stepRef": "@step:common/end-process-validation",
-      "output": "Compliance report"
     }
   ],
   "qAPattern": {
@@ -107,8 +94,7 @@
       "@step:planning/understand-context",
       "@step:planning/gather-relevant-information",
       "@step:planning/analyze-affected-system",
-      "@step:planning/create-low-level-design",
-      "@step:learning/continuous-improvement"
+      "@step:planning/create-low-level-design"
     ],
     "relatedTemplates": [
       "develop-user-story"

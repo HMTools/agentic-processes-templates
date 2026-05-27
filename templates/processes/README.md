@@ -78,19 +78,6 @@ graph TD
   - **Description**: [Detailed description]
   - **Output**: [What this step produces]
 
-### Final Phase: Learning & Improvement
-
-- [ ] Step N: Continuous Improvement & Learning
-  - **Step**: `@step:learning/continuous-improvement`
-  - **Description**: Analyze process log and implement improvements for future iterations
-  - **Context**:
-    - `processLogPath`: ~/.claude/agentic-processes/active/{process-name}/log.json
-    - `processName`: {{processName}}
-    - `templateName`: [template-name]
-  - **Output**: Analysis report, implemented improvements, updated templates/steps
-  - **Iterative Workflow**: For each improvement: propose → investigate → implement → request approval → next
-  - **Note**: User must approve each improvement before proceeding to the next one
-
 ## Errors & Notes
 <!-- Add any notes, warnings, or observations here during execution -->
 
@@ -518,45 +505,14 @@ The template format has been simplified:
 6. **Inconsistent numbering**: Use Step 1, Step 2, Step 3 format
 7. **Vague descriptions**: Provide actionable guidance
 8. **No diagram**: Every template must have a mermaid flow diagram
-9. **Missing continuous improvement step**: Every template MUST include the final continuous improvement step
+## Framework Auto-Injected Steps
 
-## Mandatory Final Step
+The following steps are **automatically appended** by the framework at process creation time and should **NOT** be included in template definitions:
 
-**Every process template MUST include the Continuous Improvement & Learning step as the final step.**
+- **Continuous Improvement** (`@framework-step:continuous-improvement`) -- analyzes the process log and implements improvements for future iterations
+- **End Process Validation** (`@framework-step:end-process-validation`) -- final compliance check ensuring all process requirements were met
 
-This step is mandatory and should be added before the "Errors & Notes" section:
-
-```markdown
-### Final Phase: Learning & Improvement
-
-- [ ] Step N: Continuous Improvement & Learning
-  - **Step**: `@step:learning/continuous-improvement`
-  - **Description**: Analyze process log and implement improvements for future iterations
-  - **Context**:
-    - `processLogPath`: ~/.claude/agentic-processes/active/{process-name}/log.json
-    - `processName`: {{processName}}
-    - `templateName`: [template-name]
-  - **Output**: Analysis report, implemented improvements, updated templates/steps
-  - **Iterative Workflow**: For each improvement: propose → investigate → implement → request approval → next
-  - **Note**: User must approve each improvement before proceeding to the next one
-```
-
-**Why This Step is Mandatory:**
-- Enables the process management system to learn and evolve
-- Captures user corrections as improvement opportunities
-- Automates repetitive manual interventions over time
-- Continuously improves templates, steps, and documentation
-- Creates a feedback loop for systematic enhancement
-
-**What This Step Does:**
-1. Reads the detailed process log file
-2. Identifies patterns in user corrections
-3. Proposes improvements one at a time
-4. Implements approved improvements
-5. Updates templates/steps/documentation
-6. Makes future processes more efficient
-
-See `@step:learning/continuous-improvement` for detailed guidance on this step.
+Template authors can assume these steps will always run after the last explicitly defined step. There is no need to reference them in `steps`, `dynamicSteps`, or `references.steps`.
 
 ## Getting Help
 

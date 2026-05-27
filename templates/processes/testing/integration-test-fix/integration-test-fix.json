@@ -93,19 +93,6 @@
       "name": "Verify test passes",
       "stepRef": "@step:testing/verify-test-passes",
       "output": "Test execution results"
-    },
-    {
-      "number": 7,
-      "name": "Continuous Improvement",
-      "stepRef": "@step:learning/continuous-improvement",
-      "output": "Improvements implemented",
-      "approvalRequired": true
-    },
-    {
-      "number": 8,
-      "name": "End Process Validation",
-      "stepRef": "@step:common/end-process-validation",
-      "output": "Compliance report"
     }
   ],
   "references": {
@@ -113,9 +100,7 @@
       "@step:testing/capture-test-failure",
       "@step:testing/diagnose-integration-test-failure",
       "@step:testing/implement-integration-test-fix",
-      "@step:testing/verify-test-passes",
-      "@step:learning/continuous-improvement",
-      "@step:common/end-process-validation"
+      "@step:testing/verify-test-passes"
     ],
     "relatedTemplates": [],
     "dependencies": []

@@ -47,14 +47,8 @@ flowchart TD
     A3 -->|Needs Changes| S3
     
     S4Check -->|Yes| S4[Step 4: Sync to Test Management Tool]
-    S4Check -->|No| S5
-    S4 --> S5[Step 5: Continuous Improvement]
-    
-    S5 -->|approvalRequired: true| A5{User Approval}
-    A5 -->|Approved| S6[Step 6: End Process Validation]
-    A5 -->|Improvements identified| S5
-    
-    S6 --> End([End: Test Plan Complete])
+    S4Check -->|No| End
+    S4 --> End([End: Test Plan Complete])
     
     subgraph "Feedback Loops"
         S3 -.->|Information gaps| S2
@@ -127,29 +121,6 @@ Push test cases to external test management tool (Azure DevOps, Zephyr, TestRail
 
 ---
 
-### Step 5: Continuous Improvement
-**Step Reference**: `@step:learning/continuous-improvement`  
-**Approval Required**: Yes
-
-Review the process execution and capture learnings:
-- What worked well
-- What could be improved
-- Suggested enhancements to guidelines or process
-
-**Output**: Improvements documented
-
----
-
-### Step 6: End Process Validation
-**Step Reference**: `@step:common/end-process-validation`  
-**Approval Required**: No
-
-Final compliance check to ensure all process requirements were met.
-
-**Output**: Compliance report
-
----
-
 ## Steps Summary
 
 | Step | Name | Approval Required |
@@ -158,8 +129,6 @@ Final compliance check to ensure all process requirements were met.
 | 2 | Gather Test Requirements | No |
 | 3 | Create Test Plan | **Yes** |
 | 4 | Sync to Test Management Tool | Conditional |
-| 5 | Continuous Improvement | **Yes** |
-| 6 | End Process Validation | No |
 
 ## Key Output
 

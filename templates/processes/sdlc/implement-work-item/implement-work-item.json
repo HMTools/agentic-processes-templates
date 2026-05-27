@@ -114,19 +114,6 @@
         "exitCondition": "CI pipeline passes OR max retries reached",
         "onLoop": "Pass CI failure details as context to Execute Implementation step"
       }
-    },
-    {
-      "number": 6,
-      "name": "Continuous Improvement",
-      "stepRef": "@step:learning/continuous-improvement",
-      "output": "Improvements implemented",
-      "approvalRequired": true
-    },
-    {
-      "number": 7,
-      "name": "End Process Validation",
-      "stepRef": "@step:common/end-process-validation",
-      "output": "Compliance report"
     }
   ],
   "references": {
@@ -136,9 +123,7 @@
       "@step:sdlc/self-code-review",
       "@step:sdlc/run-local-tests",
       "@step:sdlc/prepare-for-review",
-      "@step:sdlc/verify-ci-pipeline",
-      "@step:learning/continuous-improvement",
-      "@step:common/end-process-validation"
+      "@step:sdlc/verify-ci-pipeline"
     ],
     "relatedTemplates": [
       "sdlc/sdlc",
