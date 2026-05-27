@@ -77,7 +77,7 @@
     {
       "number": 3,
       "name": "Investigate Repositories (Subprocess Loop)",
-      "stepRef": "@step:common/spawn-sub-process",
+      "stepRef": null,
       "output": "Spawned subprocesses for each repository; repositories-list.json updated with subProcessId, subProcessPath, and status for each entry",
       "approvalRequired": false,
       "reused": true,
@@ -181,7 +181,6 @@
     "steps": [
       "@step:planning/understand-context",
       "@step:multi-repo/parse-repository-list",
-      "@step:common/spawn-sub-process",
       "@step:multi-repo/aggregate-and-synthesize-findings",
       "@step:investigation/create-research-report"
     ],

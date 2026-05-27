@@ -29,7 +29,7 @@
     {
       "number": 2,
       "name": "Create guidelines (batch)",
-      "stepRef": "@step:common/spawn-sub-process",
+      "stepRef": null,
       "output": "Created guideline files",
       "subProcessConfig": {
         "template": "create-guideline",
@@ -72,8 +72,7 @@
   },
   "references": {
     "steps": [
-      "@step:investigation/identify-files",
-      "@step:common/spawn-sub-process"
+      "@step:investigation/identify-files"
     ],
     "relatedTemplates": [
       "create-guideline"

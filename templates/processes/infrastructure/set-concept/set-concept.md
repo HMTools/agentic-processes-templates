@@ -51,7 +51,7 @@ flowchart TD
 
 | Step | Name | Approval Required |
 |------|------|-------------------|
-| 1 | Understand concept | No |
+| 1 | Understand concept | Yes |
 | 2 | Identify target files | No |
 | 3 | Analyze existing state | No |
 | 4 | Design implementation plan | Yes |

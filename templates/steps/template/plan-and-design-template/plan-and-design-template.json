@@ -70,10 +70,10 @@
         "Each phase needs its own approval gates and process tracking"
       ],
       "howToImplement": [
-        "Orchestrator template uses @step:common/spawn-sub-process for each phase",
+        "Orchestrator template steps use subProcessTrigger metadata to declare which sub-process to spawn (stepRef is null)",
         "Each phase is a separate sub-process template with its own steps",
         "Use syncPoint: immediate for sequential phase execution",
-        "Orchestrator only has: spawn steps + continuous-improvement + end-process-validation",
+        "Orchestrator only has: sub-process spawning steps + continuous-improvement + end-process-validation",
         "Do NOT add context-gathering steps to the orchestrator — sub-processes gather their own context",
         "Keep orchestrator parameters minimal — only what's needed to identify the work (e.g., workItemId)"
       ],

@@ -167,8 +167,7 @@
   },
   "references": {
     "relatedSteps": [
-      "identify-files",
-      "spawn-sub-process"
+      "identify-files"
     ],
     "usedInTemplates": [
       "multi-repo-investigation"

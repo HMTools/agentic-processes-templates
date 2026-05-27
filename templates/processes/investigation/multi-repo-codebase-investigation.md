@@ -59,7 +59,7 @@ graph TD
 - [ ] Step 2: Parse Repository List (@step:multi-repo/parse-repository-list)
   - Output: `repositories-list.json` with each repo's name, source, type (remote/local), and tracking fields
 
-- [ ] Step 3: Investigate Repositories - Subprocess Loop (@step:common/spawn-sub-process)
+- [ ] Step 3: Investigate Repositories - Subprocess Loop (sub-process spawning via subProcessTemplate metadata)
   - Sub-Process Template: `investigate-single-repo`
   - Output: Completed sub-processes for each repository; `repositories-list.json` updated with subprocess IDs and statuses
   - Note: Each subprocess handles clone (if remote), investigation, and cleanup autonomously

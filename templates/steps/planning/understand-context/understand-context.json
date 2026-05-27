@@ -55,7 +55,8 @@
       "Verify context completeness before moving to next step",
       "VERIFY FILE EXISTENCE: Before claiming files exist or are missing, use Glob or list_dir to verify. Never make claims about codebase state without tool-based verification.",
       "CHECK SOURCE REPOS: When investigating framework internals (templates, steps, configuration), check BOTH the locally synced copy (~/.claude/agentic-processes/) AND the source git repositories (listed in additional working directories or template-sources config). The synced copy may be stale or incomplete — the source repo is the ground truth.",
-      "DOCUMENTATION FIRST: Read existing project documentation (README.md, docs/, etc.) before creating context analysis. Existing docs may already answer questions or provide critical context."
+      "DOCUMENTATION FIRST: Read existing project documentation (README.md, docs/, etc.) before creating context analysis. Existing docs may already answer questions or provide critical context.",
+      "REWRITE ON SCOPE CHANGE: When the user expands or significantly modifies the scope during review (e.g., adds new research areas, changes boundaries), rewrite the context document from scratch with a unified voice. Do NOT patch new content into the existing document — this creates visible seams and forces the user to request a rewrite."
     ]
   },
   "substeps": [

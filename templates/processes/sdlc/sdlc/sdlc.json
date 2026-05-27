@@ -24,7 +24,7 @@
     {
       "number": 0,
       "name": "Plan Work Item",
-      "stepRef": "@step:common/spawn-sub-process",
+      "stepRef": null,
       "output": "Implementation plan document",
       "subProcessTrigger": {
         "template": "sdlc/plan-work-item",
@@ -37,7 +37,7 @@
     {
       "number": 1,
       "name": "Create Test Plan",
-      "stepRef": "@step:common/spawn-sub-process",
+      "stepRef": null,
       "output": "Test plan with test cases in ADO",
       "subProcessTrigger": {
         "template": "sdlc/create-test-plan",
@@ -50,7 +50,7 @@
     {
       "number": 2,
       "name": "Implement Work Item",
-      "stepRef": "@step:common/spawn-sub-process",
+      "stepRef": null,
       "output": "Code changes and commits",
       "subProcessTrigger": {
         "template": "sdlc/implement-work-item",
@@ -63,7 +63,7 @@
     {
       "number": 3,
       "name": "Deploy to Testing Environments",
-      "stepRef": "@step:common/spawn-sub-process",
+      "stepRef": null,
       "output": "CD pipeline deployment status -- deployed successfully or failure details",
       "subProcessTrigger": {
         "template": "sdlc/deploy-to-testing",
@@ -79,7 +79,7 @@
     {
       "number": 4,
       "name": "Run Test Suite",
-      "stepRef": "@step:common/spawn-sub-process",
+      "stepRef": null,
       "output": "Test execution results report",
       "subProcessTrigger": {
         "template": "sdlc/run-test-suite",
@@ -92,7 +92,7 @@
     {
       "number": 5,
       "name": "Fix PR Comments",
-      "stepRef": "@step:common/spawn-sub-process",
+      "stepRef": null,
       "output": "PR comments addressed and replied to",
       "subProcessTrigger": {
         "template": "sdlc/fix-pr-comments",
@@ -104,9 +104,7 @@
     }
   ],
   "references": {
-    "steps": [
-      "@step:common/spawn-sub-process"
-    ],
+    "steps": [],
     "relatedTemplates": [
       "sdlc/plan-work-item",
       "sdlc/create-test-plan",
