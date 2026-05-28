@@ -113,45 +113,30 @@ When creating a new step:
 ## Available Steps
 
 ### Common Steps
-Steps used across multiple process types:
-- Requirements analysis
-- Technical design
-- Team reviews
-- Pull request creation
-- Code reviews
-- Branch merging
+Shared steps used across multiple process types:
+- Apply changes, analyze artifacts, plan updates, review and validate
 
-### API Steps
-Steps specific to API layer work:
-- Contract definition
-- Controller implementation
-- Request/response mapping
-- Service registration
+### Planning Steps
+Planning and design steps:
+- Design implementation plans, understand context
 
-### Service Steps
-Steps for service layer implementation:
-- Internal contract definition
-- Service implementation
-- Validation logic
-- Business calculations
+### Investigation Steps
+Investigation and analysis steps:
+- Identify files, review and verify documents
 
-### Data Steps
-Steps for data layer work:
-- Domain model creation
-- Repository implementation
-- Database migrations
+### Template Steps
+Template management and creation steps:
+- Create, validate, and manage process and step templates
 
-### Testing Steps
-Steps for testing activities:
-- Unit test creation
-- Integration test creation
-- Test execution and coverage verification
+### Guideline Steps
+Guideline management steps:
+- Create and manage project-specific guidelines
 
-### Documentation Steps
-Steps for documentation tasks:
-- XML documentation
-- API documentation
-- Flow documentation
+### Learning Steps
+Learning and improvement steps (framework placeholder):
+- Process improvement, retrospectives
+
+> **Note**: Domain-specific step categories (API, service, data, testing, documentation, SDLC) have been moved to dedicated repositories. See the root README for related repositories.
 
 ## Usage in Process Manager
 

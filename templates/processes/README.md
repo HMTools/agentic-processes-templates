@@ -18,12 +18,9 @@ All templates are stored in a single unified location:
 
 Templates are organized by category:
 
-- `development/` - Feature development, bug fixes, refactoring
-- `testing/` - Test creation, test fixes, coverage improvement
-- `review/` - Code review, verification processes
-- `infrastructure/` - Setup, migrations, configuration, template/step creation
-- `documentation/` - Documentation updates, API docs
-- `learning/` - Process improvement, retrospectives
+- `infrastructure/` - Setup, migrations, configuration, template/step creation and management
+
+> **Note**: Domain-specific process categories (development, testing, review, SDLC) have been moved to dedicated repositories. See the root README for related repositories.
 
 ## Template Structure
 

@@ -329,7 +329,6 @@
   "references": {
     "relatedSteps": [
       "analyze-current-artifact-state",
-      "init-process-principles",
       "end-process-validation"
     ],
     "usedInTemplates": [

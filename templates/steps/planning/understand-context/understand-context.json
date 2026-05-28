@@ -107,6 +107,7 @@
         "Based on parameters, sources, and requirements gathered so far, list the top 3-5 assumptions the agent has formed about scope (what is included/excluded), architecture (technical approach, patterns, structure), and boundaries (constraints, limitations, interfaces)",
         "Present these assumptions to the user clearly, numbered and categorized, requesting confirmation or correction for each",
         "If the user corrects any assumptions, log each correction as a user interaction with forImprovementStep: true so the continuous-improvement step can identify systemic assumption patterns",
+        "After any user correction, immediately rewrite ALL affected sections of existing artifacts (context files, tables, classification labels). Do NOT patch individual lines — rewrite the affected sections from scratch to ensure full consistency. Verify no stale values remain.",
         "Adjust the analysis direction based on any corrections before proceeding to deeper analysis (success criteria, constraints)",
         "Output: '✓ Assumptions validated with user - [N] confirmed, [M] corrected'"
       ]

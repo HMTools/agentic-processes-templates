@@ -4,32 +4,21 @@ Official template library for the [agentic-processes](https://github.com/user/ag
 
 ## Overview
 
-This repository contains reusable process templates and step templates that can be consumed by the agentic-processes framework via git-based template sources.
+This repository contains the **core infrastructure** process templates and shared step templates for the agentic-processes framework. Domain-specific templates (e.g., SDLC workflows) are maintained in separate repositories.
 
 ## Structure
 
 ```
 templates/
   processes/               # Process templates (full workflow definitions)
-    development/           # Software development workflows
     infrastructure/        # Framework/tooling infrastructure workflows
-    investigation/         # Code investigation and analysis workflows
-    review/                # Review and verification workflows
-    testing/               # Testing workflows
   steps/                   # Step templates (individual step definitions)
-    api/                   # API layer steps
-    common/                # Common/shared steps
-    data/                  # Data layer steps
-    documentation/         # Documentation steps
-    external-services/     # External service integration steps
+    common/                # Common/shared steps (apply-changes, etc.)
     guideline/             # Guideline management steps
-    investigation/         # Investigation steps
+    investigation/         # Investigation steps (identify-files, review-verify-document)
     learning/              # Learning and improvement steps
-    multi-repo/            # Multi-repository operation steps
-    planning/              # Planning and design steps
-    service/               # Service layer steps
+    planning/              # Planning and design steps (design-implementation-plan, understand-context)
     template/              # Template management steps
-    testing/               # Testing steps
 ```
 
 ## Usage
@@ -48,6 +37,14 @@ Then sync templates:
 ```bash
 python scripts/template_manager.py sync
 ```
+
+### Multi-Source Configuration
+
+The framework supports multiple template sources. Each source is synced independently and merged by priority (higher priority wins on conflicts). Configure additional sources in `~/.claude/agentic-processes/config/template-sources.json`.
+
+## Related Repositories
+
+- **[sdlc-process-templates](https://github.com/user/sdlc-process-templates)** -- SDLC process and step templates (work item implementation, test planning, deployment, PR review, etc.)
 
 ## License
 

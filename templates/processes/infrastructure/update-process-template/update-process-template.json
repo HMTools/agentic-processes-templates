@@ -83,7 +83,6 @@
   ],
   "references": {
     "steps": [
-      "@step:common/init-process-principles",
       "@step:common/analyze-current-artifact-state",
       "@step:common/plan-artifact-updates",
       "@step:common/apply-artifact-updates",
