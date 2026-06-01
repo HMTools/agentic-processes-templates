@@ -59,30 +59,27 @@
     {
       "number": 1,
       "name": "Understand context",
-      "stepRef": "@step:planning/understand-context",
-      "output": "Context documented in memory.json",
+      "stepRef": "understand-context",
       "approvalRequired": false
     },
     {
       "number": 2,
       "name": "Create guideline file",
-      "stepRef": "@step:guideline/create-guideline-file",
-      "output": "Complete guideline file",
+      "stepRef": "create-guideline-file",
       "approvalRequired": true
     },
     {
       "number": 3,
       "name": "Link guideline to steps",
-      "stepRef": "@step:guideline/link-guideline-to-steps",
-      "output": "Updated step files",
+      "stepRef": "link-guideline-to-steps",
       "optional": true
     }
   ],
   "references": {
     "steps": [
-      "@step:planning/understand-context",
-      "@step:guideline/create-guideline-file",
-      "@step:guideline/link-guideline-to-steps"
+      "understand-context",
+      "create-guideline-file",
+      "link-guideline-to-steps"
     ],
     "relatedTemplates": [
       "create-process-step-template"

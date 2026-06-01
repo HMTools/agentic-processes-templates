@@ -43,35 +43,30 @@
     {
       "number": 0,
       "name": "Analyze Current Artifact State",
-      "stepRef": "@step:common/analyze-current-artifact-state",
-      "output": "Baseline analysis of artifact structure recorded to memory"
+      "stepRef": "analyze-current-artifact-state"
     },
     {
       "number": 1,
       "name": "Plan Artifact Updates",
-      "stepRef": "@step:common/plan-artifact-updates",
-      "output": "update-plan.md with proposed changes (including migration plan for active instances if applicable)",
+      "stepRef": "plan-artifact-updates",
       "approvalRequired": true,
       "guidance": "When planning changes, check for active process instances using this template. If found, proactively include a migration plan (inserting new steps, renumbering, preserving existing IDs/statuses). Do not wait for the user to request migration."
     },
     {
       "number": 2,
       "name": "Apply Artifact Updates",
-      "stepRef": "@step:common/apply-artifact-updates",
-      "output": "Modified artifact JSON and MD files with verified changes"
+      "stepRef": "apply-artifact-updates"
     },
     {
       "number": 3,
       "name": "Review and Validate Artifact Updates",
-      "stepRef": "@step:common/review-and-validate-artifact-updates",
-      "output": "review-report.md with plan compliance, quality assessment, and validation results",
+      "stepRef": "review-and-validate-artifact-updates",
       "approvalRequired": true
     },
     {
       "number": 4,
       "name": "Validate Process Steps Exist",
-      "stepRef": "@step:template/validate-process-steps-exist",
-      "output": "Validation report",
+      "stepRef": "validate-process-steps-exist",
       "subProcessTrigger": {
         "condition": "missing steps found",
         "template": "create-process-step-template",
@@ -83,11 +78,11 @@
   ],
   "references": {
     "steps": [
-      "@step:common/analyze-current-artifact-state",
-      "@step:common/plan-artifact-updates",
-      "@step:common/apply-artifact-updates",
-      "@step:common/review-and-validate-artifact-updates",
-      "@step:template/validate-process-steps-exist"
+      "analyze-current-artifact-state",
+      "plan-artifact-updates",
+      "apply-artifact-updates",
+      "review-and-validate-artifact-updates",
+      "validate-process-steps-exist"
     ],
     "relatedTemplates": [
       "create-process-template",

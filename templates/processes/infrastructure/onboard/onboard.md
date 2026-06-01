@@ -51,7 +51,7 @@ flowchart TD
 ## Steps
 
 - [ ] **Step 1: Identify missing guidelines**
-  - **Step**: `@step:investigation/identify-files`
+  - **Step**: `identify-files`
   - **Description**: Scan `~/.claude/agentic-processes/templates/steps/` for `userGuidelines` references and identify which referenced guidelines don't exist in `~/.claude/agentic-processes/guidelines/`
   - **Output**: `identified-files.json` containing list of missing guidelines
   - **Approval Required**: Yes - review list before proceeding

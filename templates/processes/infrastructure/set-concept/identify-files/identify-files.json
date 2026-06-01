@@ -1,0 +1,211 @@
+{
+  "type": "step",
+  "name": "identify-files",
+  "category": "investigation",
+  "metadata": {
+    "title": "Identify Files",
+    "purposeAndUsage": "File list and identification report",
+    "lastUpdated": "2026-05-28"
+  },
+  "output": {
+    "description": "File list and identification report",
+    "artifacts": [
+      "identified-files.json",
+      "deep-search-tracking.json (for deep mode)"
+    ],
+    "memoryUpdates": [
+      "fileCount",
+      "resultsJsonPath",
+      "summary",
+      "searchApproach",
+      "exclusionsApplied",
+      "contentPreservationFlags"
+    ]
+  },
+  "guidance": {
+    "prerequisites": [
+      "Context parameters from process.md or memory.json"
+    ],
+    "specificActions": [
+      "Follow the substeps below - workflow depends on search depth mode (simple or deep)",
+      "Simple mode: Agent decides search approach based on available parameters",
+      "Deep mode: Exhaustive search with tracking to ensure completeness"
+    ],
+    "files": {
+      "read": [
+        "memory.json or process.md (context parameters)"
+      ],
+      "create": [
+        "identified-files.json (results file)",
+        "deep-search-tracking.json (for deep search mode, temporary)"
+      ],
+      "update": []
+    },
+    "tools": [
+      "read_file - Read context parameters",
+      "glob_file_search - Find files matching patterns",
+      "list_dir - Explore directory structures",
+      "grep - Search file contents",
+      "codebase_search - Understand scope and identify targets",
+      "write - Create results JSON file"
+    ],
+    "bestPractices": [
+      "Apply exclusions during discovery when possible (more efficient)",
+      "Log progress periodically for large file sets (>1000 files)",
+      "Use simple search (default) for most cases - it's fast and efficient",
+      "Save results to separate JSON file to keep memory.json clean",
+      "For hidden directories (starting with .), glob_file_search may not find files - use list_dir as backup"
+    ]
+  },
+  "substeps": [
+    {
+      "number": 1,
+      "name": "Read Context Parameters",
+      "description": "Read search parameters and determine search mode",
+      "actions": [
+        "Read filePatterns, scope, excludePatterns, searchDepth, includeMatchReason from context",
+        "Determine search mode: 'simple' (default) or 'deep'",
+        "Document parameters in log.json"
+      ]
+    },
+    {
+      "number": 2,
+      "name": "Handle Deep Search Mode",
+      "description": "Exhaustive search with tracking (if searchDepth = 'deep')",
+      "conditional": true,
+      "actions": [
+        "List all files recursively using list_dir",
+        "Create tracking JSON file to track progress",
+        "Iterate and check each file against criteria",
+        "Verify all files have been checked"
+      ]
+    },
+    {
+      "number": 3,
+      "name": "Handle Simple Search Mode",
+      "description": "Fast search using glob, grep, codebase_search (default mode)",
+      "conditional": true,
+      "actions": [
+        "Agent decides search approach based on available parameters",
+        "If patterns available: Use glob_file_search",
+        "If scope available: Use codebase_search + list_dir + grep",
+        "If both: Agent decides how to combine"
+      ]
+    },
+    {
+      "number": 4,
+      "name": "Broad Text-Reference Search",
+      "description": "Search for all textual references to target files, directories, or concepts — not just structured references like JSON arrays",
+      "actions": [
+        "Identify the key names being targeted (file names, directory names, concept names)",
+        "Run broad grep searches across ALL file types (.json, .md, .ts, .js, .py, .sh, etc.) for these names",
+        "Search for references in: inline text/comments, markdown links, import statements, documentation prose, directory listings, type definitions, and configuration files",
+        "Compare broad search results against the structured search results from substep 3 — flag any files found by broad search but missed by structured search",
+        "Log the delta: how many additional files were found by broad search"
+      ]
+    },
+    {
+      "number": 5,
+      "name": "Cross-Repository Scope Verification",
+      "description": "Verify whether the search scope covers all repositories that may reference the targets",
+      "actions": [
+        "Review the list of project paths provided in the process parameters",
+        "Consider: are there related repositories, downstream consumers, or other codebases that might reference the identified targets?",
+        "If the process involves shared infrastructure (templates, types, APIs, UI components), check for references in consuming repositories",
+        "If additional repositories are identified, extend the search to cover them and document the scope expansion",
+        "Log: repositories checked and whether scope was expanded"
+      ]
+    },
+    {
+      "number": 6,
+      "name": "Apply Exclusion Patterns",
+      "description": "Filter out excluded files from results",
+      "actions": [
+        "Apply common exclusions (node_modules, .git, dist, build, bin, obj, etc.)",
+        "Apply custom exclusions from excludePatterns parameter",
+        "Log exclusions applied and files removed count"
+      ]
+    },
+    {
+      "number": 7,
+      "name": "Create File Identification Report",
+      "description": "Document the search results and flag content preservation needs",
+      "actions": [
+        "Document search approach used",
+        "Include summary: total files found, excluded files count",
+        "Note any issues encountered",
+        "For files marked for deletion: check if any contain content that belongs elsewhere or should be preserved (e.g., useful documentation misplaced in a directory being removed). Flag these with contentPreservationRequired: true and describe the preservation action needed."
+      ]
+    },
+    {
+      "number": 8,
+      "name": "Save Results to JSON File and Update Memory",
+      "description": "Save results and update memory reference",
+      "actions": [
+        "Save file list to identified-files.json",
+        "Format: array of paths (default) or array of {path, matchReason, contentPreservationRequired?, preservationAction?} objects",
+        "For any file flagged for content preservation, include contentPreservationRequired: true and preservationAction describing what to do (e.g., 'Move to docs/claude/ before deleting parent directory')",
+        "Record: file count and path to results JSON"
+      ]
+    },
+    {
+      "number": 9,
+      "name": "End-Step: Compliance Check",
+      "description": "Verify principles were followed in this step",
+      "actions": [
+        "Verify: Was log.json updated for any user interactions?",
+        "Verify: Were mandatory actions confirmed with output?",
+        "Output: '✓ Step completed in compliance with operating principles'"
+      ]
+    }
+  ],
+  "flow": {
+    "description": "Read parameters → Choose search mode (simple/deep) → Execute search → Broad text-reference search → Cross-repo scope verification → Apply exclusions → Create report → Save results → Update memory"
+  },
+  "memoryFileUsage": {
+    "readFrom": "Previous step section in memory.json or process.md - context parameters (filePatterns, scope, excludePatterns, searchDepth, includeMatchReason)",
+    "writeTo": "Step results and decisions",
+    "fields": [
+      "Information Produced: File count, Path to results JSON file, Brief summary",
+      "Decisions Made: Search approach used, Search depth mode, Exclusion patterns applied"
+    ]
+  },
+  "parameters": {
+    "filePatterns": {
+      "type": "string",
+      "description": "Glob patterns to match"
+    },
+    "scope": {
+      "type": "string",
+      "description": "Scope description for semantic search"
+    },
+    "excludePatterns": {
+      "type": "string",
+      "description": "Patterns to exclude"
+    },
+    "searchDepth": {
+      "type": "string",
+      "enum": [
+        "simple",
+        "deep"
+      ],
+      "default": "simple"
+    },
+    "includeMatchReason": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "searchModes": [
+    {
+      "mode": "simple",
+      "default": true,
+      "description": "Fast search using glob, grep, codebase_search"
+    },
+    {
+      "mode": "deep",
+      "default": false,
+      "description": "Exhaustive search with tracking"
+    }
+  ]
+}

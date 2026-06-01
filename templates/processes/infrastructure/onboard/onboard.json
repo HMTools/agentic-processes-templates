@@ -17,8 +17,7 @@
     {
       "number": 1,
       "name": "Identify missing guidelines",
-      "stepRef": "@step:investigation/identify-files",
-      "output": "identified-files.json with list of missing guidelines",
+      "stepRef": "identify-files",
       "approvalRequired": true,
       "context": {
         "scope": "Find all guideline files referenced in ~/.claude/agentic-processes/steps that don't exist in ~/.claude/agentic-processes/guidelines",
@@ -30,7 +29,6 @@
       "number": 2,
       "name": "Create guidelines (batch)",
       "stepRef": null,
-      "output": "Created guideline files",
       "subProcessConfig": {
         "template": "create-guideline",
         "sync": "immediate",
@@ -42,7 +40,8 @@
           "relatedSteps": "steps that reference this guideline",
           "triggeringContext": "Onboard process identified missing guideline"
         }
-      }
+      },
+      "stepDefinition": {}
     }
   ],
   "guidance": {
@@ -72,7 +71,7 @@
   },
   "references": {
     "steps": [
-      "@step:investigation/identify-files"
+      "identify-files"
     ],
     "relatedTemplates": [
       "create-guideline"

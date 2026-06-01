@@ -5,7 +5,7 @@
 
 ## Description
 
-Create a new process step file for the Agentic Process System. This template guides you through designing, creating, and validating a new step that can be referenced by templates using the `@step:` syntax.
+Create a new process step file for the Agentic Process System. This template guides you through designing, creating, and validating a new step that can be referenced by templates via `stepRef`.
 
 ## Purpose & Usage
 

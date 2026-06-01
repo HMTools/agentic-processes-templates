@@ -55,18 +55,18 @@ flowchart TD
 ## Steps
 
 - [ ] **Step 1: Understand context**
-  - **Step**: `@step:planning/understand-context`
+  - **Step**: `understand-context`
   - **Description**: Gather parameters, identify sources, clarify requirements for the guideline
   - **Output**: Context documented in memory.json
 
 - [ ] **Step 2: Create guideline file**
-  - **Step**: `@step:guideline/create-guideline-file`
+  - **Step**: `create-guideline-file`
   - **Description**: Write the guideline markdown file with practical steps and examples
   - **Output**: Complete guideline file at `~/.claude/agentic-processes/guidelines/{{guidelineCategory}}/how-to-{{guidelineName}}.md`
   - **Approval Required**: Yes
 
 - [ ] **Step 3: Link guideline to steps** *(optional)*
-  - **Step**: `@step:guideline/link-guideline-to-steps`
+  - **Step**: `link-guideline-to-steps`
   - **Description**: Update step JSON files to reference the new guideline in `userGuidelines`
   - **Output**: Updated step files
 

@@ -4,8 +4,8 @@
   "category": "planning",
   "metadata": {
     "title": "Understand Context",
-    "purposeAndUsage": "Fully understand the context, sources, and requirements for a task or process. Use at the beginning of any process to gather parameters, identify sources, understand requirements, and document constraints.",
-    "lastUpdated": "2026-01-21"
+    "purposeAndUsage": "Context documentation in step{N}-context.md file and memory.json reference",
+    "lastUpdated": "2026-05-28"
   },
   "output": {
     "description": "Context documentation in step{N}-context.md file and memory.json reference",
@@ -199,25 +199,6 @@
       "Decisions Made: Clarifications, Assumptions, Information source selections",
       "Files Modified/Created: memory.json",
       "Notes: Q&A questions and answers, References to process parameters, Gaps needing clarification"
-    ]
-  },
-  "dependencies": {
-    "requiredFiles": [
-      "process.md"
-    ],
-    "requiredTools": [
-      "read_file",
-      "codebase_search",
-      "grep",
-      "list_dir"
-    ]
-  },
-  "references": {
-    "relatedSteps": [],
-    "usedInTemplates": [
-      "set-concept",
-      "review-and-verify",
-      "develop-user-story"
     ]
   }
 }

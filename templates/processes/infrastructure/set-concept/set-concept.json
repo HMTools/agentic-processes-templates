@@ -61,49 +61,43 @@
     {
       "number": 1,
       "name": "Understand concept",
-      "stepRef": "@step:planning/understand-context",
-      "output": "Context documentation",
+      "stepRef": "understand-context",
       "approvalRequired": true
     },
     {
       "number": 2,
       "name": "Identify target files",
-      "stepRef": "@step:investigation/identify-files",
-      "output": "List of target files in identified-files.json"
+      "stepRef": "identify-files"
     },
     {
       "number": 3,
       "name": "Analyze existing state",
-      "stepRef": "@step:investigation/review-verify-document",
-      "output": "Findings report"
+      "stepRef": "review-verify-document"
     },
     {
       "number": 4,
       "name": "Design implementation plan",
-      "stepRef": "@step:planning/design-implementation-plan",
-      "output": "Implementation plan with change proposals",
+      "stepRef": "design-implementation-plan",
       "approvalRequired": true
     },
     {
       "number": 5,
       "name": "Apply changes",
-      "stepRef": "@step:common/apply-changes",
-      "output": "Modified and newly created files"
+      "stepRef": "apply-changes"
     },
     {
       "number": 6,
       "name": "Verify implementation",
-      "stepRef": "@step:investigation/review-verify-document",
-      "output": "Verification report"
+      "stepRef": "review-verify-document"
     }
   ],
   "references": {
     "steps": [
-      "@step:planning/understand-context",
-      "@step:investigation/identify-files",
-      "@step:investigation/review-verify-document",
-      "@step:planning/design-implementation-plan",
-      "@step:common/apply-changes"
+      "understand-context",
+      "identify-files",
+      "review-verify-document",
+      "design-implementation-plan",
+      "apply-changes"
     ],
     "relatedTemplates": [
       "review-and-verify"
