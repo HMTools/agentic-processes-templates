@@ -41,7 +41,7 @@
       "read": [
         "memory.json (previous step section: identified files list, JSON file reference)",
         "memory.json (previous step section: investigationScope, verificationCriteria)",
-        "process.md (context parameters)",
+        "process.json (context parameters)",
         "Files identified in previous step"
       ],
       "create": [
@@ -51,7 +51,7 @@
       "update": []
     },
     "tools": [
-      "read_file - Read memory.json, process.md, identified-files.json, each file for review",
+      "read_file - Read memory.json, process.json, identified-files.json, each file for review",
       "grep - Search for specific patterns or content in files",
       "codebase_search - Understand context or find related content",
       "write - Create report files"
@@ -136,6 +136,7 @@
         "Verify: Was log.json updated for any user interactions?",
         "Verify: Were mandatory actions confirmed with output?",
         "Record processWideObservations.patternsDetected with any cross-file patterns found during review (e.g., repeated code structures, shared issues across files, common anti-patterns)",
+        "Log problems: If any problems, errors, workarounds, or unexpected situations were encountered during this step, log them via add-log-entry --problems '[\"description of problem 1\", ...]'. This feeds the continuous-improvement step's analysis.",
         "Output: '✓ Step completed in compliance with operating principles'"
       ]
     }
@@ -144,7 +145,7 @@
     "description": "Read context and files → Initialize tracking → Review each file → Categorize issues → Create documentation → Update memory"
   },
   "memoryFileUsage": {
-    "readFrom": "Previous step section (identified files list, investigationScope, verificationCriteria), process.md",
+    "readFrom": "Previous step section (identified files list, investigationScope, verificationCriteria), process.json",
     "writeTo": "Step results and decisions",
     "fields": [
       "Information Produced: Findings report path, Issues list path, Files reviewed count, Items verified count, Issues found count, Counts by category/severity, Verification status",

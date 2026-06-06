@@ -32,7 +32,7 @@
     ],
     "files": {
       "read": [
-        "process.md (process description and parameters)"
+        "process.json parameters"
       ],
       "create": [
         "step{N}-context.md (MANDATORY - full context documentation for approval)"
@@ -40,7 +40,7 @@
       "update": []
     },
     "tools": [
-      "read_file - read process.md and understand process description",
+      "read_file - read process.json parameters and understand process description",
       "codebase_search - find relevant files or areas when scope is mentioned",
       "grep - search for specific patterns or references",
       "list_dir - explore directory structures if needed"
@@ -63,9 +63,9 @@
     {
       "number": 1,
       "name": "Gather Process Parameters",
-      "description": "Read process.md to extract all parameters from the process context",
+      "description": "Read process.json parameters to extract all parameters from the process context",
       "actions": [
-        "Read process.md to extract all parameters from the process context",
+        "Read process.json parameters to extract all parameters from the process context",
         "Identify required vs optional parameters",
         "Note any parameter placeholders (e.g., {{parameterName}}) that need substitution",
         "Document parameter values and their meanings",
@@ -92,7 +92,7 @@
       "name": "Clarify Requirements",
       "description": "Extract and document requirements from process description",
       "actions": [
-        "Extract explicit requirements from process description in process.md",
+        "Extract explicit requirements from process description in process.json parameters",
         "Identify implicit requirements from context parameters",
         "Document what needs to be accomplished",
         "Note any ambiguous requirements that need clarification",
@@ -184,6 +184,7 @@
       "actions": [
         "Verify: Was log.json updated for any user interactions?",
         "Verify: Were mandatory actions confirmed with output?",
+        "Log problems: If any problems, errors, workarounds, or unexpected situations were encountered during this step, log them via add-log-entry --problems '[\"description of problem 1\", ...]'. This feeds the continuous-improvement step's analysis.",
         "Output: '✓ Step completed in compliance with operating principles'"
       ]
     }
@@ -192,7 +193,7 @@
     "description": "Linear flow through substeps 1-4 (including assumption validation), then substeps 5-7, conditional substep 8 if gaps found, then substep 9. If substep 8 executed, return to substep 3 after receiving answers."
   },
   "memoryFileUsage": {
-    "readFrom": "Process context (process.md parameters and description)",
+    "readFrom": "Process context (process.json parameters and description)",
     "writeTo": "Step results and decisions",
     "fields": [
       "Information Produced: Process parameters, Information sources, Requirements, Success criteria, Constraints",
@@ -203,7 +204,7 @@
   },
   "dependencies": {
     "requiredFiles": [
-      "process.md"
+      "process.json"
     ],
     "requiredTools": [
       "read_file",

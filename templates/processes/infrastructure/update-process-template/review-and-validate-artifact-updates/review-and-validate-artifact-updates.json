@@ -182,6 +182,7 @@
       "actions": [
         "Verify: Was log.json updated for any user interactions?",
         "Verify: Were mandatory actions confirmed with output?",
+        "Log problems: If any problems, errors, workarounds, or unexpected situations were encountered during this step, log them via add-log-entry --problems '[\"description of problem 1\", ...]'. This feeds the continuous-improvement step's analysis.",
         "Output: '✓ Step completed in compliance with operating principles'"
       ]
     }
@@ -271,7 +272,7 @@
     "process": {
       "files": {
         "json": "{artifactPath}/process.json",
-        "md": "{artifactPath}/process.md"
+        "md": "{artifactPath}/process.json"
       },
       "validationChecks": [
         "Valid JSON structure with type: process-instance",

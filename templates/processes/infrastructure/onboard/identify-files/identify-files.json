@@ -24,7 +24,7 @@
   },
   "guidance": {
     "prerequisites": [
-      "Context parameters from process.md or memory.json"
+      "Context parameters from process.json or memory.json"
     ],
     "specificActions": [
       "Follow the substeps below - workflow depends on search depth mode (simple or deep)",
@@ -33,7 +33,7 @@
     ],
     "files": {
       "read": [
-        "memory.json or process.md (context parameters)"
+        "memory.json or process.json (context parameters)"
       ],
       "create": [
         "identified-files.json (results file)",
@@ -155,6 +155,7 @@
       "actions": [
         "Verify: Was log.json updated for any user interactions?",
         "Verify: Were mandatory actions confirmed with output?",
+        "Log problems: If any problems, errors, workarounds, or unexpected situations were encountered during this step, log them via add-log-entry --problems '[\"description of problem 1\", ...]'. This feeds the continuous-improvement step's analysis.",
         "Output: '✓ Step completed in compliance with operating principles'"
       ]
     }
@@ -163,7 +164,7 @@
     "description": "Read parameters → Choose search mode (simple/deep) → Execute search → Broad text-reference search → Cross-repo scope verification → Apply exclusions → Create report → Save results → Update memory"
   },
   "memoryFileUsage": {
-    "readFrom": "Previous step section in memory.json or process.md - context parameters (filePatterns, scope, excludePatterns, searchDepth, includeMatchReason)",
+    "readFrom": "Previous step section in memory.json or process.json - context parameters (filePatterns, scope, excludePatterns, searchDepth, includeMatchReason)",
     "writeTo": "Step results and decisions",
     "fields": [
       "Information Produced: File count, Path to results JSON file, Brief summary",

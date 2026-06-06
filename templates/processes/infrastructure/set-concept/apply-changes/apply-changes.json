@@ -136,6 +136,7 @@
         "Verify: Was log.json updated for any user interactions?",
         "Verify: Were mandatory actions confirmed with output?",
         "Record processWideObservations: add any patterns detected during change application to patternsDetected, add efficiency metrics (changes applied, files modified, verification pass/fail counts) to efficiencyMetrics",
+        "Log problems: If any problems, errors, workarounds, or unexpected situations were encountered during this step, log them via add-log-entry --problems '[\"description of problem 1\", ...]'. This feeds the continuous-improvement step's analysis.",
         "Output: '✓ Step completed in compliance with operating principles'"
       ]
     }

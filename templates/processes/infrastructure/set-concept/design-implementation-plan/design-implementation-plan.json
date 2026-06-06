@@ -29,7 +29,7 @@
       "Process parameters (conceptDescription, requestedState, verificationCriteria)"
     ],
     "specificActions": [
-      "Read Context from Previous Steps: Read from memory.json (concept definition, findings, gaps); read from process.md (conceptDescription, requestedState, verificationCriteria); read the findings report to understand current state",
+      "Read Context from Previous Steps: Read from memory.json (concept definition, findings, gaps); read from process.json (conceptDescription, requestedState, verificationCriteria); read the findings report to understand current state",
       "Understand Requested State: If requestedState parameter provided, use as specification; if NOT provided, derive from concept description and characteristics; document requested state specification clearly",
       "Analyze Existing State and Gaps: Review findings report from previous step; identify files that need modification vs. creation; map gaps to change proposals needed",
       "Design Implementation Approach: Break down into logical steps; determine order of changes (dependencies); design verification approach",
@@ -39,7 +39,7 @@
     "files": {
       "read": [
         "memory.json",
-        "process.md",
+        "process.json",
         "findings report",
         "target files"
       ],
@@ -76,9 +76,9 @@
     {
       "number": 2,
       "name": "Read process parameters",
-      "description": "Extract conceptDescription, requestedState, verificationCriteria from process.md",
+      "description": "Extract conceptDescription, requestedState, verificationCriteria from process.json",
       "actions": [
-        "Read process.md to get conceptDescription",
+        "Read process.json to get conceptDescription",
         "Get requestedState parameter if provided",
         "Get verificationCriteria parameter"
       ]
@@ -209,6 +209,7 @@
       "actions": [
         "Verify: Was log.json updated for any user interactions?",
         "Verify: Were mandatory actions confirmed with output?",
+        "Log problems: If any problems, errors, workarounds, or unexpected situations were encountered during this step, log them via add-log-entry --problems '[\"description of problem 1\", ...]'. This feeds the continuous-improvement step's analysis.",
         "Output: '✓ Step completed in compliance with operating principles'"
       ]
     }
@@ -217,7 +218,7 @@
     "description": "Read context → Read parameters → Read findings → Understand requested state → Analyze gaps → Design approach → Create proposals → Create plan document → Present for approval → Process response → Update memory"
   },
   "memoryFileUsage": {
-    "readFrom": "Previous steps (concept definition, findings, gaps), process.md parameters",
+    "readFrom": "Previous steps (concept definition, findings, gaps), process.json parameters",
     "writeTo": "Step results and decisions",
     "fields": [
       "Information Produced: Implementation plan path, Requested state specification, Total change proposals count, Files to modify/create lists",

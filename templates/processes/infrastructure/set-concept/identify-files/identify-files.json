@@ -24,7 +24,7 @@
   },
   "guidance": {
     "prerequisites": [
-      "Context parameters from process.md or memory.json"
+      "Context parameters from process.json or memory.json"
     ],
     "specificActions": [
       "Follow the substeps below - workflow depends on search depth mode (simple or deep)",
@@ -33,7 +33,7 @@
     ],
     "files": {
       "read": [
-        "memory.json or process.md (context parameters)"
+        "memory.json or process.json (context parameters)"
       ],
       "create": [
         "identified-files.json (results file)",
@@ -118,6 +118,19 @@
     },
     {
       "number": 6,
+      "name": "Generator Process Detection",
+      "description": "Search for processes or templates whose OUTPUT would re-introduce the pattern being eliminated",
+      "actions": [
+        "Identify the pattern being removed (from context parameters)",
+        "Search for process templates and step definitions that GENERATE or CREATE files matching the eliminated pattern",
+        "Look in step definition substeps for 'Create', 'Write', or 'Generate' actions that would produce the target pattern",
+        "Check output.artifacts fields in step definitions for references to the eliminated pattern",
+        "Flag any generator processes found -- these must be modified to stop producing the eliminated pattern",
+        "Log: generator processes found and their output patterns"
+      ]
+    },
+    {
+      "number": 7,
       "name": "Apply Exclusion Patterns",
       "description": "Filter out excluded files from results",
       "actions": [
@@ -127,7 +140,7 @@
       ]
     },
     {
-      "number": 7,
+      "number": 8,
       "name": "Create File Identification Report",
       "description": "Document the search results and flag content preservation needs",
       "actions": [
@@ -138,7 +151,7 @@
       ]
     },
     {
-      "number": 8,
+      "number": 9,
       "name": "Save Results to JSON File and Update Memory",
       "description": "Save results and update memory reference",
       "actions": [
@@ -149,21 +162,22 @@
       ]
     },
     {
-      "number": 9,
+      "number": 10,
       "name": "End-Step: Compliance Check",
       "description": "Verify principles were followed in this step",
       "actions": [
         "Verify: Was log.json updated for any user interactions?",
         "Verify: Were mandatory actions confirmed with output?",
+        "Log problems: If any problems, errors, workarounds, or unexpected situations were encountered during this step, log them via add-log-entry --problems '[\"description of problem 1\", ...]'. This feeds the continuous-improvement step's analysis.",
         "Output: '✓ Step completed in compliance with operating principles'"
       ]
     }
   ],
   "flow": {
-    "description": "Read parameters → Choose search mode (simple/deep) → Execute search → Broad text-reference search → Cross-repo scope verification → Apply exclusions → Create report → Save results → Update memory"
+    "description": "Read parameters → Choose search mode (simple/deep) → Execute search → Broad text-reference search → Cross-repo scope verification → Generator process detection → Apply exclusions → Create report → Save results → Update memory"
   },
   "memoryFileUsage": {
-    "readFrom": "Previous step section in memory.json or process.md - context parameters (filePatterns, scope, excludePatterns, searchDepth, includeMatchReason)",
+    "readFrom": "Previous step section in memory.json or process.json - context parameters (filePatterns, scope, excludePatterns, searchDepth, includeMatchReason)",
     "writeTo": "Step results and decisions",
     "fields": [
       "Information Produced: File count, Path to results JSON file, Brief summary",

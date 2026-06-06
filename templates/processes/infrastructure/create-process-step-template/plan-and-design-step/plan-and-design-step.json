@@ -37,8 +37,7 @@
     "files": {
       "read": [
         "~/.claude/agentic-processes/templates/steps/README.md",
-        "~/.claude/agentic-processes/templates/steps/step-template.md",
-        "Existing steps in relevant category"
+        "Existing step JSON files in relevant category"
       ],
       "create": [
         "step-design.md (readable design document in process folder)"
@@ -165,6 +164,7 @@
       "actions": [
         "Verify: Was log.json updated for any user interactions?",
         "Verify: Were mandatory actions confirmed with output?",
+        "Log problems: If any problems, errors, workarounds, or unexpected situations were encountered during this step, log them via add-log-entry --problems '[\"description of problem 1\", ...]'. This feeds the continuous-improvement step's analysis.",
         "Output: '✓ Step completed in compliance with operating principles'"
       ]
     }
