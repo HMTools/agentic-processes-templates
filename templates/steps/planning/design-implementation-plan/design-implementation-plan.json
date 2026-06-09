@@ -163,17 +163,31 @@
     },
     {
       "number": 10,
+      "name": "Analyze Edge Cases",
+      "description": "Proactively identify edge cases, race conditions, and interaction effects for each change proposal before presenting the plan",
+      "actions": [
+        "For each change proposal, ask: What happens when this operation occurs multiple times? (e.g., same file edited twice, same field updated repeatedly)",
+        "For each change proposal, ask: What happens with conflicting sequences? (e.g., create-then-delete, edit-then-recreate, concurrent modifications)",
+        "For proposals that add list/collection data: determine deduplication strategy — append-all, upsert-by-key, or replace-all — and document the choice",
+        "For proposals that modify shared state: identify whether other components read or write the same state and what ordering constraints exist",
+        "Document edge cases and chosen handling strategies as a section in the implementation plan",
+        "If any edge case reveals a design gap, revise the affected change proposals BEFORE presenting the plan"
+      ]
+    },
+    {
+      "number": 11,
       "name": "Create implementation-plan.md",
       "description": "Create the implementation plan document",
       "actions": [
         "Create implementation-plan.md with all change proposals",
         "Include requested state specification",
         "Include implementation approach",
+        "Include edge case analysis section",
         "Include verification approach"
       ]
     },
     {
-      "number": 11,
+      "number": 12,
       "name": "Present plan to user",
       "description": "Present implementation plan and explain approval options",
       "actions": [
@@ -183,7 +197,7 @@
       ]
     },
     {
-      "number": 12,
+      "number": 13,
       "name": "Process user response",
       "description": "Handle user's approval, modification request, or rejection",
       "actions": [
@@ -194,7 +208,7 @@
       ]
     },
     {
-      "number": 13,
+      "number": 14,
       "name": "Update memory with approval status",
       "description": "Record plan summary and approval status",
       "actions": [
@@ -204,7 +218,7 @@
       ]
     },
     {
-      "number": 14,
+      "number": 15,
       "name": "End-Step: Compliance Check",
       "description": "Verify principles were followed in this step",
       "actions": [
@@ -216,7 +230,7 @@
     }
   ],
   "flow": {
-    "description": "Read context → Read parameters → Read findings → Understand requested state → Analyze gaps → Design approach → Create proposals → Create plan document → Present for approval → Process response → Update memory"
+    "description": "Read context → Read parameters → Read findings → Understand requested state → Analyze gaps → Design approach → Create proposals → Analyze edge cases → Create plan document → Present for approval → Process response → Update memory"
   },
   "memoryFileUsage": {
     "readFrom": ["context.json", "identified-files.json", "findings.json"],
