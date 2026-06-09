@@ -204,8 +204,8 @@
     "description": "Validate params → Review requirements → Load analysis → Prompt backward compatibility → Type-specific consumer check → Design changes → (Q&A if needed) → Create plan → Review plan → Present for approval (loop on request-changes) → End"
   },
   "memoryFileUsage": {
-    "readFrom": "Process parameters (artifactType, artifactPath, updateDescription) and previous step's analysis (currentStructure)",
-    "writeTo": "Step results and decisions",
+    "readFrom": ["context.json", "findings.json"],
+    "writeTo": ["implementation-decisions.json"],
     "fields": [
       "Information Produced: backwardCompatibility decision, activeConsumersCheck results, changeDesign details, updatePlanRef path",
       "Decisions Made: Backward compatibility decision, change design choices, scope determination"

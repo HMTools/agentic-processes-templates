@@ -129,8 +129,8 @@
     "description": "Linear flow: read template → extract references → check existence → create report → list missing → handle missing"
   },
   "memoryFileUsage": {
-    "readFrom": "Template file path from previous step",
-    "writeTo": "Step results and decisions",
+    "readFrom": ["context.json", "changes-applied.json"],
+    "writeTo": ["findings.json"],
     "fields": [
       "Information Produced: Validation results, missing steps list, spawned sub-processes (if any)",
       "Decisions Made: How to handle missing steps"

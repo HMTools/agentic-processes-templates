@@ -141,8 +141,8 @@
     "description": "Linear flow: read step → self-contained check → section check → diagram check → guidance check → naming check → create report"
   },
   "memoryFileUsage": {
-    "readFrom": "Step file path from previous step or parameters",
-    "writeTo": "Step results and decisions",
+    "readFrom": ["context.json", "changes-applied.json"],
+    "writeTo": ["findings.json"],
     "fields": [
       "Information Produced: Validation results, issues found, pass/fail status",
       "Decisions Made: Required fixes if validation failed"

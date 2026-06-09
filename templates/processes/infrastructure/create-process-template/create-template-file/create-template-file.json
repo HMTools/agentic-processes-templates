@@ -147,8 +147,8 @@
     "description": "Linear flow: create file → write user docs → write flow → write steps → create JSON → validate"
   },
   "memoryFileUsage": {
-    "readFrom": "Previous step section (template design)",
-    "writeTo": "Step results and decisions",
+    "readFrom": ["context.json", "implementation-decisions.json"],
+    "writeTo": ["changes-applied.json"],
     "fields": [
       "Information Produced: Template file path, JSON file path, validation results",
       "Files Modified/Created: Template MD file, JSON companion file"

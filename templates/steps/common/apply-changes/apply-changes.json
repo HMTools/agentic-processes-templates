@@ -58,7 +58,8 @@
       "Apply changes exactly as specified in the change instructions",
       "Verify each change was applied correctly by reading the file after modification",
       "Log progress for each change applied",
-      "Document all changes in the change application report"
+      "Document all changes in the change application report",
+      "SWEEP FOR RESIDUAL REFERENCES: After applying changes, grep all modified files for old pattern names. Mechanical changes (e.g., updating a field format) often miss references in guidance text, comments, and documentation prose within the same file. Fix all residuals before reporting completion."
     ]
   },
   "substeps": [
@@ -110,6 +111,18 @@
     },
     {
       "number": 5,
+      "name": "Post-Change Reference Sweep",
+      "description": "Verify that ALL references to the changed concept were updated within each modified file, not just the targeted field",
+      "actions": [
+        "Identify the old patterns/names that were replaced (e.g., old field names, old file references, old type names)",
+        "Run a grep sweep across ALL modified files for any residual occurrences of the old patterns",
+        "For each residual found: determine if it is in guidance text, comments, documentation prose, or code — all must be updated",
+        "Fix any residual references found during the sweep",
+        "Log: 'Reference sweep complete: {count} residual references found and fixed across {count} files'"
+      ]
+    },
+    {
+      "number": 6,
       "name": "Create Change Application Report",
       "description": "Create report documenting all changes applied",
       "actions": [
@@ -120,7 +133,7 @@
       ]
     },
     {
-      "number": 6,
+      "number": 7,
       "name": "Update Memory with Results",
       "description": "Update memory with change application results",
       "actions": [
@@ -129,7 +142,7 @@
       ]
     },
     {
-      "number": 7,
+      "number": 8,
       "name": "End-Step: Compliance Check",
       "description": "Verify principles were followed in this step",
       "actions": [
@@ -145,8 +158,8 @@
     "description": "Verify batch coverage → Read approved IDs from memory → Read proposals document → Apply each change → Verify each change → Create report → Update memory"
   },
   "memoryFileUsage": {
-    "readFrom": "Previous step section (approved change IDs list, change proposals document path)",
-    "writeTo": "Step results and decisions",
+    "readFrom": ["context.json", "identified-files.json", "implementation-decisions.json"],
+    "writeTo": ["changes-applied.json"],
     "fields": [
       "Information Produced: Change application report path, Total changes applied, List of files modified",
       "Decisions Made: Any decisions during application",

@@ -59,7 +59,8 @@
       "Keep proposals atomic: Each proposal should be self-contained",
       "Use consistent IDs: Makes it easy for user to approve specific proposals",
       "CATEGORIZE ALL FILES: Implementation plans must explicitly address ALL file groups in scope: (1) Files to CREATE, (2) Files to MODIFY, (3) Files to DELETE, (4) Files UNCHANGED with brief explanation why they're out of scope. This prevents 'what about X?' questions.",
-      "MIGRATION STRATEGY EARLY: When the plan involves changing existing patterns or moving responsibilities, present 'clean migration vs backward compatibility' as an explicit decision point BEFORE designing the detailed approach. Don't default to the most complex option — ask the user which strategy they prefer."
+      "MIGRATION STRATEGY EARLY: When the plan involves changing existing patterns or moving responsibilities, present 'clean migration vs backward compatibility' as an explicit decision point BEFORE designing the detailed approach. Don't default to the most complex option — ask the user which strategy they prefer.",
+      "ENFORCE DECLARATIVE PATTERNS AT RUNTIME: When the plan introduces declarative access patterns (e.g., declaring which resources a component can access), always include runtime validation in the implementation. Documentation-only guidance is insufficient — add actual enforcement code that checks declarations at read/write time and produces error messages listing the allowed values so the agent can self-correct."
     ]
   },
   "substeps": [
@@ -218,8 +219,8 @@
     "description": "Read context → Read parameters → Read findings → Understand requested state → Analyze gaps → Design approach → Create proposals → Create plan document → Present for approval → Process response → Update memory"
   },
   "memoryFileUsage": {
-    "readFrom": "Previous steps (concept definition, findings, gaps), process.json parameters",
-    "writeTo": "Step results and decisions",
+    "readFrom": ["context.json", "identified-files.json", "findings.json"],
+    "writeTo": ["implementation-decisions.json"],
     "fields": [
       "Information Produced: Implementation plan path, Requested state specification, Total change proposals count, Files to modify/create lists",
       "Decisions Made: Implementation approach, Change proposal priorities",

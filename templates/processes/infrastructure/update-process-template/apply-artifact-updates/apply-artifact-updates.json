@@ -195,8 +195,8 @@
     "description": "Load context → Read plan → Resolve files by type → Read files → Apply JSON → Apply MD → Conditional diagram update → Conditional process migration → Verify (loop back to apply on failure) → Update memory"
   },
   "memoryFileUsage": {
-    "readFrom": "Process parameters (artifactType, artifactPath) and previous step's plan (updatePlanRef from plan-artifact-updates)",
-    "writeTo": "Step results and decisions",
+    "readFrom": ["context.json", "findings.json", "implementation-decisions.json"],
+    "writeTo": ["changes-applied.json"],
     "fields": [
       "Information Produced: changesApplied, filesModified, verificationResults, diagramUpdated, migratedProcesses",
       "Decisions Made: Diagram update decision, migration decision, retry decisions on verification failure"

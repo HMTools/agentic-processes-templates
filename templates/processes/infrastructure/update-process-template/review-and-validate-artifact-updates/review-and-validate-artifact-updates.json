@@ -191,8 +191,8 @@
     "description": "Load context → Read plan → Read artifact → Compare against plan → Assess quality → Validate structure → Generate report → Present for approval (loop on corrections) → End"
   },
   "memoryFileUsage": {
-    "readFrom": "Previous steps' memory sections (updatePlanRef from plan-artifact-updates, changesApplied/filesModified/verificationResults from apply-artifact-updates, artifactType/artifactPath from analyze-current-artifact-state)",
-    "writeTo": "Step results and decisions",
+    "readFrom": ["context.json", "implementation-decisions.json", "changes-applied.json"],
+    "writeTo": ["findings.json"],
     "fields": [
       "Information Produced: planComparisonResults, qualityAssessment, structuralValidationResults, reviewReportRef, overallStatus",
       "Decisions Made: Overall status determination (approve/approve-with-suggestions/fix-required), quality severity classifications"

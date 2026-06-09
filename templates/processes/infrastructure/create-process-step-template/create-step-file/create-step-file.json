@@ -125,8 +125,8 @@
     "description": "Linear flow: create directory → create JSON file → USER APPROVAL → validate"
   },
   "memoryFileUsage": {
-    "readFrom": "Previous step section (step design)",
-    "writeTo": "Step results and decisions",
+    "readFrom": ["context.json", "implementation-decisions.json"],
+    "writeTo": ["changes-applied.json"],
     "fields": [
       "Information Produced: JSON file path, validation results",
       "Files Modified/Created: Step JSON file"

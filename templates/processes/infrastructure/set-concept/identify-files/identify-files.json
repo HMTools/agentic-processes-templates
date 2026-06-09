@@ -54,7 +54,8 @@
       "Log progress periodically for large file sets (>1000 files)",
       "Use simple search (default) for most cases - it's fast and efficient",
       "Save results to separate JSON file to keep memory.json clean",
-      "For hidden directories (starting with .), glob_file_search may not find files - use list_dir as backup"
+      "For hidden directories (starting with .), glob_file_search may not find files - use list_dir as backup",
+      "SHARED INFRASTRUCTURE SCOPE EXPANSION: When the concept being changed affects shared infrastructure (step definitions, type definitions, template schemas, APIs), automatically include ALL repositories that consume or define that infrastructure. For example, if step definitions change how they declare memory usage, all template repos containing step definitions must be in scope — not just the framework repo."
     ]
   },
   "substeps": [
@@ -177,8 +178,8 @@
     "description": "Read parameters → Choose search mode (simple/deep) → Execute search → Broad text-reference search → Cross-repo scope verification → Generator process detection → Apply exclusions → Create report → Save results → Update memory"
   },
   "memoryFileUsage": {
-    "readFrom": "Previous step section in memory.json or process.json - context parameters (filePatterns, scope, excludePatterns, searchDepth, includeMatchReason)",
-    "writeTo": "Step results and decisions",
+    "readFrom": ["context.json"],
+    "writeTo": ["identified-files.json"],
     "fields": [
       "Information Produced: File count, Path to results JSON file, Brief summary",
       "Decisions Made: Search approach used, Search depth mode, Exclusion patterns applied"

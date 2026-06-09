@@ -173,8 +173,8 @@
     "description": "Linear flow through all 9 substeps: requirements → existing check → category → purpose → use cases → structure → flow → substeps → create design document"
   },
   "memoryFileUsage": {
-    "readFrom": "Process parameters and context",
-    "writeTo": "Step results and decisions",
+    "readFrom": ["context.json"],
+    "writeTo": ["implementation-decisions.json"],
     "fields": [
       "Information Produced: Purpose statement, category, structure plan, flow diagram, substeps plan",
       "Decisions Made: Category selection, design choices"

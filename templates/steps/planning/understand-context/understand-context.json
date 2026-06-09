@@ -56,7 +56,8 @@
       "VERIFY FILE EXISTENCE: Before claiming files exist or are missing, use Glob or list_dir to verify. Never make claims about codebase state without tool-based verification.",
       "CHECK SOURCE REPOS: When investigating framework internals (templates, steps, configuration), check BOTH the locally synced copy (~/.claude/agentic-processes/) AND the source git repositories (listed in additional working directories or template-sources config). The synced copy may be stale or incomplete — the source repo is the ground truth.",
       "DOCUMENTATION FIRST: Read existing project documentation (README.md, docs/, etc.) before creating context analysis. Existing docs may already answer questions or provide critical context.",
-      "REWRITE ON SCOPE CHANGE: When the user expands or significantly modifies the scope during review (e.g., adds new research areas, changes boundaries), rewrite the context document from scratch with a unified voice. Do NOT patch new content into the existing document — this creates visible seams and forces the user to request a rewrite."
+      "REWRITE ON SCOPE CHANGE: When the user expands or significantly modifies the scope during review (e.g., adds new research areas, changes boundaries), rewrite the context document from scratch with a unified voice. Do NOT patch new content into the existing document — this creates visible seams and forces the user to request a rewrite.",
+      "AVOID REDUNDANT INFRASTRUCTURE FILES: When designing multi-file architectures, check whether proposed infrastructure/metadata files duplicate data already available in existing files (e.g., process.json already contains process metadata). Only introduce new files when they serve a purpose not already covered."
     ]
   },
   "substeps": [
@@ -84,7 +85,8 @@
         "Use read_file to examine process description and context",
         "List external resources if applicable (documentation, APIs, etc.)",
         "When investigating framework files (templates, steps, config), also check source git repositories — not just the locally synced copy",
-        "Note any missing sources that cannot be located (only after verification with Glob/list_dir and source repo check)"
+        "Note any missing sources that cannot be located (only after verification with Glob/list_dir and source repo check)",
+        "CONSUMER LAYER IDENTIFICATION: When the concept involves data structures, APIs, or shared types, proactively identify all consumer layers (UI apps, downstream services, CLI tools, scripts) that read or display the data. Check additional working directories and project paths for consumer codebases. Do NOT wait for the user to expand scope — include consumers in the initial analysis."
       ]
     },
     {
@@ -109,6 +111,7 @@
         "If the user corrects any assumptions, log each correction as a user interaction with forImprovementStep: true so the continuous-improvement step can identify systemic assumption patterns",
         "After any user correction, immediately rewrite ALL affected sections of existing artifacts (context files, tables, classification labels). Do NOT patch individual lines — rewrite the affected sections from scratch to ensure full consistency. Verify no stale values remain.",
         "Adjust the analysis direction based on any corrections before proceeding to deeper analysis (success criteria, constraints)",
+        "MIGRATION STRATEGY: When the concept involves restructuring existing patterns, replacing fields, or moving responsibilities, explicitly ask the user about migration strategy as one of the assumptions: (a) Clean migration — replace existing patterns entirely, no backward compatibility, (b) Gradual migration — maintain backward compatibility during transition. Do NOT default to either option — present both and ask.",
         "Output: '✓ Assumptions validated with user - [N] confirmed, [M] corrected'"
       ]
     },
@@ -193,8 +196,8 @@
     "description": "Linear flow through substeps 1-4 (including assumption validation), then substeps 5-7, conditional substep 8 if gaps found, then substep 9. If substep 8 executed, return to substep 3 after receiving answers."
   },
   "memoryFileUsage": {
-    "readFrom": "Process context (process.json parameters and description)",
-    "writeTo": "Step results and decisions",
+    "readFrom": [],
+    "writeTo": ["context.json"],
     "fields": [
       "Information Produced: Process parameters, Information sources, Requirements, Success criteria, Constraints",
       "Decisions Made: Clarifications, Assumptions, Information source selections",

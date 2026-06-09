@@ -182,8 +182,8 @@
     "description": "Linear with branching: Validate params → Locate files → Load files → Branch by artifactType (with focusArea scoping) → Record baseline to memory"
   },
   "memoryFileUsage": {
-    "readFrom": "Process parameters (artifactType, artifactPath, focusArea)",
-    "writeTo": "Step results and decisions",
+    "readFrom": ["context.json"],
+    "writeTo": ["findings.json"],
     "fields": [
       "Information Produced: artifactType, artifactPath, artifactName, focusArea, currentStructure, baselineTimestamp",
       "Decisions Made: Focus area interpretation (if applicable)"

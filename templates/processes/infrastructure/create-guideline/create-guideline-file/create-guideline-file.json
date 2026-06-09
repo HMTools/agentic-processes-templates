@@ -144,8 +144,8 @@
     "description": "Linear flow with Q&A decision points: Review Context (→ Q&A if incomplete) → Research Examples (→ Q&A if clarification needed) → Structure Content → Write File → Verify Quality (→ Revise if needed)"
   },
   "memoryFileUsage": {
-    "readFrom": "Previous step section - guidelineName, guidelineCategory, guidelinePurpose, sources",
-    "writeTo": "Step results and decisions",
+    "readFrom": ["context.json"],
+    "writeTo": ["changes-applied.json"],
     "fields": [
       "Information Produced: guidelineFilePath, guidelineContent summary",
       "Decisions Made: decisionsOnContent (examples chosen, detail level)",

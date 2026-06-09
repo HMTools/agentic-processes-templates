@@ -123,8 +123,8 @@
     "description": "Linear flow with Q&A decision point: get guideline info → scan and analyze steps → Q&A confirm targets → update files → verify and document"
   },
   "memoryFileUsage": {
-    "readFrom": "Previous step section - guidelineFilePath, guidelinePurpose",
-    "writeTo": "Step results and decisions",
+    "readFrom": ["context.json", "changes-applied.json"],
+    "writeTo": ["changes-applied.json"],
     "fields": [
       "Information Produced: stepsUpdated (array of paths), stepsSkipped (with reasons)",
       "guidelineLinked: Path to the guideline that was added",
