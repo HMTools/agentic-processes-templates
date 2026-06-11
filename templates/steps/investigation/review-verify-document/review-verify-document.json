@@ -124,8 +124,8 @@
       "actions": [
         "Create findings-report.md with: Executive Summary, Review Findings, Verification Results, Issues Found (if any)",
         "If issues found, create issues-list.json with structured issue data",
-        "Record: summary",
-        "Record: actions taken"
+        "Record via add-memory-entry --topic findings: summary",
+        "Record via add-memory-entry --topic findings: actions taken"
       ]
     },
     {

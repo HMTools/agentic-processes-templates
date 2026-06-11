@@ -137,7 +137,7 @@
       "name": "Update Memory with Results",
       "description": "Update memory with change application results",
       "actions": [
-        "Record: Change application report path, Total changes applied, List of files modified",
+        "Record via add-memory-entry --topic changes-applied: Change application report path, Total changes applied, List of files modified",
         "Log completion: 'Step complete - {count} changes applied to {count} files'"
       ]
     },

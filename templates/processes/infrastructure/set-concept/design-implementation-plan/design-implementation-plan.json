@@ -212,7 +212,7 @@
       "name": "Update memory with approval status",
       "description": "Record plan summary and approval status",
       "actions": [
-        "Record: plan summary and approval status",
+        "Record via add-memory-entry --topic implementation-decisions: plan summary and approval status",
         "Include: implementation plan path, total proposals, files to modify/create",
         "Include: approval status, list of approved Change IDs"
       ]

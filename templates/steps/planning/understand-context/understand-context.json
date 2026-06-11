@@ -174,7 +174,7 @@
         "MANDATORY: Create step{N}-context.md file in process directory with full context documentation",
         "File structure: Concept Overview, Current State, Target State, Target Files, Requirements, Success Criteria, Constraints, Questions/Gaps",
         "Organize clearly with headers and tables for readability",
-        "Record: reference only: '**Detailed Context**: See [`step{N}-context.md`](./step{N}-context.md)'",
+        "Record via add-memory-entry --topic context: reference only: '**Detailed Context**: See [`step{N}-context.md`](./step{N}-context.md)'",
         "Do NOT put detailed context inline in conversation - the file IS the deliverable for approval",
         "VERIFY BEFORE APPROVAL: Before proceeding to the approval checkpoint, re-read the context file and confirm it incorporates ALL user answers, corrections, and scope changes from substep 4 and substep 8. Do NOT present a stale context file for approval.",
         "Output: '✓ Created step{N}-context.md' - DO NOT proceed to approval checkpoint without this verification"

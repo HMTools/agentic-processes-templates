@@ -159,7 +159,7 @@
         "Save file list to identified-files.json",
         "Format: array of paths (default) or array of {path, matchReason, contentPreservationRequired?, preservationAction?} objects",
         "For any file flagged for content preservation, include contentPreservationRequired: true and preservationAction describing what to do (e.g., 'Move to docs/claude/ before deleting parent directory')",
-        "Record: file count and path to results JSON"
+        "Record via add-memory-entry --topic identified-files: file count and path to results JSON"
       ]
     },
     {
