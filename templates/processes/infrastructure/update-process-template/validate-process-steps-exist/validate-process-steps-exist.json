@@ -1,11 +1,12 @@
 {
   "type": "step",
+  "id": "369080de-eb84-4c54-874f-59caf9b409b5",
   "name": "validate-process-steps-exist",
   "category": "template",
   "metadata": {
     "title": "Validate Process Steps Exist",
     "purposeAndUsage": "Validation report of existing vs. missing process-steps",
-    "lastUpdated": "2026-05-28"
+    "lastUpdated": "2026-06-15"
   },
   "output": {
     "description": "Validation report of existing vs. missing process-steps",
@@ -14,40 +15,38 @@
     ],
     "memoryUpdates": [
       "validationResults",
-      "missingStepsList",
-      "spawnedSubProcesses"
+      "missingStepsList"
     ]
   },
   "guidance": {
     "prerequisites": [
       "Template file to validate exists",
-      "Template contains @framework-step references"
+      "Template contains stepRef references in its steps array"
     ],
     "specificActions": [
       "Follow the substeps below in sequence",
-      "Workflow: read template → extract references → check existence → create report → handle missing",
-      "Reference format: @step:category/step-name",
-      "Step file location: ~/.claude/agentic-processes/templates/steps/{category}/{step-name}.md",
-      "If missing steps found: either spawn sub-processes or PAUSE for manual creation"
+      "Workflow: read template -> extract stepRef values -> check existence -> create report -> handle missing",
+      "Step definitions live within the process template directory as subdirectories: {template-dir}/{stepRef}/{stepRef}.json",
+      "Framework steps use @framework-step: prefix and are resolved from ~/.claude/agentic-processes/framework-steps/",
+      "If missing steps found: report them and STOP -- user must create the step subdirectory within the template"
     ],
     "files": {
       "read": [
-        "Template file to validate",
-        "~/.claude/agentic-processes/templates/steps/{category}/{step-name}.md for each reference"
+        "Template JSON file to validate",
+        "{template-dir}/{stepRef}/{stepRef}.json for each non-framework step reference"
       ],
       "create": [],
       "update": []
     },
     "tools": [
       "read_file - Read template and check step files",
-      "grep - Extract @framework-step references",
-      "list_dir - Verify step directories exist"
+      "list_dir - Verify step subdirectories exist within template directory"
     ],
     "bestPractices": [
-      "Extract all @framework-step references systematically",
-      "Check both MD and JSON files exist for each step",
+      "Extract all stepRef values from the template steps array",
+      "For @framework-step: prefixed refs, check ~/.claude/agentic-processes/framework-steps/{name}/{name}.json",
+      "For regular stepRef values, check {template-dir}/{stepRef}/{stepRef}.json",
       "Document all missing steps with their expected locations",
-      "Verify continuous improvement step exists",
       "Provide clear report of validation results"
     ]
   },
@@ -57,30 +56,31 @@
       "name": "Read template file",
       "description": "Load the template content for analysis",
       "actions": [
-        "Read the template MD file",
-        "Read the template JSON file if exists",
-        "Document template being validated"
+        "Read the template JSON file",
+        "Document template being validated",
+        "Identify the template directory path"
       ]
     },
     {
       "number": 2,
       "name": "Extract step references",
-      "description": "Find all @framework-step references in the template",
+      "description": "Find all stepRef values in the template steps array",
       "actions": [
-        "Search for @step:category/step-name pattern",
-        "Create list of all referenced steps",
-        "Note the category and name for each reference"
+        "Parse the steps array from the template JSON",
+        "For each step, extract the stepRef value",
+        "Classify each reference as framework-step (@framework-step: prefix) or inline-step",
+        "Create list of all referenced steps with their classification"
       ]
     },
     {
       "number": 3,
       "name": "Check step existence",
-      "description": "Verify each referenced step exists",
+      "description": "Verify each referenced step exists at its expected location",
       "actions": [
-        "For each reference, check ~/.claude/agentic-processes/templates/steps/{category}/{step-name}.md exists",
-        "Also verify ~/.claude/agentic-processes/templates/steps/{category}/{step-name}.json exists",
-        "Mark as valid if both files exist",
-        "Mark as missing if either file doesn't exist"
+        "For framework steps (@framework-step:name): check ~/.claude/agentic-processes/framework-steps/{name}/{name}.json exists",
+        "For inline steps: check {template-dir}/{stepRef}/{stepRef}.json exists",
+        "Mark as valid if the JSON file exists",
+        "Mark as missing if the file doesn't exist"
       ]
     },
     {
@@ -96,21 +96,21 @@
     {
       "number": 5,
       "name": "List missing steps",
-      "description": "Document missing steps with locations",
+      "description": "Document missing steps with expected locations",
       "actions": [
-        "For each missing step, document expected path",
-        "Document category and name",
-        "Suggest creation approach"
+        "For each missing inline step, document expected path: {template-dir}/{stepRef}/{stepRef}.json",
+        "For each missing framework step, document expected path: ~/.claude/agentic-processes/framework-steps/{name}/{name}.json",
+        "Instruct user to create the step subdirectory within the template directory"
       ]
     },
     {
       "number": 6,
       "name": "Handle missing steps",
-      "description": "Determine how to handle missing steps",
+      "description": "Report missing steps and stop if any are found",
       "actions": [
-        "Option A - Sub-Process: If autoSpawnMissing or user approves, spawn create-process-step-template sub-process for each missing step",
-        "Option B - PAUSE: If user prefers manual, PAUSE and list missing steps",
-        "Document decision in memory"
+        "If missing steps found: report the list and STOP -- user must create step subdirectories within the template",
+        "If all steps valid: proceed to next step",
+        "Document validation result in memory"
       ]
     },
     {
@@ -121,38 +121,33 @@
         "Verify: Was log.json updated for any user interactions?",
         "Verify: Were mandatory actions confirmed with output?",
         "Log problems: If any problems, errors, workarounds, or unexpected situations were encountered during this step, log them via add-log-entry --problems '[\"description of problem 1\", ...]'. This feeds the continuous-improvement step's analysis.",
-        "Output: '✓ Step completed in compliance with operating principles'"
+        "Output: 'Step completed in compliance with operating principles'"
       ]
     }
   ],
   "flow": {
-    "description": "Linear flow: read template → extract references → check existence → create report → list missing → handle missing"
+    "description": "Linear flow: read template -> extract stepRef values -> check existence -> create report -> list missing -> handle missing"
   },
   "memoryFileUsage": {
-    "readFrom": ["context.json", "changes-applied.json"],
-    "writeTo": ["findings.json"],
+    "readFrom": [
+      "context.json",
+      "changes-applied.json"
+    ],
+    "writeTo": [
+      "findings.json"
+    ],
     "fields": [
-      "Information Produced: Validation results, missing steps list, spawned sub-processes (if any)",
+      "Information Produced: Validation results, missing steps list",
       "Decisions Made: How to handle missing steps"
     ]
   },
   "parameters": {
     "required": [],
-    "optional": [
-      "autoSpawnMissing"
-    ],
-    "defaults": {
-      "autoSpawnMissing": false
-    }
-  },
-  "subProcessSupport": {
-    "canSpawnSubProcesses": true,
-    "template": "create-process-step-template",
-    "forEach": "missingStep",
-    "defaultSyncPoint": "immediate"
+    "optional": [],
+    "defaults": {}
   },
   "referenceFormat": {
-    "pattern": "@step:category/step-name",
-    "location": "~/.claude/agentic-processes/templates/steps/category/step-name.md"
+    "inlineStep": "{template-dir}/{stepRef}/{stepRef}.json",
+    "frameworkStep": "~/.claude/agentic-processes/framework-steps/{name}/{name}.json"
   }
 }

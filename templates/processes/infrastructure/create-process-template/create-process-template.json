@@ -1,5 +1,6 @@
 {
   "type": "template",
+  "id": "dbd4a57f-1a1e-48f2-88bf-28aec980b43a",
   "name": "create-process-template",
   "category": "infrastructure",
   "metadata": {
@@ -46,36 +47,30 @@
     {
       "number": 1,
       "name": "Plan and design template",
-      "stepRef": "plan-and-design-template",
-      "approvalRequired": true
+      "stepRef": "1ffce6c4-ab5d-4418-8fa9-455625fb2abf",
+      "approvalRequired": true,
+      "stepRefName": "plan-and-design-template"
     },
     {
       "number": 2,
       "name": "Create template file",
-      "stepRef": "create-template-file"
+      "stepRef": "48b3a870-31ca-450d-856e-796b23997776",
+      "stepRefName": "create-template-file"
     },
     {
       "number": 3,
       "name": "Validate process-steps exist",
-      "stepRef": "validate-process-steps-exist",
-      "subProcessTrigger": {
-        "condition": "missing steps found",
-        "template": "create-process-step-template",
-        "forEach": "missingStep",
-        "syncPoint": "immediate"
-      },
-      "fallback": "manual PAUSE if user prefers"
+      "stepRef": "2266ebc8-c666-43d7-a874-c9b2eb9d1296",
+      "stepRefName": "validate-process-steps-exist"
     }
   ],
   "references": {
     "steps": [
-      "plan-and-design-template",
-      "create-template-file",
-      "validate-process-steps-exist"
+      "1ffce6c4-ab5d-4418-8fa9-455625fb2abf",
+      "48b3a870-31ca-450d-856e-796b23997776",
+      "2266ebc8-c666-43d7-a874-c9b2eb9d1296"
     ],
-    "relatedTemplates": [
-      "create-process-step-template"
-    ],
+    "relatedTemplates": [],
     "dependencies": []
   }
 }

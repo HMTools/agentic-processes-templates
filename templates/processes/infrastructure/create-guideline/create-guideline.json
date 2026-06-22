@@ -1,5 +1,6 @@
 {
   "type": "template",
+  "id": "9a8832a9-da6a-4e91-acfd-63dd1560475e",
   "name": "create-guideline",
   "category": "infrastructure",
   "metadata": {
@@ -59,31 +60,32 @@
     {
       "number": 1,
       "name": "Understand context",
-      "stepRef": "understand-context",
-      "approvalRequired": false
+      "stepRef": "5807389c-3ea6-49c9-bcb9-6fca3730242c",
+      "approvalRequired": false,
+      "stepRefName": "understand-context"
     },
     {
       "number": 2,
       "name": "Create guideline file",
-      "stepRef": "create-guideline-file",
-      "approvalRequired": true
+      "stepRef": "f0a841f7-bdb0-4f2c-b016-ca4017992149",
+      "approvalRequired": true,
+      "stepRefName": "create-guideline-file"
     },
     {
       "number": 3,
       "name": "Link guideline to steps",
-      "stepRef": "link-guideline-to-steps",
-      "optional": true
+      "stepRef": "b422e6db-5302-4cc0-9154-3587792ee00e",
+      "optional": true,
+      "stepRefName": "link-guideline-to-steps"
     }
   ],
   "references": {
     "steps": [
-      "understand-context",
-      "create-guideline-file",
-      "link-guideline-to-steps"
+      "5807389c-3ea6-49c9-bcb9-6fca3730242c",
+      "f0a841f7-bdb0-4f2c-b016-ca4017992149",
+      "b422e6db-5302-4cc0-9154-3587792ee00e"
     ],
-    "relatedTemplates": [
-      "create-process-step-template"
-    ],
+    "relatedTemplates": [],
     "dependencies": []
   },
   "guidelineFormat": {

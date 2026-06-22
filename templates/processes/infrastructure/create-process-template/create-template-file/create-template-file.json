@@ -1,5 +1,6 @@
 {
   "type": "step",
+  "id": "48b3a870-31ca-450d-856e-796b23997776",
   "name": "create-template-file",
   "category": "template",
   "metadata": {
@@ -58,11 +59,9 @@
       "Keep parameters section clear with required vs optional",
       "Ensure flow diagram matches step sequence",
       "Include memory file configuration",
-      "NEVER create step files (~/.claude/agentic-processes/templates/steps/) directly in this step. This step creates PROCESS TEMPLATE files only (~/.claude/agentic-processes/templates/processes/). New steps must be created via the create-process-step-template sub-process in the validate-process-steps-exist step."
+      "This step creates PROCESS TEMPLATE files only (~/.claude/agentic-processes/templates/processes/). Step definitions are created as subdirectories within the template directory."
     ],
-    "warnings": [
-      "CRITICAL: This step creates TEMPLATE files only (~/.claude/agentic-processes/templates/processes/). Do NOT create step files (~/.claude/agentic-processes/templates/steps/) here. If the template references steps that don't exist yet, they will be handled by the validate-process-steps-exist step which spawns create-process-step-template sub-processes for each missing step."
-    ]
+    "warnings": []
   },
   "substeps": [
     {
@@ -147,8 +146,13 @@
     "description": "Linear flow: create file → write user docs → write flow → write steps → create JSON → validate"
   },
   "memoryFileUsage": {
-    "readFrom": ["context.json", "implementation-decisions.json"],
-    "writeTo": ["changes-applied.json"],
+    "readFrom": [
+      "context.json",
+      "implementation-decisions.json"
+    ],
+    "writeTo": [
+      "changes-applied.json"
+    ],
     "fields": [
       "Information Produced: Template file path, JSON file path, validation results",
       "Files Modified/Created: Template MD file, JSON companion file"

@@ -1,5 +1,6 @@
 {
   "type": "template",
+  "id": "2932a013-81b1-487b-8f0c-991549eedeef",
   "name": "set-concept",
   "category": "infrastructure",
   "metadata": {
@@ -61,43 +62,49 @@
     {
       "number": 1,
       "name": "Understand concept",
-      "stepRef": "understand-context",
-      "approvalRequired": true
+      "stepRef": "28047be4-e7c5-4152-8329-2929982ad042",
+      "approvalRequired": true,
+      "stepRefName": "understand-context"
     },
     {
       "number": 2,
       "name": "Identify target files",
-      "stepRef": "identify-files"
+      "stepRef": "bbf0decb-59c7-4623-9d99-34788789b4f0",
+      "stepRefName": "identify-files"
     },
     {
       "number": 3,
       "name": "Analyze existing state",
-      "stepRef": "review-verify-document"
+      "stepRef": "8aecb57e-d096-4cac-81f3-a1e4c5f7a2e1",
+      "stepRefName": "review-verify-document"
     },
     {
       "number": 4,
       "name": "Design implementation plan",
-      "stepRef": "design-implementation-plan",
-      "approvalRequired": true
+      "stepRef": "5fd46afb-b722-4ee9-9311-86f5d9c86365",
+      "approvalRequired": true,
+      "stepRefName": "design-implementation-plan"
     },
     {
       "number": 5,
       "name": "Apply changes",
-      "stepRef": "apply-changes"
+      "stepRef": "6c53947a-ba9c-469a-930a-7af1238d1d91",
+      "stepRefName": "apply-changes"
     },
     {
       "number": 6,
       "name": "Verify implementation",
-      "stepRef": "review-verify-document"
+      "stepRef": "8aecb57e-d096-4cac-81f3-a1e4c5f7a2e1",
+      "stepRefName": "review-verify-document"
     }
   ],
   "references": {
     "steps": [
-      "understand-context",
-      "identify-files",
-      "review-verify-document",
-      "design-implementation-plan",
-      "apply-changes"
+      "28047be4-e7c5-4152-8329-2929982ad042",
+      "bbf0decb-59c7-4623-9d99-34788789b4f0",
+      "8aecb57e-d096-4cac-81f3-a1e4c5f7a2e1",
+      "5fd46afb-b722-4ee9-9311-86f5d9c86365",
+      "6c53947a-ba9c-469a-930a-7af1238d1d91"
     ],
     "relatedTemplates": [
       "review-and-verify"

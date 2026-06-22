@@ -1,5 +1,6 @@
 {
   "type": "template",
+  "id": "71c959b0-50bd-4756-996a-dbbf6061444b",
   "name": "onboard",
   "category": "infrastructure",
   "metadata": {
@@ -17,13 +18,14 @@
     {
       "number": 1,
       "name": "Identify missing guidelines",
-      "stepRef": "identify-files",
+      "stepRef": "b978211a-0f40-4f89-89d9-85223dbb77f1",
       "approvalRequired": true,
       "context": {
-        "scope": "Find all guideline files referenced in ~/.claude/agentic-processes/steps that don't exist in ~/.claude/agentic-processes/guidelines",
-        "searchApproach": "grep for userGuidelines in step JSON files, then check existence of each referenced path",
+        "scope": "Find all guideline files referenced in step definitions within process template directories and framework-steps/ that don't exist in ~/.claude/agentic-processes/guidelines",
+        "searchApproach": "grep for userGuidelines in step JSON files within process template directories (templates/processes/*/*/*/*.json) and framework-steps/**/*.json, then check existence of each referenced path",
         "outputFormat": "Array of {path, guidelineName, category, referencedBy} objects"
-      }
+      },
+      "stepRefName": "identify-files"
     },
     {
       "number": 2,
@@ -48,14 +50,17 @@
     "step1ScanningLogic": {
       "description": "How to identify missing guidelines",
       "actions": [
-        "Use grep to find all 'userGuidelines' references in ~/.claude/agentic-processes/templates/steps/**/*.json",
+        "Use grep to find all 'userGuidelines' references in step JSON files within process template directories (templates/processes/*/*/*/*.json) and framework-steps/**/*.json",
         "Parse each reference to extract the guideline path",
         "Check if the file exists at the referenced path",
         "Group missing guidelines by category",
         "Present findings to user for approval"
       ],
       "grepPattern": "userGuidelines",
-      "searchPath": "~/.claude/agentic-processes/templates/steps/",
+      "searchPaths": [
+        "~/.claude/agentic-processes/templates/processes/*/*/*/*.json",
+        "~/.claude/agentic-processes/framework-steps/**/*.json"
+      ],
       "guidelineBasePath": "~/.claude/agentic-processes/guidelines/"
     },
     "step2BatchCreation": {
@@ -71,7 +76,7 @@
   },
   "references": {
     "steps": [
-      "identify-files"
+      "b978211a-0f40-4f89-89d9-85223dbb77f1"
     ],
     "relatedTemplates": [
       "create-guideline"

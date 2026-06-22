@@ -1,5 +1,6 @@
 {
   "type": "template",
+  "id": "eb1c9c33-6d6a-477f-8178-eadc110184e1",
   "name": "update-process-template",
   "category": "infrastructure",
   "metadata": {
@@ -43,50 +44,47 @@
     {
       "number": 0,
       "name": "Analyze Current Artifact State",
-      "stepRef": "analyze-current-artifact-state"
+      "stepRef": "55afac4c-b2de-4fdc-838f-042639175d19",
+      "stepRefName": "analyze-current-artifact-state"
     },
     {
       "number": 1,
       "name": "Plan Artifact Updates",
-      "stepRef": "plan-artifact-updates",
+      "stepRef": "df09091e-6069-44be-b9dc-657489a37c64",
       "approvalRequired": true,
-      "guidance": "When planning changes, check for active process instances using this template. If found, proactively include a migration plan (inserting new steps, renumbering, preserving existing IDs/statuses). Do not wait for the user to request migration."
+      "guidance": "When planning changes, check for active process instances using this template. If found, proactively include a migration plan (inserting new steps, renumbering, preserving existing IDs/statuses). Do not wait for the user to request migration.",
+      "stepRefName": "plan-artifact-updates"
     },
     {
       "number": 2,
       "name": "Apply Artifact Updates",
-      "stepRef": "apply-artifact-updates"
+      "stepRef": "03d2c4fa-1d07-4e0a-a16c-48387d805103",
+      "stepRefName": "apply-artifact-updates"
     },
     {
       "number": 3,
       "name": "Review and Validate Artifact Updates",
-      "stepRef": "review-and-validate-artifact-updates",
-      "approvalRequired": true
+      "stepRef": "6880b8bb-6085-4da5-bd8a-71c5c1e9301e",
+      "approvalRequired": true,
+      "stepRefName": "review-and-validate-artifact-updates"
     },
     {
       "number": 4,
       "name": "Validate Process Steps Exist",
-      "stepRef": "validate-process-steps-exist",
-      "subProcessTrigger": {
-        "condition": "missing steps found",
-        "template": "create-process-step-template",
-        "forEach": "missingStep",
-        "syncPoint": "immediate"
-      },
-      "fallback": "manual PAUSE if user prefers"
+      "stepRef": "369080de-eb84-4c54-874f-59caf9b409b5",
+      "stepRefName": "validate-process-steps-exist"
     }
   ],
   "references": {
     "steps": [
-      "analyze-current-artifact-state",
-      "plan-artifact-updates",
-      "apply-artifact-updates",
-      "review-and-validate-artifact-updates",
-      "validate-process-steps-exist"
+      "55afac4c-b2de-4fdc-838f-042639175d19",
+      "df09091e-6069-44be-b9dc-657489a37c64",
+      "03d2c4fa-1d07-4e0a-a16c-48387d805103",
+      "6880b8bb-6085-4da5-bd8a-71c5c1e9301e",
+      "369080de-eb84-4c54-874f-59caf9b409b5"
     ],
     "relatedTemplates": [
-      "create-process-template",
-      "create-process-step-template"
+      "dbd4a57f-1a1e-48f2-88bf-28aec980b43a"
     ],
     "dependencies": []
   }

@@ -1,5 +1,6 @@
 {
   "type": "step",
+  "id": "6880b8bb-6085-4da5-bd8a-71c5c1e9301e",
   "name": "review-and-validate-artifact-updates",
   "category": "common",
   "metadata": {
@@ -191,8 +192,14 @@
     "description": "Load context → Read plan → Read artifact → Compare against plan → Assess quality → Validate structure → Generate report → Present for approval (loop on corrections) → End"
   },
   "memoryFileUsage": {
-    "readFrom": ["context.json", "implementation-decisions.json", "changes-applied.json"],
-    "writeTo": ["findings.json"],
+    "readFrom": [
+      "context.json",
+      "implementation-decisions.json",
+      "changes-applied.json"
+    ],
+    "writeTo": [
+      "findings.json"
+    ],
     "fields": [
       "Information Produced: planComparisonResults, qualityAssessment, structuralValidationResults, reviewReportRef, overallStatus",
       "Decisions Made: Overall status determination (approve/approve-with-suggestions/fix-required), quality severity classifications"

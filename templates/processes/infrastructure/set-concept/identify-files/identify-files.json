@@ -1,5 +1,6 @@
 {
   "type": "step",
+  "id": "bbf0decb-59c7-4623-9d99-34788789b4f0",
   "name": "identify-files",
   "category": "investigation",
   "metadata": {
@@ -102,6 +103,7 @@
         "Run broad grep searches across ALL file types (.json, .md, .ts, .js, .py, .sh, etc.) for these names",
         "Search for references in: inline text/comments, markdown links, import statements, documentation prose, directory listings, type definitions, and configuration files",
         "Compare broad search results against the structured search results from substep 3 — flag any files found by broad search but missed by structured search",
+        "DOCUMENTATION COMPLETENESS CHECK: After the broad grep, list ALL .md files and docs/ files across all in-scope repositories. Verify each was included in the grep results or explicitly excluded. Log: '{count} documentation files verified covered by broad search'",
         "Log the delta: how many additional files were found by broad search"
       ]
     },
@@ -178,8 +180,12 @@
     "description": "Read parameters → Choose search mode (simple/deep) → Execute search → Broad text-reference search → Cross-repo scope verification → Generator process detection → Apply exclusions → Create report → Save results → Update memory"
   },
   "memoryFileUsage": {
-    "readFrom": ["context.json"],
-    "writeTo": ["identified-files.json"],
+    "readFrom": [
+      "context.json"
+    ],
+    "writeTo": [
+      "identified-files.json"
+    ],
     "fields": [
       "Information Produced: File count, Path to results JSON file, Brief summary",
       "Decisions Made: Search approach used, Search depth mode, Exclusion patterns applied"

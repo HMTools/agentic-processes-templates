@@ -4,7 +4,7 @@ Official template library for the [agentic-processes](https://github.com/user/ag
 
 ## Overview
 
-This repository contains the **core infrastructure** process templates and shared step templates for the agentic-processes framework. Domain-specific templates (e.g., SDLC workflows) are maintained in separate repositories.
+This repository contains the **core infrastructure** process templates for the agentic-processes framework. Domain-specific templates (e.g., SDLC workflows) are maintained in separate repositories. Step definitions live as subdirectories within each process template.
 
 ## Structure
 
@@ -12,39 +12,31 @@ This repository contains the **core infrastructure** process templates and share
 templates/
   processes/               # Process templates (full workflow definitions)
     infrastructure/        # Framework/tooling infrastructure workflows
-  steps/                   # Step templates (individual step definitions)
-    common/                # Common/shared steps (apply-changes, etc.)
-    guideline/             # Guideline management steps
-    investigation/         # Investigation steps (identify-files, review-verify-document)
-    learning/              # Learning and improvement steps
-    planning/              # Planning and design steps (design-implementation-plan, understand-context)
-    template/              # Template management steps
+      create-process-template/
+        create-process-template.json
+        plan-and-design-template/   # Step subdirectory
+        create-template-file/       # Step subdirectory
+        validate-process-steps-exist/  # Step subdirectory
+      ...
 ```
 
 ## Usage
 
-Add this repository as a template source in your agentic-processes configuration:
+Add this repository as a marketplace in the UI Settings:
 
-```bash
-python scripts/template_manager.py add-source \
-  --name official \
-  --url https://github.com/user/agentic-process-templates.git \
-  --priority 100
-```
+1. Open the **Marketplace** section in the UI Settings
+2. Click **Add Marketplace**
+3. Enter name: `official`, URL: `https://github.com/user/agentic-process-templates.git`, priority: `100`
+4. Click **Refresh** to fetch the template catalog
+5. Browse and install the templates you need
 
-Then sync templates:
+### Multi-Marketplace Configuration
 
-```bash
-python scripts/template_manager.py sync
-```
-
-### Multi-Source Configuration
-
-The framework supports multiple template sources. Each source is synced independently and merged by priority (higher priority wins on conflicts). Configure additional sources in `~/.claude/agentic-processes/config/template-sources.json`.
+The framework supports multiple marketplaces. Each marketplace is refreshed independently. Configure additional marketplaces via the UI Settings or in `~/.claude/agentic-processes/config/marketplaces.json`.
 
 ## Related Repositories
 
-- **[sdlc-process-templates](https://github.com/user/sdlc-process-templates)** -- SDLC process and step templates (work item implementation, test planning, deployment, PR review, etc.)
+- **[sdlc-process-templates](https://github.com/user/sdlc-process-templates)** -- SDLC process templates (work item implementation, test planning, deployment, PR review, etc.)
 
 ## License
 

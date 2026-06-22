@@ -1,5 +1,6 @@
 {
   "type": "step",
+  "id": "55afac4c-b2de-4fdc-838f-042639175d19",
   "name": "analyze-current-artifact-state",
   "category": "common",
   "metadata": {
@@ -182,8 +183,12 @@
     "description": "Linear with branching: Validate params → Locate files → Load files → Branch by artifactType (with focusArea scoping) → Record baseline to memory"
   },
   "memoryFileUsage": {
-    "readFrom": ["context.json"],
-    "writeTo": ["findings.json"],
+    "readFrom": [
+      "context.json"
+    ],
+    "writeTo": [
+      "findings.json"
+    ],
     "fields": [
       "Information Produced: artifactType, artifactPath, artifactName, focusArea, currentStructure, baselineTimestamp",
       "Decisions Made: Focus area interpretation (if applicable)"
@@ -213,7 +218,7 @@
       "artifactPath": {
         "description": "Path to the artifact to analyze (relative to project root)",
         "type": "string",
-        "example": "~/.claude/agentic-processes/templates/processes/infrastructure/create-process-step-template"
+        "example": "~/.claude/agentic-processes/templates/processes/infrastructure/create-process-template"
       },
       "focusArea": {
         "description": "Free-form description of what aspect to focus on. Agent interprets dynamically. If omitted, full analysis is performed.",

@@ -1,16 +1,17 @@
 {
   "type": "step",
+  "id": "b422e6db-5302-4cc0-9154-3587792ee00e",
   "name": "link-guideline-to-steps",
   "category": "guideline",
   "metadata": {
     "title": "Link Guideline To Steps",
     "purposeAndUsage": "Updated step JSON files with new userGuidelines entries",
-    "lastUpdated": "2026-05-28"
+    "lastUpdated": "2026-06-15"
   },
   "output": {
     "description": "Updated step JSON files with new userGuidelines entries",
     "artifacts": [
-      "Updated ~/.claude/agentic-processes/templates/steps/{category}/{step-name}.json files"
+      "Updated step JSON files within process template directories and framework-steps/"
     ],
     "memoryUpdates": [
       "stepsUpdated",
@@ -27,7 +28,7 @@
     "userGuidelines": [],
     "specificActions": [
       "Follow the substeps below in sequence",
-      "Workflow: get guideline info → scan steps → analyze content → Q&A confirm → update files → verify",
+      "Workflow: get guideline info -> scan steps -> analyze content -> Q&A confirm -> update files -> verify",
       "Use Q&A Session component to confirm which steps to link",
       "Always preserve existing userGuidelines entries (append only)",
       "Skip steps that already reference the guideline (idempotent)",
@@ -36,7 +37,8 @@
     "files": {
       "read": [
         "memory.json (guideline path from previous step)",
-        "~/.claude/agentic-processes/templates/steps/**/*.json (all step JSON files for analysis)"
+        "Step JSON files within process template directories: templates/processes/*/*/*/*.json",
+        "Framework step JSON files: ~/.claude/agentic-processes/framework-steps/**/*.json"
       ],
       "update": [
         "Step JSON files that user confirms"
@@ -44,7 +46,7 @@
     },
     "tools": [
       "read_file - Read memory and step JSON files for content analysis",
-      "list_dir - List all step categories and files",
+      "list_dir - List process template directories and their step subdirectories",
       "grep - Search step content for keyword matches",
       "search_replace - Update JSON files with new guideline references"
     ],
@@ -73,7 +75,8 @@
       "name": "Identify target steps",
       "description": "Analyze step JSON files to find relevant steps, then confirm with user",
       "actions": [
-        "Scan all step JSON files in ~/.claude/agentic-processes/templates/steps/ (all categories)",
+        "Scan step JSON files within process template directories: templates/processes/{category}/{template}/{stepRef}/{stepRef}.json",
+        "Also scan framework steps: ~/.claude/agentic-processes/framework-steps/{name}/{name}.json",
         "Read and analyze each step's content to determine relevance:",
         "- Check metadata.purposeAndUsage - does it relate to the guideline topic?",
         "- Check guidance.specificActions - would this guideline help?",
@@ -115,16 +118,21 @@
         "Verify: Was log.json updated for any user interactions?",
         "Verify: Were mandatory actions confirmed with output?",
         "Log problems: If any problems, errors, workarounds, or unexpected situations were encountered during this step, log them via add-log-entry --problems '[\"description of problem 1\", ...]'. This feeds the continuous-improvement step's analysis.",
-        "Output: '✓ Step completed in compliance with operating principles'"
+        "Output: 'Step completed in compliance with operating principles'"
       ]
     }
   ],
   "flow": {
-    "description": "Linear flow with Q&A decision point: get guideline info → scan and analyze steps → Q&A confirm targets → update files → verify and document"
+    "description": "Linear flow with Q&A decision point: get guideline info -> scan and analyze steps -> Q&A confirm targets -> update files -> verify and document"
   },
   "memoryFileUsage": {
-    "readFrom": ["context.json", "changes-applied.json"],
-    "writeTo": ["changes-applied.json"],
+    "readFrom": [
+      "context.json",
+      "changes-applied.json"
+    ],
+    "writeTo": [
+      "changes-applied.json"
+    ],
     "fields": [
       "Information Produced: stepsUpdated (array of paths), stepsSkipped (with reasons)",
       "guidelineLinked: Path to the guideline that was added",

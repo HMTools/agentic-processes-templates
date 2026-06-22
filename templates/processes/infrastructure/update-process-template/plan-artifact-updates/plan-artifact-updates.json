@@ -1,5 +1,6 @@
 {
   "type": "step",
+  "id": "df09091e-6069-44be-b9dc-657489a37c64",
   "name": "plan-artifact-updates",
   "category": "common",
   "metadata": {
@@ -204,8 +205,13 @@
     "description": "Validate params → Review requirements → Load analysis → Prompt backward compatibility → Type-specific consumer check → Design changes → (Q&A if needed) → Create plan → Review plan → Present for approval (loop on request-changes) → End"
   },
   "memoryFileUsage": {
-    "readFrom": ["context.json", "findings.json"],
-    "writeTo": ["implementation-decisions.json"],
+    "readFrom": [
+      "context.json",
+      "findings.json"
+    ],
+    "writeTo": [
+      "implementation-decisions.json"
+    ],
     "fields": [
       "Information Produced: backwardCompatibility decision, activeConsumersCheck results, changeDesign details, updatePlanRef path",
       "Decisions Made: Backward compatibility decision, change design choices, scope determination"

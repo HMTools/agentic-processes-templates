@@ -1,5 +1,6 @@
 {
   "type": "step",
+  "id": "f0a841f7-bdb0-4f2c-b016-ca4017992149",
   "name": "create-guideline-file",
   "category": "guideline",
   "metadata": {
@@ -144,8 +145,12 @@
     "description": "Linear flow with Q&A decision points: Review Context (→ Q&A if incomplete) → Research Examples (→ Q&A if clarification needed) → Structure Content → Write File → Verify Quality (→ Revise if needed)"
   },
   "memoryFileUsage": {
-    "readFrom": ["context.json"],
-    "writeTo": ["changes-applied.json"],
+    "readFrom": [
+      "context.json"
+    ],
+    "writeTo": [
+      "changes-applied.json"
+    ],
     "fields": [
       "Information Produced: guidelineFilePath, guidelineContent summary",
       "Decisions Made: decisionsOnContent (examples chosen, detail level)",

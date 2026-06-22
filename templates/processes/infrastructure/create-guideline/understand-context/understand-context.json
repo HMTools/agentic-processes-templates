@@ -1,5 +1,6 @@
 {
   "type": "step",
+  "id": "5807389c-3ea6-49c9-bcb9-6fca3730242c",
   "name": "understand-context",
   "category": "planning",
   "metadata": {
@@ -54,7 +55,7 @@
       "Wait for user answers before proceeding if context is incomplete",
       "Verify context completeness before moving to next step",
       "VERIFY FILE EXISTENCE: Before claiming files exist or are missing, use Glob or list_dir to verify. Never make claims about codebase state without tool-based verification.",
-      "CHECK SOURCE REPOS: When investigating framework internals (templates, steps, configuration), check BOTH the locally synced copy (~/.claude/agentic-processes/) AND the source git repositories (listed in additional working directories or template-sources config). The synced copy may be stale or incomplete — the source repo is the ground truth.",
+      "CHECK SOURCE REPOS: When investigating framework internals (templates, steps, configuration), check BOTH the locally installed copy (~/.claude/agentic-processes/) AND the source git repositories (listed in additional working directories or marketplace config). The installed copy may be stale or incomplete — the source repo is the ground truth.",
       "DOCUMENTATION FIRST: Read existing project documentation (README.md, docs/, etc.) before creating context analysis. Existing docs may already answer questions or provide critical context.",
       "REWRITE ON SCOPE CHANGE: When the user expands or significantly modifies the scope during review (e.g., adds new research areas, changes boundaries), rewrite the context document from scratch with a unified voice. Do NOT patch new content into the existing document — this creates visible seams and forces the user to request a rewrite.",
       "AVOID REDUNDANT INFRASTRUCTURE FILES: When designing multi-file architectures, check whether proposed infrastructure/metadata files duplicate data already available in existing files (e.g., process.json already contains process metadata). Only introduce new files when they serve a purpose not already covered."
@@ -84,7 +85,7 @@
         "Use codebase_search to find relevant codebase areas if scope is mentioned",
         "Use read_file to examine process description and context",
         "List external resources if applicable (documentation, APIs, etc.)",
-        "When investigating framework files (templates, steps, config), also check source git repositories — not just the locally synced copy",
+        "When investigating framework files (templates, steps, config), also check source git repositories — not just the locally installed copy",
         "Note any missing sources that cannot be located (only after verification with Glob/list_dir and source repo check)",
         "CONSUMER LAYER IDENTIFICATION: When the concept involves data structures, APIs, or shared types, proactively identify all consumer layers (UI apps, downstream services, CLI tools, scripts) that read or display the data. Check additional working directories and project paths for consumer codebases. Do NOT wait for the user to expand scope — include consumers in the initial analysis."
       ]
@@ -103,16 +104,16 @@
     },
     {
       "number": 4,
-      "name": "Surface and verify assumptions",
-      "description": "Present key assumptions to user for early validation before deep analysis",
+      "name": "Surface assumptions in context document",
+      "description": "Document key assumptions as a dedicated section in the context file for user review at the approval checkpoint",
       "actions": [
         "Based on parameters, sources, and requirements gathered so far, list the top 3-5 assumptions the agent has formed about scope (what is included/excluded), architecture (technical approach, patterns, structure), and boundaries (constraints, limitations, interfaces)",
-        "Present these assumptions to the user clearly, numbered and categorized, requesting confirmation or correction for each",
-        "If the user corrects any assumptions, log each correction as a user interaction with forImprovementStep: true so the continuous-improvement step can identify systemic assumption patterns",
-        "After any user correction, immediately rewrite ALL affected sections of existing artifacts (context files, tables, classification labels). Do NOT patch individual lines — rewrite the affected sections from scratch to ensure full consistency. Verify no stale values remain.",
-        "Adjust the analysis direction based on any corrections before proceeding to deeper analysis (success criteria, constraints)",
-        "MIGRATION STRATEGY: When the concept involves restructuring existing patterns, replacing fields, or moving responsibilities, explicitly ask the user about migration strategy as one of the assumptions: (a) Clean migration — replace existing patterns entirely, no backward compatibility, (b) Gradual migration — maintain backward compatibility during transition. Do NOT default to either option — present both and ask.",
-        "Output: '✓ Assumptions validated with user - [N] confirmed, [M] corrected'"
+        "Do NOT present assumptions interactively or pause for user confirmation mid-step. Instead, include all assumptions as a clearly labeled 'Assumptions (Pending User Validation)' section in the step{N}-context.md document. The user will review and correct them at the approval checkpoint.",
+        "For each assumption, document: the assumption itself, the reasoning behind it, and the alternative if the assumption is wrong — so the user can make an informed decision at review time",
+        "MIGRATION STRATEGY: When the concept involves restructuring existing patterns, replacing fields, or moving responsibilities, include migration strategy as an explicit assumption: (a) Clean migration — replace existing patterns entirely, no backward compatibility, (b) Gradual migration — maintain backward compatibility during transition. Do NOT default to either option — present both.",
+        "TRANSFORMATION LEVEL: When the concept involves moving, extracting, or restructuring existing components to a new location, include transformation level as an explicit assumption: (a) Extract as-is — move existing implementation to new location with minimal changes, (b) Full redesign — rethink the implementation, improve UX/architecture while restructuring. Do NOT default to either option — present both.",
+        "If the user corrects any assumptions at the approval checkpoint, log each correction as a user interaction with forImprovementStep: true, then rewrite ALL affected sections of the context document from scratch to ensure full consistency",
+        "Output: '✓ Assumptions documented in context file for user review at approval checkpoint'"
       ]
     },
     {
@@ -197,7 +198,9 @@
   },
   "memoryFileUsage": {
     "readFrom": [],
-    "writeTo": ["context.json"],
+    "writeTo": [
+      "context.json"
+    ],
     "fields": [
       "Information Produced: Process parameters, Information sources, Requirements, Success criteria, Constraints",
       "Decisions Made: Clarifications, Assumptions, Information source selections",

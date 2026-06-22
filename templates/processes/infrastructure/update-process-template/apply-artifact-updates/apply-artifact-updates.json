@@ -1,5 +1,6 @@
 {
   "type": "step",
+  "id": "03d2c4fa-1d07-4e0a-a16c-48387d805103",
   "name": "apply-artifact-updates",
   "category": "common",
   "metadata": {
@@ -195,8 +196,14 @@
     "description": "Load context → Read plan → Resolve files by type → Read files → Apply JSON → Apply MD → Conditional diagram update → Conditional process migration → Verify (loop back to apply on failure) → Update memory"
   },
   "memoryFileUsage": {
-    "readFrom": ["context.json", "findings.json", "implementation-decisions.json"],
-    "writeTo": ["changes-applied.json"],
+    "readFrom": [
+      "context.json",
+      "findings.json",
+      "implementation-decisions.json"
+    ],
+    "writeTo": [
+      "changes-applied.json"
+    ],
     "fields": [
       "Information Produced: changesApplied, filesModified, verificationResults, diagramUpdated, migratedProcesses",
       "Decisions Made: Diagram update decision, migration decision, retry decisions on verification failure"

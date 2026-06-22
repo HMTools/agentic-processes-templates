@@ -1,5 +1,6 @@
 {
   "type": "step",
+  "id": "6c53947a-ba9c-469a-930a-7af1238d1d91",
   "name": "apply-changes",
   "category": "common",
   "metadata": {
@@ -59,7 +60,7 @@
       "Verify each change was applied correctly by reading the file after modification",
       "Log progress for each change applied",
       "Document all changes in the change application report",
-      "SWEEP FOR RESIDUAL REFERENCES: After applying changes, grep all modified files for old pattern names. Mechanical changes (e.g., updating a field format) often miss references in guidance text, comments, and documentation prose within the same file. Fix all residuals before reporting completion."
+      "SWEEP FOR RESIDUAL REFERENCES: After applying changes, grep ALL files across ALL in-scope repositories for old pattern names — not just modified files. Residual references often exist in files that were not in the original identified list (e.g., documentation, process management files). Fix all residuals before reporting completion."
     ]
   },
   "substeps": [
@@ -115,7 +116,7 @@
       "description": "Verify that ALL references to the changed concept were updated within each modified file, not just the targeted field",
       "actions": [
         "Identify the old patterns/names that were replaced (e.g., old field names, old file references, old type names)",
-        "Run a grep sweep across ALL modified files for any residual occurrences of the old patterns",
+        "Run a grep sweep across ALL files in ALL in-scope repositories (not just modified files) for any residual occurrences of the old patterns",
         "For each residual found: determine if it is in guidance text, comments, documentation prose, or code — all must be updated",
         "Fix any residual references found during the sweep",
         "Log: 'Reference sweep complete: {count} residual references found and fixed across {count} files'"
@@ -158,8 +159,14 @@
     "description": "Verify batch coverage → Read approved IDs from memory → Read proposals document → Apply each change → Verify each change → Create report → Update memory"
   },
   "memoryFileUsage": {
-    "readFrom": ["context.json", "identified-files.json", "implementation-decisions.json"],
-    "writeTo": ["changes-applied.json"],
+    "readFrom": [
+      "context.json",
+      "identified-files.json",
+      "implementation-decisions.json"
+    ],
+    "writeTo": [
+      "changes-applied.json"
+    ],
     "fields": [
       "Information Produced: Change application report path, Total changes applied, List of files modified",
       "Decisions Made: Any decisions during application",

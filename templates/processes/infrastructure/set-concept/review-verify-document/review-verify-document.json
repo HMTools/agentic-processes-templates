@@ -1,5 +1,6 @@
 {
   "type": "step",
+  "id": "8aecb57e-d096-4cac-81f3-a1e4c5f7a2e1",
   "name": "review-verify-document",
   "category": "investigation",
   "metadata": {
@@ -145,8 +146,13 @@
     "description": "Read context and files → Initialize tracking → Review each file → Categorize issues → Create documentation → Update memory"
   },
   "memoryFileUsage": {
-    "readFrom": ["context.json", "identified-files.json"],
-    "writeTo": ["findings.json"],
+    "readFrom": [
+      "context.json",
+      "identified-files.json"
+    ],
+    "writeTo": [
+      "findings.json"
+    ],
     "fields": [
       "Information Produced: Findings report path, Issues list path, Files reviewed count, Items verified count, Issues found count, Counts by category/severity, Verification status",
       "Decisions Made: Issue categorization scheme, Severity levels assigned, Verification approach",
