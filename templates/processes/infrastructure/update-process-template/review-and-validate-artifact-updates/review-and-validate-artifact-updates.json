@@ -240,8 +240,8 @@
       "validationChecks": [
         "Valid JSON structure with required top-level fields (type, name, metadata, steps, parameters, flow)",
         "steps array present with valid structure (id, number, name, status, stepRef)",
-        "Step references use @step:category/name format",
-        "Referenced steps exist in ~/.claude/agentic-processes/steps/ directory",
+        "Step references use UUID format in stepRef field with stepRefName companion",
+        "Referenced step UUIDs resolve to existing step definition files",
         "Parameters defined with required/optional/defaults/definitions",
         "Mermaid diagram in MD is syntactically valid",
         "Mermaid diagram reflects actual step sequence"
@@ -263,7 +263,7 @@
         "Valid JSON structure with required top-level fields (type, name, category, metadata, output, guidance, substeps, flow, memoryFileUsage, dependencies, references)",
         "substeps array present and numbered sequentially",
         "guidance has specificActions, files, tools, bestPractices",
-        "Self-contained: no @step: references in step content",
+        "Self-contained: step content does not contain unresolved cross-references",
         "Mermaid diagram in MD matches substep flow",
         "Filename follows kebab-case convention",
         "dependencies and references sections present"

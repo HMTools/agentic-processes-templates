@@ -25,15 +25,15 @@
     ],
     "specificActions": [
       "Follow the substeps below in sequence",
-      "Workflow: read template -> extract stepRef values -> check existence -> create report -> handle missing",
-      "Step definitions live within the process template directory as subdirectories: {template-dir}/{stepRef}/{stepRef}.json",
-      "Framework steps use @framework-step: prefix and are resolved from ~/.claude/agentic-processes/framework-steps/",
-      "If missing steps found: report them and STOP -- user must create the step subdirectory within the template"
+      "Workflow: read template -> extract stepRef UUIDs -> scan for matching id fields -> create report -> handle missing",
+      "Each stepRef is a UUID that must match the id field of a step definition JSON file in a subdirectory of the template directory",
+      "Framework steps are identified by type: framework-step in their JSON and are resolved from ~/.claude/agentic-processes/framework-steps/ by scanning for matching id field",
+      "If missing steps found: report them and STOP -- user must create the step definition with a matching id field"
     ],
     "files": {
       "read": [
         "Template JSON file to validate",
-        "{template-dir}/{stepRef}/{stepRef}.json for each non-framework step reference"
+        "Step definition JSON files in template subdirectories (scan for matching id field)"
       ],
       "create": [],
       "update": []
@@ -43,10 +43,11 @@
       "list_dir - Verify step subdirectories exist within template directory"
     ],
     "bestPractices": [
-      "Extract all stepRef values from the template steps array",
-      "For @framework-step: prefixed refs, check ~/.claude/agentic-processes/framework-steps/{name}/{name}.json",
-      "For regular stepRef values, check {template-dir}/{stepRef}/{stepRef}.json",
-      "Document all missing steps with their expected locations",
+      "Extract all stepRef UUID values from the template steps array",
+      "For each stepRef UUID, scan template subdirectories for a step definition JSON file whose id field matches the UUID",
+      "Also scan ~/.claude/agentic-processes/framework-steps/ for framework step definitions with matching id field",
+      "No prefix handling needed -- all stepRefs are plain UUIDs; framework steps are identified by their type: framework-step field",
+      "Document all missing steps with their UUID and the stepRefName companion field (if available) for readability",
       "Provide clear report of validation results"
     ]
   },
@@ -64,23 +65,23 @@
     {
       "number": 2,
       "name": "Extract step references",
-      "description": "Find all stepRef values in the template steps array",
+      "description": "Find all stepRef UUID values in the template steps array",
       "actions": [
         "Parse the steps array from the template JSON",
-        "For each step, extract the stepRef value",
-        "Classify each reference as framework-step (@framework-step: prefix) or inline-step",
-        "Create list of all referenced steps with their classification"
+        "For each step, extract the stepRef UUID value (skip null stepRefs for orchestrator steps)",
+        "Note the stepRefName companion field for each step (human-readable display name)",
+        "Create list of all referenced step UUIDs"
       ]
     },
     {
       "number": 3,
       "name": "Check step existence",
-      "description": "Verify each referenced step exists at its expected location",
+      "description": "Verify each referenced step UUID resolves to an existing step definition",
       "actions": [
-        "For framework steps (@framework-step:name): check ~/.claude/agentic-processes/framework-steps/{name}/{name}.json exists",
-        "For inline steps: check {template-dir}/{stepRef}/{stepRef}.json exists",
-        "Mark as valid if the JSON file exists",
-        "Mark as missing if the file doesn't exist"
+        "Build a UUID-to-path registry by scanning all subdirectories of {template-dir} for step definition JSON files with id fields",
+        "Also scan ~/.claude/agentic-processes/framework-steps/ subdirectories for framework step definitions with id fields",
+        "For each stepRef UUID: look up in the registry -- mark as valid if found, missing if not found",
+        "No name-based fallback -- UUID must resolve or it is marked as missing"
       ]
     },
     {
@@ -96,11 +97,11 @@
     {
       "number": 5,
       "name": "List missing steps",
-      "description": "Document missing steps with expected locations",
+      "description": "Document missing steps with their UUIDs",
       "actions": [
-        "For each missing inline step, document expected path: {template-dir}/{stepRef}/{stepRef}.json",
-        "For each missing framework step, document expected path: ~/.claude/agentic-processes/framework-steps/{name}/{name}.json",
-        "Instruct user to create the step subdirectory within the template directory"
+        "For each missing step UUID, document the UUID and the stepRefName (if available) for readability",
+        "Check if the step definition exists but has a different id -- this indicates a UUID mismatch",
+        "Instruct user to either create a step definition with the expected id or update the template's stepRef to the correct UUID"
       ]
     },
     {
@@ -147,7 +148,8 @@
     "defaults": {}
   },
   "referenceFormat": {
-    "inlineStep": "{template-dir}/{stepRef}/{stepRef}.json",
-    "frameworkStep": "~/.claude/agentic-processes/framework-steps/{name}/{name}.json"
+    "resolution": "UUID-only lookup -- scan step definition JSON files for matching id field",
+    "templateSteps": "Scan {template-dir} subdirectories for {subfolder}/{subfolder}.json files with matching id",
+    "frameworkSteps": "Scan ~/.claude/agentic-processes/framework-steps/ subdirectories for step definitions with matching id"
   }
 }

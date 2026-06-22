@@ -506,8 +506,8 @@ The template format has been simplified:
 
 The following steps are **automatically appended** by the framework at process creation time and should **NOT** be included in template definitions:
 
-- **Continuous Improvement** (`@framework-step:continuous-improvement`) -- analyzes the process log and implements improvements for future iterations
-- **End Process Validation** (`@framework-step:end-process-validation`) -- final compliance check ensuring all process requirements were met
+- **Continuous Improvement** -- analyzes the process log and implements improvements for future iterations
+- **End Process Validation** -- final compliance check ensuring all process requirements were met
 
 Template authors can assume these steps will always run after the last explicitly defined step. There is no need to reference them in `steps`, `dynamicSteps`, or `references.steps`.
 

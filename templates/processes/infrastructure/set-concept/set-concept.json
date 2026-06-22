@@ -106,9 +106,7 @@
       "5fd46afb-b722-4ee9-9311-86f5d9c86365",
       "6c53947a-ba9c-469a-930a-7af1238d1d91"
     ],
-    "relatedTemplates": [
-      "review-and-verify"
-    ],
+    "relatedTemplates": [],
     "dependencies": []
   }
 }

@@ -120,7 +120,7 @@
       "actions": [
         "Based on `artifactType`, check for active consumers using artifactTypeConfig",
         "For templates: search `~/.claude/agentic-processes/active/` for processes using this template",
-        "For steps: search `~/.claude/agentic-processes/templates/` for templates referencing this step via `@step:{category}/{stepName}`",
+        "For steps: search `~/.claude/agentic-processes/templates/` for templates referencing this step by its UUID in the `stepRef` field",
         "For processes: check `subProcessState` for parent/child relationships",
         "Report findings to the user",
         "If `preserveActiveConsumers` is true, flag changes that would break consumers",
@@ -298,7 +298,7 @@
       "consumerCheck": {
         "description": "Search for templates referencing this step",
         "searchPath": "~/.claude/agentic-processes/templates/",
-        "searchPattern": "Search for @step:{category}/{stepName} in template JSON files"
+        "searchPattern": "Search for the step's UUID in stepRef fields of template JSON files"
       },
       "compatibilityConcerns": [
         "Removing substeps may break templates that depend on specific outputs",

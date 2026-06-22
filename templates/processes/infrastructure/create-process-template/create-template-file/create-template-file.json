@@ -34,7 +34,7 @@
       "Use kebab-case for filename: `~/.claude/agentic-processes/templates/processes/{category}/{template-name}.md`",
       "MD file contains: Description, Purpose & Usage, Quick Reference, Flow diagram, Steps list",
       "JSON file contains: metadata, parameters, steps with full context, guidance",
-      "Each step references framework-step: @step:category/step-name",
+      "Each step's stepRef is the UUID from the step definition's id field, with stepRefName as human-readable companion",
       "CRITICAL: Only create template files in this step. Do NOT create step files — missing steps are handled later by validate-process-steps-exist via sub-processes"
     ],
     "files": {
@@ -55,7 +55,7 @@
     ],
     "bestPractices": [
       "Always include continuous improvement as final step with approvalRequired: true",
-      "Use @step:category/step-name for all step references",
+      "Use UUID-based references for all step and template cross-references",
       "Keep parameters section clear with required vs optional",
       "Ensure flow diagram matches step sequence",
       "Include memory file configuration",
@@ -100,8 +100,8 @@
       "description": "Document all steps with their references",
       "actions": [
         "Write Steps section",
-        "For each step: checkbox, description, step reference",
-        "Use format: - [ ] Step N: Description (@step:category/step-name)",
+        "For each step: checkbox, description, step reference UUID",
+        "Use format: - [ ] Step N: Description (stepRef: <UUID>)",
         "Include output for each step",
         "Add continuous improvement as final step with approvalRequired: true"
       ]
@@ -112,9 +112,9 @@
       "description": "Create the agent-facing JSON with complete step definitions",
       "actions": [
         "Create file: ~/.claude/agentic-processes/templates/processes/{category}/{template-name}.json",
-        "Include metadata: type, name, category, title, purposeAndUsage",
+        "Include metadata: type, id (UUID v4 as second field after type), name, category, title, purposeAndUsage",
         "Include parameters: required and optional arrays",
-        "Include steps array with full context for each step",
+        "Include steps array with full context for each step -- stepRef must be the step definition's UUID, with stepRefName as human-readable companion; subProcessTrigger.template must be a template UUID with templateName as companion; loopBackTo uses step name strings; references.steps uses step definition UUIDs; references.relatedTemplates uses template UUIDs",
         "Include guidance section",
         "Include memoryFileUsage configuration"
       ]
