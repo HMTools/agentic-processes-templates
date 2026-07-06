@@ -1,6 +1,6 @@
-# agentic-process-templates
+# agentic-processes-templates
 
-Official template library for the [agentic-processes](https://github.com/user/agentic-processes) framework.
+Official template library for the [agentic-processes](https://github.com/HMTools/agentic-processes) framework.
 
 ## Overview
 
@@ -22,13 +22,13 @@ templates/
 
 ## Usage
 
-Add this repository as a marketplace in the UI Settings:
+This repository is pre-configured as the `official` marketplace out of the box, so no setup is required:
 
-1. Open the **Marketplace** section in the UI Settings
-2. Click **Add Marketplace**
-3. Enter name: `official`, URL: `https://github.com/user/agentic-process-templates.git`, priority: `100`
-4. Click **Refresh** to fetch the template catalog
-5. Browse and install the templates you need
+1. Open the **Marketplace** section in the UI
+2. Click **Refresh** to fetch the template catalog
+3. Browse and install the templates you need
+
+To add it manually (e.g. under a different name or priority), use **Add Marketplace** in the Marketplace Sources section with URL `https://github.com/HMTools/agentic-processes-templates.git`.
 
 ### Multi-Marketplace Configuration
 
@@ -36,8 +36,8 @@ The framework supports multiple marketplaces. Each marketplace is refreshed inde
 
 ## Related Repositories
 
-- **[sdlc-process-templates](https://github.com/user/sdlc-process-templates)** -- SDLC process templates (work item implementation, test planning, deployment, PR review, etc.)
+- **[sdlc-process-templates](https://github.com/HMTools/sdlc-process-templates)** -- SDLC process templates (work item implementation, test planning, deployment, PR review, etc.)
 
 ## License
 
-See [agentic-processes](https://github.com/user/agentic-processes) for license information.
+See [agentic-processes](https://github.com/HMTools/agentic-processes) for license information.
