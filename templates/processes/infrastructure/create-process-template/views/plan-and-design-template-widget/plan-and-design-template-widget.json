@@ -3,46 +3,50 @@
   "id": "370c998f-c9ed-4575-aba1-47eb0deabcd7",
   "name": "plan-and-design-template-widget",
   "htmlFile": "widget.html",
-  "operationIds": [
-    "approve",
-    "reject",
-    "modify"
-  ],
+  "operationIds": ["approve", "revise-phases", "revise-params", "reject"],
   "mockData": {
     "approve": {
-      "purpose": "Automate weekly on-call rotation handoff: summarize open incidents, draft handoff notes, and require the outgoing engineer to confirm before rotating.",
-      "steps": [
-        {
-          "name": "Gather open incidents",
-          "purpose": "Pull all incidents touched in the last 7 days from the tracker"
-        },
-        {
-          "name": "Draft handoff notes",
-          "purpose": "Summarize status, owners, and next actions per incident"
-        },
-        {
-          "name": "Confirm handoff (approval gate)",
-          "purpose": "Outgoing engineer reviews and approves before rotation completes"
-        }
+      "purpose": "Given a payo-flows bug work item ID, automatically investigate and confirm the bug, implement and fleet-verify a fix, open and self-remediate a PR, and produce a human-reviewable summary — looping back to fix+deploy+test wherever tests, self-review, or human review surface unresolved issues.",
+      "useCases": [
+        "A tester or engineer files a bug against payo-flows and wants an end-to-end automated fix without manually driving investigation, fleet deployment, e2e verification, and PR review.",
+        "Team wants consistent evidence-backed e2e verification (personal fleet + test run) attached to every payo-flows bug-fix PR.",
+        "Team wants self-review findings auto-remediated before a human ever looks at the PR."
       ],
+      "existingChecked": [
+        { "name": "infrastructure/set-concept", "verdict": "not reusable", "why": "closest generic analog, but linear with no fleet-deploy/e2e/PR/self-review concepts and no native loop-back" },
+        { "name": "infrastructure/create-process-template, update-process-template", "verdict": "unrelated", "why": "template authoring, not bug-fixing" },
+        { "name": "~/.claude/agentic-processes/steps/{planning,common,investigation,learning}", "verdict": "none exist", "why": "no existing step matches this domain — all phases authored fresh" }
+      ],
+      "pattern": {
+        "name": "Orchestrator template",
+        "why": "4 independently-evolvable multi-step phases, each with its own approval gates. Orchestrator itself contains only phase-spawning steps + the 2 framework steps."
+      },
       "params": [
-        {
-          "name": "onCallChannel",
-          "type": "string",
-          "desc": "Slack channel to post the handoff summary to"
-        },
-        {
-          "name": "lookbackDays",
-          "type": "number",
-          "desc": "How many days of incidents to include (default 7)"
-        }
+        { "name": "workItemId", "required": true, "desc": "ADO work item ID of the bug to fix", "example": "1274362" }
+      ],
+      "steps": [
+        { "n": 0, "name": "Investigate and confirm bug", "type": "sub-process", "approval": true, "desc": "Pull work item from ADO, reproduce/analyze root cause, embed Q&A substep if understanding is incomplete. Gate confirms full understanding before fix design." },
+        { "n": 1, "name": "Implement, deploy, and verify fix", "type": "sub-process", "approval": false, "desc": "Propose fix → implement → deploy to a personal fleet dedicated to this bug → run e2e tests with evidence. On test failure, tear down the old personal fleet, redeploy fresh, and retest.", "loopTarget": true },
+        { "n": 2, "name": "Open PR and remediate self-review", "type": "sub-process", "approval": false, "desc": "Create PR referencing the work item with test evidence linked. Run automated self-review, post findings as PR comments.", "loopsTo": 1, "loopCondition": "High/Critical findings" },
+        { "n": 3, "name": "Produce human review summary", "type": "sub-process", "approval": true, "desc": "Generate a full review markdown describing the behaviors/decisions actually developed in the PR. Present to human reviewer.", "loopsTo": 1, "loopCondition": "Requested changes" },
+        { "n": 4, "name": "Continuous Improvement & Learning", "type": "framework", "approval": true, "desc": "Auto-appended." },
+        { "n": 5, "name": "End Process Validation", "type": "framework", "approval": false, "desc": "Auto-appended." }
+      ],
+      "keyDecisions": [
+        "Orchestrator pattern chosen over a single flat workflow because the process has 4 independently-evolvable multi-step phases, each needing its own approval gate.",
+        "Orchestrator parameters kept to just workItemId; sub-processes gather their own context.",
+        "Both remediation loops (self-review findings, human review change requests) target the same Implement/Deploy/Verify phase instead of duplicating fix-loop logic.",
+        "No existing reusable steps found anywhere in the installation for investigation, fix, fleet deploy, e2e test, PR, self-review, or human-review-summary — all 4 sub-process templates authored fresh as native process templates."
+      ],
+      "decisionOptions": [
+        { "id": "approve", "label": "Approve", "desc": "Proceed to create the template file", "variant": "primary", "isDefault": true },
+        { "id": "revise-phases", "label": "Revise phases", "desc": "Change the step/phase breakdown" },
+        { "id": "revise-params", "label": "Revise params", "desc": "Change parameters" },
+        { "id": "reject", "label": "Reject", "desc": "Stop and discuss", "variant": "danger" }
       ]
     },
-    "reject": {
-      "note": "n/a"
-    },
-    "modify": {
-      "note": "n/a"
-    }
+    "revise-phases": { "note": "n/a" },
+    "revise-params": { "note": "n/a" },
+    "reject": { "note": "n/a" }
   }
 }

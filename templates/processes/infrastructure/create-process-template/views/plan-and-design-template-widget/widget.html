@@ -1,80 +1,217 @@
 <!doctype html>
 <html>
-<head><style>*{box-sizing:border-box}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;margin:0;color:#181d1a;background:#fff;display:flex;flex-direction:column;height:100vh}
-h3{margin:0;font-size:13px;font-weight:600;padding:14px 16px 10px;flex-shrink:0;letter-spacing:-0.01em}
-.body{flex:1;overflow-y:auto;padding:0 16px 4px;font-size:12px}
-.actions{display:flex;gap:8px;padding:12px 16px;border-top:1px solid #e3e6e0;flex-shrink:0;background:#fafbf9}
-button{font:inherit;font-weight:500;font-size:12.5px;padding:7px 14px;border-radius:6px;border:1px solid #cbd1c7;background:#fff;cursor:pointer;box-shadow:0 1px 0 rgba(0,0,0,.04);transition:transform .06s ease, box-shadow .06s ease}
-button:hover{border-color:#a8b0a2}
+<head><style>
+*{box-sizing:border-box}
+:root{
+  --bg:#fdfcfa; --surface:#f7f5f0; --border:#e7e2d6; --border-strong:#d8d1bf;
+  --text:#211f1a; --text-dim:#6e6858;
+  --brass:#a5651f; --brass-soft:#f5e6cc;
+  --blue:#3a6ea5; --blue-soft:#e4edf8;
+  --slate:#6e6858; --slate-soft:#efece2;
+  --green:#1f7a52; --green-soft:#dcf0e6;
+  --red:#b23a24; --red-soft:#fbe7e1;
+}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;margin:0;color:var(--text);background:var(--bg);display:flex;flex-direction:column;height:100vh}
+.head{padding:16px 18px 12px;flex-shrink:0;background:linear-gradient(180deg,var(--surface),var(--bg));border-bottom:1px solid var(--border)}
+.head .eyebrow{display:flex;align-items:center;gap:6px;font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--brass);margin-bottom:4px}
+.head .eyebrow svg{width:11px;height:11px}
+.head h2{margin:0 0 7px;font-size:15.5px;font-weight:600;letter-spacing:-0.01em}
+.head .ratio{display:inline-flex;align-items:center;gap:5px;font-family:ui-monospace,Menlo,monospace;font-size:10.5px;font-weight:600;color:var(--brass);background:var(--brass-soft);padding:3px 9px;border-radius:20px}
+.head .ratio svg{width:10px;height:10px}
+.body{flex:1;overflow-y:auto;padding:4px 18px 10px;font-size:12.5px}
+.actions{display:flex;gap:8px;flex-wrap:wrap;padding:13px 18px;border-top:1px solid var(--border);flex-shrink:0;background:var(--surface)}
+button{font:inherit;font-weight:500;font-size:12px;padding:8px 14px;border-radius:8px;border:1px solid var(--border-strong);background:#fff;cursor:pointer;transition:transform .06s ease, box-shadow .1s ease;box-shadow:0 1px 2px rgba(30,25,10,.04)}
+button:hover{border-color:#b8b096;box-shadow:0 2px 6px rgba(30,25,10,.08)}
 button:active{transform:translateY(1px);box-shadow:none}
-button.primary{background:#9a5b21;border-color:#9a5b21;color:#fff}
-button.primary:hover{background:#85501d}
-button.danger{color:#a3311f;border-color:#e2b3a8}
-.muted{color:#5c6660}
-code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:10.5px;background:#f1f3ef;border-radius:3px;padding:1px 4px}
-.tag{display:inline-block;font-family:ui-monospace,Menlo,monospace;font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;padding:2px 6px;border-radius:3px;flex-shrink:0}
-.tag.mod{background:#faedd2;color:#96631a}
-.tag.new{background:#dff0e6;color:#1f7a52}
-.tag.info{background:#e8eff8;color:#3a6ea5}
-.tag.num{background:#eef0ec;color:#5c6459}
-.item{padding:10px 0;border-bottom:1px solid #edefe9}
-.item:last-child{border-bottom:0}
-.item .row1{display:flex;align-items:center;gap:7px;margin-bottom:3px}
-.item .path{font-weight:600;font-size:12px}
-.item .why{color:#5c6660;font-size:11.5px;line-height:1.45}
-ul.plain{margin:0;padding:0;list-style:none}
-ul.bullets{margin:6px 0 0;padding-left:16px}
-ul.bullets li{margin-bottom:4px;font-size:11.5px}
-table.cmp{width:100%;border-collapse:collapse;font-size:11.5px;margin-top:4px}
-table.cmp th{text-align:left;color:#5c6660;font-weight:600;padding:5px 6px;border-bottom:1px solid #e3e6e0;font-family:ui-monospace,monospace;font-size:9.5px;text-transform:uppercase;letter-spacing:.03em}
-table.cmp td{padding:6px;border-bottom:1px solid #edefe9;vertical-align:top}
-.check{display:flex;align-items:flex-start;gap:8px;padding:6px 0;font-size:11.5px}
-.check .mark{flex-shrink:0;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;margin-top:1px;font-weight:700}
-.check .mark.pass{background:#1f7a52}
-.check .mark.fail{background:#a3311f}
-.banner{margin-top:2px;padding:9px 11px;border-radius:6px;font-weight:600;font-size:12px;border:1px solid}
-.banner.ok{background:#dff0e6;color:#1f7a52;border-color:#a9d9c1}
-.priority{font-family:ui-monospace,monospace;font-size:9px;font-weight:700;text-transform:uppercase;padding:1px 5px;border-radius:3px;margin-left:6px}
-.priority.high{background:#fbeae6;color:#a3311f}
-.priority.med{background:#faedd2;color:#96631a}
-.excerpt{background:#f4f5f3;border-left:2px solid #9a5b21;border-radius:0 6px 6px 0;padding:11px 12px;font-size:11px;line-height:1.55;color:#3a4038;margin-top:8px;font-style:italic}
-h4.section{font-family:ui-monospace,monospace;font-size:9.5px;text-transform:uppercase;letter-spacing:.06em;color:#8a9186;margin:16px 0 5px}
-h4.section:first-child{margin-top:2px}</style></head>
+button.primary{background:var(--brass);border-color:var(--brass);color:#fff;position:relative;box-shadow:0 2px 8px rgba(165,101,31,.3)}
+button.primary:hover{background:#8f5619}
+button.primary::after{content:'default';position:absolute;top:-9px;right:-6px;background:var(--green);color:#fff;font-size:8px;font-family:ui-monospace,monospace;padding:2px 6px;border-radius:8px;text-transform:uppercase;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+button.danger{color:var(--red);border-color:#e6bfb4}
+button.danger:hover{background:var(--red-soft)}
+.bwrap{display:flex;flex-direction:column;align-items:flex-start;gap:1px}
+.bwrap small{font-size:9.5px;color:inherit;opacity:.75;font-weight:400}
+code{font-family:ui-monospace,Menlo,monospace;font-size:10.5px;background:var(--slate-soft);border-radius:4px;padding:1.5px 5px;color:#494432}
+h4.s{font-size:11.5px;font-weight:600;color:var(--text);margin:18px 0 8px;display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none;padding:6px 8px;margin-left:-8px;margin-right:-8px;border-radius:6px}
+h4.s:hover{background:var(--surface)}
+h4.s .ic{width:22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+h4.s .ic svg{width:12px;height:12px}
+h4.s .car{transition:transform .12s;margin-left:auto;color:var(--text-dim);font-size:10px}
+h4.s.collapsed .car{transform:rotate(-90deg)}
+h4.s:first-child{margin-top:4px}
+.sec-body{overflow:hidden;padding-left:30px}
+.sec-body.collapsed{display:none}
+p.lead{margin:0;color:#413c2e;font-size:12px;line-height:1.6}
+ul.uc{margin:0;padding-left:16px}
+ul.uc li{margin-bottom:6px;font-size:11.5px;color:#413c2e;line-height:1.5}
+.chk{padding:9px 0;border-bottom:1px solid var(--border)}
+.chk:last-child{border-bottom:0}
+.chk .row1{display:flex;align-items:center;gap:7px}
+.chk .name{font-weight:600;font-size:11.5px}
+.chk .verdict{font-family:ui-monospace,monospace;font-size:9px;text-transform:uppercase;font-weight:700;padding:2px 7px;border-radius:10px;background:var(--slate-soft);color:var(--slate)}
+.chk .why{color:var(--text-dim);margin-top:4px;font-size:11.5px;line-height:1.5}
+.pattern-box{background:linear-gradient(135deg,var(--brass-soft),var(--surface));border:1px solid var(--border);border-left:3px solid var(--brass);border-radius:8px;padding:12px 14px}
+.pattern-box .pname{font-weight:700;font-size:13px;margin-bottom:4px;color:#5c3813}
+.pattern-box .pwhy{font-size:11.5px;color:#413c2e;line-height:1.5}
+table.ptable{width:100%;border-collapse:collapse;font-size:11.5px;border:1px solid var(--border);border-radius:8px;overflow:hidden}
+table.ptable th{text-align:left;color:var(--text-dim);font-weight:700;padding:7px 8px;background:var(--surface);font-size:9.5px;text-transform:uppercase;letter-spacing:.03em}
+table.ptable td{padding:8px;border-top:1px solid var(--border);vertical-align:top}
+.copybtn{border:1px solid var(--border-strong);background:#fff;border-radius:5px;font-size:9.5px;padding:2px 7px;cursor:pointer;margin-left:6px}
+.copybtn:hover{background:var(--surface)}
+.steps-wrap{position:relative;padding-left:8px}
+.steps-wrap::before{content:'';position:absolute;left:16px;top:8px;bottom:8px;width:2px;background:var(--border-strong)}
+.step{position:relative;padding:9px 0 9px 26px}
+.step .num{position:absolute;left:0;top:9px;width:20px;height:20px;border-radius:50%;font-size:9.5px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff;box-shadow:0 0 0 3px var(--bg)}
+.step .num.sub{background:var(--blue)}
+.step .num.fw{background:var(--slate)}
+.step .row1{display:flex;align-items:center;gap:6px;margin-bottom:3px;flex-wrap:wrap}
+.step .name{font-weight:600;font-size:12px}
+.tag{font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:.02em;padding:2px 6px;border-radius:9px}
+.tag.sub{background:var(--blue-soft);color:var(--blue)}
+.tag.fw{background:var(--slate-soft);color:var(--slate)}
+.tag.gate{background:var(--brass-soft);color:var(--brass)}
+.tag.loop{background:var(--red-soft);color:var(--red)}
+.step .desc{color:var(--text-dim);font-size:11.5px;line-height:1.5}
+.step .loopnote{margin-top:4px;font-size:10.5px;color:var(--red);font-style:italic}
+.flow{margin-top:2px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px}
+.decision{padding:10px 0;border-bottom:1px solid var(--border)}
+.decision:last-child{border-bottom:0}
+.decision .why{font-size:11.5px;color:#413c2e;line-height:1.5}
+</style></head>
 <body>
-  <h3>Template Design Ready</h3>
+  <div class="head">
+    <div class="eyebrow">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/></svg>
+      Template design review
+    </div>
+    <h2>Plan and design template</h2>
+    <span class="ratio" id="ratio"></span>
+  </div>
   <div class="body">
+    <h4 class="s" data-t="purpose"><span class="ic" style="background:var(--brass-soft);color:var(--brass)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="9"/><path d="M12 8v5l3 2"/></svg></span>Purpose<span class="car">▾</span></h4>
+    <div class="sec-body" data-s="purpose"><p class="lead" id="purpose"></p></div>
 
-    <h4 class="section">Purpose</h4>
-    <p class="muted" id="purpose" style="margin:0"></p>
-    <h4 class="section">Step breakdown</h4>
-    <ul class="plain" id="steps"></ul>
-    <h4 class="section">Parameters</h4>
-    <table class="cmp"><tr><th>Name</th><th>Type</th><th>Description</th></tr><tbody id="params"></tbody></table>
-    <script>
-      window.onViewData = function(d){
-        d = d.approve || {}
-        document.getElementById('purpose').textContent = d.purpose || ''
-        document.getElementById('steps').innerHTML = (d.steps||[]).map(function(s,i){
-          return '<li class="item"><div class="row1"><span class="tag num">'+(i+1)+'</span><span class="path">'+s.name+'</span></div><div class="why">'+s.purpose+'</div></li>'
-        }).join('')
-        document.getElementById('params').innerHTML = (d.params||[]).map(function(p){
-          return '<tr><td><code>'+p.name+'</code></td><td>'+p.type+'</td><td>'+p.desc+'</td></tr>'
-        }).join('')
-      }
-    </script>
+    <h4 class="s" data-t="usecases"><span class="ic" style="background:var(--blue-soft);color:var(--blue)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 5H5a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2v-4"/><path d="M9 15L20 4M20 4h-5M20 4v5"/></svg></span>Use cases<span class="car">▾</span></h4>
+    <div class="sec-body" data-s="usecases"><ul class="uc" id="usecases"></ul></div>
 
+    <h4 class="s collapsed" data-t="checked"><span class="ic" style="background:var(--slate-soft);color:var(--slate)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></span>Existing options checked<span class="car">▾</span></h4>
+    <div class="sec-body collapsed" data-s="checked" id="checked"></div>
+
+    <h4 class="s" data-t="pattern"><span class="ic" style="background:var(--brass-soft);color:var(--brass)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 12l9-9 9 9-9 9z"/></svg></span>Pattern<span class="car">▾</span></h4>
+    <div class="sec-body" data-s="pattern"><div class="pattern-box"><div class="pname" id="patternName"></div><div class="pwhy" id="patternWhy"></div></div></div>
+
+    <h4 class="s" data-t="params"><span class="ic" style="background:var(--blue-soft);color:var(--blue)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 10v10"/></svg></span>Parameters<span class="car">▾</span></h4>
+    <div class="sec-body" data-s="params">
+      <table class="ptable"><tr><th>Name</th><th>Req</th><th>Description</th><th>Example</th></tr><tbody id="params"></tbody></table>
+    </div>
+
+    <h4 class="s" data-t="steps"><span class="ic" style="background:var(--green-soft);color:var(--green)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4" cy="6" r="1.5" fill="currentColor"/><circle cx="4" cy="12" r="1.5" fill="currentColor"/><circle cx="4" cy="18" r="1.5" fill="currentColor"/></svg></span>Step breakdown<span class="car">▾</span></h4>
+    <div class="sec-body steps-wrap" data-s="steps" id="steps"></div>
+
+    <h4 class="s" data-t="flow"><span class="ic" style="background:var(--green-soft);color:var(--green)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="4" y="3" width="7" height="5" rx="1"/><rect x="4" y="16" width="7" height="5" rx="1"/><path d="M11 5.5h5a2 2 0 012 2V11M18 11l-3-3m3 3l3-3M11 18.5h5a2 2 0 002-2V13"/></svg></span>Process flow<span class="car">▾</span></h4>
+    <div class="sec-body" data-s="flow"><div class="flow" id="flow"></div></div>
+
+    <h4 class="s collapsed" data-t="decisions"><span class="ic" style="background:var(--slate-soft);color:var(--slate)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2a7 7 0 00-4 12.7V17h8v-2.3A7 7 0 0012 2z"/><path d="M9 21h6"/></svg></span>Key decisions<span class="car">▾</span></h4>
+    <div class="sec-body collapsed" data-s="decisions" id="decisions"></div>
   </div>
-  <div class="actions">
-<button onclick="send('approve')" class="primary">Approve</button>
-  <button onclick="send('reject')" class="danger">Reject</button>
-  <button onclick="send('modify')">Request changes</button>
-  </div>
+  <div class="actions" id="actions"></div>
   <script>
-function send(operationId){ parent.postMessage({type:'operation', operationId}, '*') }
-window.addEventListener('message', function(e){
-  if (e.data && e.data.type === 'view-data' && window.onViewData) window.onViewData(e.data.data || {})
-})
+    function send(operationId) { parent.postMessage({ type: 'operation', operationId }, '*') }
+
+    document.querySelectorAll('h4.s').forEach(function(h) {
+      h.addEventListener('click', function() {
+        h.classList.toggle('collapsed')
+        var body = document.querySelector('.sec-body[data-s="' + h.dataset.t + '"]')
+        if (body) body.classList.toggle('collapsed')
+      })
+    })
+
+    function copy(text, btn) {
+      navigator.clipboard.writeText(text).then(function() {
+        var old = btn.textContent; btn.textContent = 'copied'
+        setTimeout(function() { btn.textContent = old }, 1200)
+      }).catch(function() {})
+    }
+
+    window.addEventListener('message', function(e) {
+      if (e.data?.type !== 'view-data') return
+      var d = e.data.data.approve || {}
+
+      var reused = (d.existingChecked || []).filter(function(c){ return c.verdict === 'reused' }).length
+      var totalSteps = (d.steps || []).length
+      document.getElementById('ratio').innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/></svg>' + reused + ' of ' + totalSteps + ' steps reused, ' + (totalSteps - reused) + ' authored fresh'
+
+      document.getElementById('purpose').textContent = d.purpose || ''
+
+      document.getElementById('usecases').innerHTML = (d.useCases || []).map(function(u) {
+        return '<li>' + u + '</li>'
+      }).join('')
+
+      document.getElementById('checked').innerHTML = (d.existingChecked || []).map(function(c) {
+        return '<div class="chk"><div class="row1"><span class="name">' + c.name + '</span><span class="verdict">' + c.verdict + '</span></div><div class="why">' + c.why + '</div></div>'
+      }).join('')
+
+      document.getElementById('patternName').textContent = (d.pattern && d.pattern.name) || ''
+      document.getElementById('patternWhy').textContent = (d.pattern && d.pattern.why) || ''
+
+      document.getElementById('params').innerHTML = (d.params || []).map(function(p, i) {
+        return '<tr><td><code>' + p.name + '</code></td><td>' + (p.required ? 'yes' : '—') + '</td><td>' + p.desc + '</td>'
+          + '<td><code>' + p.example + '</code> <button class="copybtn" onclick="copy(\'' + p.example + '\', this)">copy</button></td></tr>'
+      }).join('')
+
+      document.getElementById('steps').innerHTML = (d.steps || []).map(function(s) {
+        var isFw = s.type === 'framework'
+        var typeTag = isFw ? '<span class="tag fw">framework</span>' : '<span class="tag sub">sub-process</span>'
+        var gateTag = s.approval ? '<span class="tag gate">gate</span>' : ''
+        var loopTag = s.loopTarget ? '<span class="tag loop">re-entered on failure</span>' : ''
+        var loopNote = s.loopsTo !== undefined ? '<div class="loopnote">loops back to step ' + s.loopsTo + ' on: ' + s.loopCondition + '</div>' : ''
+        return '<div class="step"><div class="row1"><span class="num ' + (isFw ? 'fw' : 'sub') + '">' + s.n + '</span><span class="name">' + s.name + '</span>' + typeTag + gateTag + loopTag + '</div><div class="desc">' + s.desc + '</div>' + loopNote + '</div>'
+      }).join('')
+
+      var steps = d.steps || []
+      var main = steps.filter(function(s){ return s.type !== 'framework' })
+      var W = 660, rowH = 58, x = 20, boxW = 220
+      var svg = '<svg viewBox="0 0 ' + W + ' ' + (rowH * main.length + 30) + '" width="100%" style="overflow:visible">'
+      svg += '<defs>'
+      svg += '<marker id="ah" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#3a6ea5"/></marker>'
+      svg += '<marker id="ahr" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b23a24"/></marker>'
+      svg += '<filter id="sh" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-color="#21201c" flood-opacity="0.12"/></filter>'
+      svg += '</defs>'
+      main.forEach(function(s, i) {
+        var y = 15 + i * rowH
+        var isLoopTarget = !!s.loopTarget
+        var fill = isLoopTarget ? '#e4edf8' : '#ffffff'
+        var stroke = isLoopTarget ? '#3a6ea5' : '#d8d1bf'
+        svg += '<rect x="' + x + '" y="' + y + '" width="' + boxW + '" height="34" rx="8" fill="' + fill + '" stroke="' + stroke + '" stroke-width="1.4" filter="url(#sh)"/>'
+        svg += '<circle cx="' + (x + 17) + '" cy="' + (y + 17) + '" r="9" fill="' + (isLoopTarget ? '#3a6ea5' : '#6e6858') + '"/>'
+        svg += '<text x="' + (x + 17) + '" y="' + (y + 20) + '" font-size="9.5" font-weight="700" text-anchor="middle" fill="#fff">' + s.n + '</text>'
+        svg += '<text x="' + (x + 32) + '" y="' + (y + 21) + '" font-size="10.5" font-weight="600" fill="#211f1a">' + s.name + '</text>'
+        if (s.approval) {
+          svg += '<circle cx="' + (x + boxW - 12) + '" cy="' + (y + 17) + '" r="4" fill="#a5651f"/>'
+        }
+        if (i < main.length - 1) {
+          svg += '<line x1="' + (x + boxW/2) + '" y1="' + (y + 34) + '" x2="' + (x + boxW/2) + '" y2="' + (y + rowH) + '" stroke="#3a6ea5" stroke-width="1.5" marker-end="url(#ah)"/>'
+        }
+        if (s.loopsTo !== undefined) {
+          var targetIdx = main.findIndex(function(m){ return m.n === s.loopsTo })
+          var ty = 15 + targetIdx * rowH + 17
+          var lx = x + boxW + 24
+          svg += '<path d="M ' + (x + boxW) + ' ' + (y + 17) + ' L ' + lx + ' ' + (y + 17) + ' L ' + lx + ' ' + ty + ' L ' + (x + boxW) + ' ' + ty + '" fill="none" stroke="#b23a24" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#ahr)"/>'
+          svg += '<rect x="' + (lx + 4) + '" y="' + ((y + 17 + ty) / 2 - 10) + '" width="' + (s.loopCondition.length * 5 + 10) + '" height="16" rx="8" fill="#fbe7e1"/>'
+          svg += '<text x="' + (lx + 9) + '" y="' + ((y + 17 + ty) / 2 + 1) + '" font-size="9" font-weight="600" fill="#b23a24">' + s.loopCondition + '</text>'
+        }
+      })
+      svg += '</svg>'
+      document.getElementById('flow').innerHTML = svg
+
+      document.getElementById('decisions').innerHTML = (d.keyDecisions || []).map(function(k) {
+        return '<div class="decision"><div class="why">' + k + '</div></div>'
+      }).join('')
+
+      document.getElementById('actions').innerHTML = (d.decisionOptions || []).map(function(o) {
+        var cls = o.variant === 'primary' ? 'primary' : (o.variant === 'danger' ? 'danger' : '')
+        return '<button class="' + cls + '" onclick="send(\'' + o.id + '\')"><span class="bwrap">' + o.label + '<small>' + o.desc + '</small></span></button>'
+      }).join('')
+    })
   </script>
 </body>
 </html>
