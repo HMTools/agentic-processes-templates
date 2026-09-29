@@ -1,0 +1,30 @@
+{
+  "type": "view",
+  "id": "b9a91669-5bbe-478b-90c9-c12c53857167",
+  "name": "create-guideline-file-widget",
+  "htmlFile": "widget.html",
+  "operationIds": [
+    "approve",
+    "reject",
+    "modify"
+  ],
+  "mockData": {
+    "approve": {
+      "path": "guidelines/testing/how-to-write-integration-tests.md",
+      "outline": [
+        "When to use an integration test",
+        "Setting up test fixtures",
+        "Writing the test body",
+        "Common pitfalls",
+        "Example: testing a webhook handler"
+      ],
+      "excerpt": "Integration tests exist to catch what unit tests structurally cannot: two real components disagreeing about a contract. Reach for one when a bug would only show up at the boundary between services..."
+    },
+    "reject": {
+      "note": "n/a"
+    },
+    "modify": {
+      "note": "n/a"
+    }
+  }
+}

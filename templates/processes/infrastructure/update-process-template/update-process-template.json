@@ -53,7 +53,8 @@
       "stepRef": "df09091e-6069-44be-b9dc-657489a37c64",
       "approvalRequired": true,
       "guidance": "When planning changes, check for active process instances using this template. If found, proactively include a migration plan (inserting new steps, renumbering, preserving existing IDs/statuses). Do not wait for the user to request migration.",
-      "stepRefName": "plan-artifact-updates"
+      "stepRefName": "plan-artifact-updates",
+      "viewRef": "00c0e20f-a0ad-447c-9287-4428f5df4144"
     },
     {
       "number": 2,
@@ -66,7 +67,8 @@
       "name": "Review and Validate Artifact Updates",
       "stepRef": "6880b8bb-6085-4da5-bd8a-71c5c1e9301e",
       "approvalRequired": true,
-      "stepRefName": "review-and-validate-artifact-updates"
+      "stepRefName": "review-and-validate-artifact-updates",
+      "viewRef": "1b61ab16-cf1b-4cfb-aeef-8b070ff1608c"
     },
     {
       "number": 4,

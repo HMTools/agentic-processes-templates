@@ -49,7 +49,8 @@
       "name": "Plan and design template",
       "stepRef": "1ffce6c4-ab5d-4418-8fa9-455625fb2abf",
       "approvalRequired": true,
-      "stepRefName": "plan-and-design-template"
+      "stepRefName": "plan-and-design-template",
+      "viewRef": "370c998f-c9ed-4575-aba1-47eb0deabcd7"
     },
     {
       "number": 2,

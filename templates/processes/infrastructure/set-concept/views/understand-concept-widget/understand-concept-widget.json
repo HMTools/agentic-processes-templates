@@ -1,0 +1,61 @@
+{
+  "type": "view",
+  "id": "554f3677-1f03-427f-b8d0-3506c98d09e6",
+  "name": "understand-concept-widget",
+  "htmlFile": "widget.html",
+  "operationIds": [
+    "approve",
+    "reject",
+    "modify"
+  ],
+  "mockData": {
+    "approve": {
+      "sources": [
+        {
+          "label": "agentic-processes/README.md",
+          "type": "doc"
+        },
+        {
+          "label": "scripts/process_manager.py (existing patterns)",
+          "type": "code"
+        },
+        {
+          "label": "Slack thread w/ @sarah re: approval flow",
+          "type": "conversation"
+        },
+        {
+          "label": "Prior \"views\" design doc (rejected v1)",
+          "type": "doc"
+        }
+      ],
+      "requirements": [
+        {
+          "text": "Views only attach to approval-gate steps",
+          "priority": "high"
+        },
+        {
+          "text": "Framework must validate data before allowing Stop",
+          "priority": "high"
+        },
+        {
+          "text": "Template browsing shows a mocked preview with no running instance",
+          "priority": "med"
+        }
+      ],
+      "constraints": [
+        "No new pending file \u2014 must extend pending-interaction.json",
+        "No CSP exists yet in the Electron app"
+      ],
+      "successCriteria": [
+        "A gate with a view blocks Stop until bound data is present",
+        "A click in the widget resolves the gate exactly like a plain button would"
+      ]
+    },
+    "reject": {
+      "note": "n/a"
+    },
+    "modify": {
+      "note": "n/a"
+    }
+  }
+}

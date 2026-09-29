@@ -1,0 +1,32 @@
+{
+  "type": "view",
+  "id": "00c0e20f-a0ad-447c-9287-4428f5df4144",
+  "name": "plan-artifact-updates-widget",
+  "htmlFile": "widget.html",
+  "operationIds": [
+    "approve",
+    "reject",
+    "modify"
+  ],
+  "mockData": {
+    "approve": {
+      "backwardCompatible": true,
+      "compatNote": "New optional field only \u2014 every existing consumer keeps parsing without changes.",
+      "consumers": [
+        "scripts/process_manager.py (cmd_create_process)",
+        "electron/main.ts (resolveStepDefinitions)",
+        "3 templates currently referencing this step"
+      ],
+      "changes": [
+        "Add optional viewRef field to the template step-entry schema",
+        "Add optional view field to the runtime ProcessStep, resolved at process-creation time"
+      ]
+    },
+    "reject": {
+      "note": "n/a"
+    },
+    "modify": {
+      "note": "n/a"
+    }
+  }
+}

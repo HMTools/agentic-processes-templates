@@ -1,0 +1,41 @@
+{
+  "type": "view",
+  "id": "b7e76e2b-650c-4960-a3dd-ace02cf52691",
+  "name": "identify-missing-guidelines-widget",
+  "htmlFile": "widget.html",
+  "operationIds": [
+    "approve",
+    "reject",
+    "modify"
+  ],
+  "mockData": {
+    "approve": {
+      "approach": "Deep mode \u2014 exhaustive search with completeness tracking",
+      "exclusions": [
+        "node_modules/",
+        "dist/",
+        ".git/"
+      ],
+      "files": [
+        {
+          "path": "guidelines/testing/",
+          "reason": "No guideline for integration test structure"
+        },
+        {
+          "path": "guidelines/security/",
+          "reason": "No guideline for secrets handling in scripts"
+        },
+        {
+          "path": "guidelines/git/",
+          "reason": "No guideline for branch naming conventions"
+        }
+      ]
+    },
+    "reject": {
+      "note": "n/a"
+    },
+    "modify": {
+      "note": "n/a"
+    }
+  }
+}

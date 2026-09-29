@@ -1,0 +1,48 @@
+{
+  "type": "view",
+  "id": "370c998f-c9ed-4575-aba1-47eb0deabcd7",
+  "name": "plan-and-design-template-widget",
+  "htmlFile": "widget.html",
+  "operationIds": [
+    "approve",
+    "reject",
+    "modify"
+  ],
+  "mockData": {
+    "approve": {
+      "purpose": "Automate weekly on-call rotation handoff: summarize open incidents, draft handoff notes, and require the outgoing engineer to confirm before rotating.",
+      "steps": [
+        {
+          "name": "Gather open incidents",
+          "purpose": "Pull all incidents touched in the last 7 days from the tracker"
+        },
+        {
+          "name": "Draft handoff notes",
+          "purpose": "Summarize status, owners, and next actions per incident"
+        },
+        {
+          "name": "Confirm handoff (approval gate)",
+          "purpose": "Outgoing engineer reviews and approves before rotation completes"
+        }
+      ],
+      "params": [
+        {
+          "name": "onCallChannel",
+          "type": "string",
+          "desc": "Slack channel to post the handoff summary to"
+        },
+        {
+          "name": "lookbackDays",
+          "type": "number",
+          "desc": "How many days of incidents to include (default 7)"
+        }
+      ]
+    },
+    "reject": {
+      "note": "n/a"
+    },
+    "modify": {
+      "note": "n/a"
+    }
+  }
+}

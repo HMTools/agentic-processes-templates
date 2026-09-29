@@ -1,0 +1,52 @@
+{
+  "type": "view",
+  "id": "1b61ab16-cf1b-4cfb-aeef-8b070ff1608c",
+  "name": "review-and-validate-artifact-updates-widget",
+  "htmlFile": "widget.html",
+  "operationIds": [
+    "approve",
+    "reject",
+    "modify"
+  ],
+  "mockData": {
+    "approve": {
+      "comparison": [
+        {
+          "dim": "Fields added",
+          "planned": "2 (viewRef, view)",
+          "actual": "2 \u2014 matches plan"
+        },
+        {
+          "dim": "Files touched",
+          "planned": "2",
+          "actual": "2 \u2014 matches plan"
+        }
+      ],
+      "checks": [
+        {
+          "label": "Existing templates still parse unchanged",
+          "pass": true
+        },
+        {
+          "label": "New field is optional everywhere it was added",
+          "pass": true
+        },
+        {
+          "label": "No breaking change to public type exports",
+          "pass": true
+        },
+        {
+          "label": "Docs updated to mention the new field",
+          "pass": false
+        }
+      ],
+      "overall": "Ready to merge (1 minor follow-up: docs)"
+    },
+    "reject": {
+      "note": "n/a"
+    },
+    "modify": {
+      "note": "n/a"
+    }
+  }
+}

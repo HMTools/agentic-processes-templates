@@ -1,0 +1,19 @@
+{
+  "type": "view",
+  "id": "f63d38c9-ef42-4b5c-9763-8f873fc09831",
+  "name": "design-implementation-plan-widget",
+  "htmlFile": "widget.html",
+  "operationIds": ["approve", "reject", "modify"],
+  "mockData": {
+    "approve": {
+      "changes": [
+        { "id": "MOD-001", "path": "src/auth/session.ts", "type": "mod", "why": "Add refresh-token rotation on every successful validate() call" },
+        { "id": "MOD-002", "path": "src/auth/middleware.ts", "type": "mod", "why": "Reject requests carrying a token already rotated out" },
+        { "id": "NEW-001", "path": "src/auth/rotation-log.ts", "type": "new", "why": "Track rotated token ids so a reused old token is detected, not just expired" },
+        { "id": "NEW-002", "path": "test/auth/rotation.test.ts", "type": "new", "why": "Cover the reuse-detection path this plan depends on" }
+      ]
+    },
+    "reject": { "note": "n/a" },
+    "modify": { "note": "n/a" }
+  }
+}

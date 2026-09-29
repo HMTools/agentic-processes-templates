@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head><style>
+*{box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;margin:0;color:#181d1a;background:#fff;display:flex;flex-direction:column;height:100vh}
+h3{margin:0;font-size:13px;font-weight:600;padding:14px 16px 10px;flex-shrink:0;letter-spacing:-0.01em}
+.body{flex:1;overflow-y:auto;padding:0 16px 4px;font-size:12px}
+.actions{display:flex;gap:8px;padding:12px 16px;border-top:1px solid #e3e6e0;flex-shrink:0;background:#fafbf9}
+button{font:inherit;font-weight:500;font-size:12.5px;padding:7px 14px;border-radius:6px;border:1px solid #cbd1c7;background:#fff;cursor:pointer;box-shadow:0 1px 0 rgba(0,0,0,.04);transition:transform .06s ease, box-shadow .06s ease}
+button:hover{border-color:#a8b0a2}
+button:active{transform:translateY(1px);box-shadow:none}
+button.primary{background:#9a5b21;border-color:#9a5b21;color:#fff}
+button.primary:hover{background:#85501d}
+button.danger{color:#a3311f;border-color:#e2b3a8}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:10.5px;background:#f1f3ef;border-radius:3px;padding:1px 4px}
+.tag{display:inline-block;font-family:ui-monospace,Menlo,monospace;font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;padding:2px 6px;border-radius:3px;flex-shrink:0}
+.tag.mod{background:#faedd2;color:#96631a}
+.tag.new{background:#dff0e6;color:#1f7a52}
+.item{padding:10px 0;border-bottom:1px solid #edefe9}
+.item:last-child{border-bottom:0}
+.item .row1{display:flex;align-items:center;gap:7px;margin-bottom:3px}
+.item .path{font-weight:600;font-size:12px}
+.item .why{color:#5c6660;font-size:11.5px;line-height:1.45}
+ul.plain{margin:0;padding:0;list-style:none}
+h4.section{font-family:ui-monospace,monospace;font-size:9.5px;text-transform:uppercase;letter-spacing:.06em;color:#8a9186;margin:16px 0 5px}
+h4.section:first-child{margin-top:2px}
+</style></head>
+<body>
+  <h3>Implementation Plan Ready</h3>
+  <div class="body">
+    <h4 class="section">Change proposals</h4>
+    <ul class="plain" id="changes"></ul>
+  </div>
+  <div class="actions">
+    <button onclick="send('approve')" class="primary">Approve</button>
+    <button onclick="send('reject')" class="danger">Reject</button>
+    <button onclick="send('modify')">Request changes</button>
+  </div>
+  <script>
+    function send(operationId) { parent.postMessage({ type: 'operation', operationId }, '*') }
+    window.addEventListener('message', function(e) {
+      if (e.data?.type !== 'view-data') return
+      var d = e.data.data.approve || {}
+      document.getElementById('changes').innerHTML = (d.changes || []).map(function(c) {
+        return '<li class="item">'
+          + '<div class="row1"><span class="tag ' + c.type + '">' + c.type + '</span><span class="path">' + c.id + '</span></div>'
+          + '<div class="path" style="font-weight:500;font-size:11px"><code>' + c.path + '</code></div>'
+          + '<div class="why">' + c.why + '</div>'
+          + '</li>'
+      }).join('')
+    })
+  </script>
+</body>
+</html>

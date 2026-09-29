@@ -25,7 +25,8 @@
         "searchApproach": "grep for userGuidelines in step JSON files within process template directories (templates/processes/*/*/*/*.json) and framework-steps/**/*.json, then check existence of each referenced path",
         "outputFormat": "Array of {path, guidelineName, category, referencedBy} objects"
       },
-      "stepRefName": "identify-files"
+      "stepRefName": "identify-files",
+      "viewRef": "b7e76e2b-650c-4960-a3dd-ace02cf52691"
     },
     {
       "number": 2,

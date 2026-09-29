@@ -69,7 +69,8 @@
       "name": "Create guideline file",
       "stepRef": "f0a841f7-bdb0-4f2c-b016-ca4017992149",
       "approvalRequired": true,
-      "stepRefName": "create-guideline-file"
+      "stepRefName": "create-guideline-file",
+      "viewRef": "b9a91669-5bbe-478b-90c9-c12c53857167"
     },
     {
       "number": 3,

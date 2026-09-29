@@ -64,7 +64,8 @@
       "name": "Understand concept",
       "stepRef": "28047be4-e7c5-4152-8329-2929982ad042",
       "approvalRequired": true,
-      "stepRefName": "understand-context"
+      "stepRefName": "understand-context",
+      "viewRef": "554f3677-1f03-427f-b8d0-3506c98d09e6"
     },
     {
       "number": 2,
@@ -83,7 +84,8 @@
       "name": "Design implementation plan",
       "stepRef": "5fd46afb-b722-4ee9-9311-86f5d9c86365",
       "approvalRequired": true,
-      "stepRefName": "design-implementation-plan"
+      "stepRefName": "design-implementation-plan",
+      "viewRef": "f63d38c9-ef42-4b5c-9763-8f873fc09831"
     },
     {
       "number": 5,
